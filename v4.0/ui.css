@@ -1,0 +1,77 @@
+body {
+    height:100% !important;
+    background: linear-gradient(to bottom right, #ffffff , #A0A0A0 )  !important;
+    background-attachment: fixed !important;
+    font-family: "Arial";
+}
+
+#div_battery {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    width: 280px;
+    height: 20px;     
+}
+
+#l1 {
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 280px;
+}
+
+#btn1 {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 150px;
+}
+
+@media (max-width: 1000px) and (min-width: 100px) {
+    #video-container {
+        position: absolute;
+        margin: auto;
+        left: 50%;
+        top: 30%;
+        transform: translateY(-50%) translateX(-50%);
+        width: 300px; 
+        height: 400px; 
+        display: block;
+    }
+
+    #status-container {
+        position: absolute;
+        margin: auto;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: 300px; 
+        height: 250px; 
+        display: block;
+        /* border:3px solid #73AD21; */
+    }
+
+}
+@media (min-width: 1000px) {
+    #video-container {
+        position: absolute;
+        margin: auto;
+        left: 50%;
+        top: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: 600px; 
+        height: 800px; 
+        display: block;
+    }
+
+    #status-container {
+        position: absolute;
+        margin: auto;
+        left: 0;
+        top: 20%;
+        width: 220px; 
+        height: 250px; 
+        display: block;
+        /* border:3px solid #73AD21; */
+    }
+}
