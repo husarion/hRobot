@@ -1,0 +1,450 @@
+<html>
+
+<head>
+    <script src="/static/robocore.js"></script>
+<style>
+.btn {
+    background-color: #555555;
+    border: none;
+    color: #ff0000;
+    padding: 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px 0px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 19px;
+    height:28px;
+}
+
+.btn_mov {
+    background-color: white; 
+    color: #ff0000; 
+    border: 2px solid #555555;
+    
+}
+
+.btn_mov:hover {
+    background-color: #555555;
+    color: #ff0000;
+}
+</style>
+</head>
+
+<body topmargin="0" leftmargin="100" rightmargin="100" bottommargin="0" marginwidth="0" marginheight="0" link="#000000" vlink="#808080" alink="#C0C0C0">
+
+
+
+<div align="center">
+
+<table border="0" width="70%" cellspacing="0" cellpadding="0" height="100%">
+	<tr>
+		<td valign="top" colspan="2" height="51">
+			&nbsp;<table border="0" width="100%" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="181">
+					<font face="Lato">
+					<img border="0" src="husarion_logo.png" width="174" height="51"></font></td>
+					<td>
+					<p align="right"><font face="Lato">
+					<a href="https://cloud.husarion.com/">Cloud</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IDE</font></td>
+				</tr>
+			</table>
+			</tr>
+	<tr>
+		<td width="36%" valign="top">
+			<dl>
+			  	<h2 style="box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-numeric: inherit; font-stretch: inherit; line-height: inherit; font-family: Lato; vertical-align: baseline; color: rgb(208, 17, 43); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255)">
+				<font style="font-size: 52pt">hRobot</font></h2>
+				<p style="box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-numeric: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: Lato; vertical-align: baseline; color: #333333; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255)" align="center">
+				<font size="7">just control</font></p>
+			  	<dt>&nbsp;</dt>
+				<dt><font face="Lato" size="5">Movement</font></dt>
+					<dd><font face="Lato" size="5" color="#C0C0C0">cartesian</font></dd>
+					<dd><font face="Lato" size="5">joints</font></dd>
+					<dd><font face="Lato" size="5" color="#C0C0C0">tool</font></dd>
+				<dt><font face="Lato" size="5" color="#C0C0C0">hCode</font></dt>
+					<dd><font face="Lato" size="5" color="#C0C0C0">export</font></dd>
+				<dt><font face="Lato" size="5" color="#C0C0C0">Links</font></dt>
+					<dd><font face="Lato" size="5" color="#C0C0C0">shop</font></dd>
+					<dd><font face="Lato" size="5" color="#C0C0C0">api</font></dd>
+
+
+			</dl>
+			<table border="0" width="400" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>
+					<p style="box-sizing: border-box; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-numeric: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: Lato; vertical-align: baseline; color: #333333; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px; background-color: rgb(255, 255, 255)" align="center">&nbsp;</td>
+				</tr>
+			</table>
+		<td valign="top" width="64%">
+			<div class="joints" align="center">
+			
+				<div class="Top_cartesian">
+					<table border="0" width="700" cellspacing="0" cellpadding="5">
+		<tr>
+			<td width="350">
+			<p align="center">
+					<font face="Lato">Modify
+			</font>
+			<td width="350">
+			<p align="center"><font face="Lato">Set</font></td>
+		</tr>
+		</table>
+		</div>
+				<div class="j1">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+&nbsp;
+		<button type-active id="btn11" class="btn btn_mov">+</button> 
+		<button type-active id="btn12" class="btn btn_mov">:</button> 
+		<button type-active id="btn13" class="btn btn_mov">:</button> 
+		<button type-active id="btn14" class="btn btn_mov">:</button> 
+		<button id="btn10" class="btn btn_mov" style="width: 30px">j1</button> 
+		<button type-active id="btn15" class="btn btn_mov">:</button> 
+		<button type-active id="btn16" class="btn btn_mov">:</button> 
+		<button type-active id="btn17" class="btn btn_mov">:</button> 
+		<button type-active id="btn18" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur1">not available</label>  Set: <label id="set1">not available</label> 
+</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">&nbsp;
+		<button type-active id="btn41" class="btn btn_mov">+</button> 
+		<button type-active id="btn42" class="btn btn_mov">:</button> 
+		<button type-active id="btn43" class="btn btn_mov">:</button> 
+		<button type-active id="btn44" class="btn btn_mov">:</button> 
+		<button id="btn40" class="btn btn_mov" style="width: 30px">j4</button> 
+		<button type-active id="btn45" class="btn btn_mov">:</button> 
+		<button type-active id="btn46" class="btn btn_mov">:</button> 
+		<button type-active id="btn47" class="btn btn_mov">:</button> 
+		<button type-active id="btn48" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur4">not available</label>  Set: <label id="set4">not available</label></td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
+					<div class="j2">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+&nbsp;
+		<button type-active id="btn21" class="btn btn_mov">+</button> 
+		<button type-active id="btn22" class="btn btn_mov">:</button> 
+		<button type-active id="btn23" class="btn btn_mov">:</button> 
+		<button type-active id="btn24" class="btn btn_mov">:</button> 
+		<button id="btn20" class="btn btn_mov" style="width: 30px">j2</button> 
+		<button type-active id="btn25" class="btn btn_mov">:</button> 
+		<button type-active id="btn26" class="btn btn_mov">:</button> 
+		<button type-active id="btn27" class="btn btn_mov">:</button> 
+		<button type-active id="btn28" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur2">not available</label>  Set: <label id="set2">not available</label></td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">&nbsp;
+		<button type-active id="btn51" class="btn btn_mov">+</button> 
+		<button type-active id="btn52" class="btn btn_mov">:</button> 
+		<button type-active id="btn53" class="btn btn_mov">:</button> 
+		<button type-active id="btn54" class="btn btn_mov">:</button> 
+		<button id="btn50" class="btn btn_mov" style="width: 30px">j5</button> 
+		<button type-active id="btn55" class="btn btn_mov">:</button> 
+		<button type-active id="btn56" class="btn btn_mov">:</button> 
+		<button type-active id="btn57" class="btn btn_mov">:</button> 
+		<button type-active id="btn58" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur5">not available</label>  Set: <label id="set5">not available</label></td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
+					<div class="j3">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+&nbsp;
+		<button type-active id="btn31" class="btn btn_mov">+</button> 
+		<button type-active id="btn32" class="btn btn_mov">:</button> 
+		<button type-active id="btn33" class="btn btn_mov">:</button> 
+		<button type-active id="btn34" class="btn btn_mov">:</button> 
+		<button id="btn30" class="btn btn_mov" style="width: 30px">j3</button> 
+		<button type-active id="btn35" class="btn btn_mov">:</button> 
+		<button type-active id="btn36" class="btn btn_mov">:</button> 
+		<button type-active id="btn37" class="btn btn_mov">:</button> 
+		<button type-active id="btn38" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur3">not available</label>  Set: <label id="set3">not available</label></td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">&nbsp;
+		<button type-active id="btn61" class="btn btn_mov">+</button> 
+		<button type-active id="btn62" class="btn btn_mov">:</button>  
+		<button type-active id="btn63" class="btn btn_mov">:</button> 
+		<button type-active id="btn64" class="btn btn_mov">:</button> 
+		<button id="btn60" class="btn btn_mov" style="width: 30px">j6</button> 
+		<button type-active id="btn65" class="btn btn_mov">:</button> 
+		<button type-active id="btn66" class="btn btn_mov">:</button> 
+		<button type-active id="btn67" class="btn btn_mov">:</button> 
+		<button type-active id="btn68" class="btn btn_mov">-</button> 
+<br>
+Current: <label id="cur6">not available</label>  Set: <label id="set6">not available</label></td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
+					<div class="j4">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+		<button type-active id="btn_pos1_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos1_read" class="btn btn_mov" style="width: 150px">
+		Pos1</button> 
+		&nbsp; 
+		<button type-active id="btn_pos1_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_pos4_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos4_read" class="btn btn_mov" style="width: 150px">
+		Pos4</button> 
+		&nbsp; 
+		<button type-active id="btn_pos4_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					</div>
+					<div class="j5">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+		<button type-active id="btn_pos2_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos2_read" class="btn btn_mov" style="width: 150px">
+		Pos2</button> 
+		&nbsp; 
+		<button type-active id="btn_pos2_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_pos5_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos5_read" class="btn btn_mov" style="width: 150px">
+		Pos5</button> 
+		&nbsp; 
+		<button type-active id="btn_pos5_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					</div>
+					<div class="j6">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+		<button type-active id="btn_pos3_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos3_read" class="btn btn_mov" style="width: 150px">
+		Pos3</button> 
+		&nbsp; 
+		<button type-active id="btn_pos3_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_pos6_show" class="btn btn_mov" style="width: 50px">
+		Show</button> 
+		&nbsp;
+		<button type-active id="btn_pos6_read" class="btn btn_mov" style="width: 150px">
+		Pos6</button> 
+		&nbsp; 
+		<button type-active id="btn_pos6_write" class="btn btn_mov" style="width: 50px">
+		Write</button> 
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					</div>
+					<div class="j7">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_close" class="btn btn_mov" style="width: 50px">close</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_stop" class="btn btn_mov" style="width: 50px">stop</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_open" class="btn btn_mov" style="width: 50px">open</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+		&nbsp;
+		<button type-active id="btnmode" class="btn btn_mov" style="width: 150px">Change Mode</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btnsend" class="btn btn_mov" style="width: 50px">Send</button> 
+<br>
+Current mode: <label id="mode">not available</label></td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					</div>
+				<div class="cartesian">
+				
+					<div class="j7">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="782" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_pos0_show" class="btn btn_mov" style="width: 120px">
+		Show target</button> 
+		&nbsp;
+		<button type-active id="btn_pos7_show" class="btn btn_mov" style="width: 120px">
+		Show current</button> 
+		&nbsp;
+		<button type-active id="btn_pos8_show" class="btn btn_mov" style="width: 120px">
+		Show other</button> 
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
+				<p>
+				
+				</div>
+				
+				<div class="tool">
+				
+				<label id="info">Dodatkowe informacje niedostêpne<br>
+&nbsp;</label><div class="PIDconfig">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_kpp" class="btn btn_mov" style="width: 50px">
+		+Kp</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_kip" class="btn btn_mov" style="width: 50px">
+		+Ki</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_kdp" class="btn btn_mov" style="width: 50px">
+		+Kd</button> 
+			<br>
+		<button type-active id="btn_kpm" class="btn btn_mov" style="width: 50px">
+		-Kp</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_kim" class="btn btn_mov" style="width: 50px">
+		-Ki</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_kdm" class="btn btn_mov" style="width: 50px">
+		-Kd</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+Current PID: <label id="PIDinfo">not available</label></td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
+				<p>&nbsp;</div>
+		</td>
+	</tr>
+	<td>
+	<font face="Lato" size="1">mikowhy95@gmail.com v.0.01.3</font></td>
+</table>
+
+<p>&nbsp;</div>
+
+</body>
+
+</html>
