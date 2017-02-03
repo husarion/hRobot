@@ -3,6 +3,8 @@
 #include "hFramework.h"
 #include "hCloudClient.h"
 #include "UI_Buttons.h"
+#include "Addons.h"
+#include "UI_Labels.h"
 
 // jog, ui, recorded positions values
 extern float target[9];
@@ -25,9 +27,9 @@ extern float tempKd;
 
 void printOnLabels()
 {
-	platform.ui.label("mode").setText("test2");
+	//platform.ui.label("mode").setText("test2");
 	//platform.ui.label("info").setText("time: %d", sys.getRefTime());
-
+    //UARTd(111100,pos_label);
 	switch (pos_label) {
 	case 1:
 		platform.ui.label("info").setText("Pos1 J1: %f, J2: %f, J3: %f, J5: %f, J6: %f", pos1[1], pos1[2], pos1[3], pos1[5], pos1[6]);
@@ -59,6 +61,6 @@ void printOnLabels()
 		break;
 	}
 
-
+    //UART(111200);
 	platform.ui.label("PIDinfo").setText("J5: Kp=%f, Ki=%f, Kd=%f", tempKp, tempKi, tempKd);
 }

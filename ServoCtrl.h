@@ -56,7 +56,6 @@ public:
 	float get_output_saturate();
 	void set_threshold(float threshold_t);
 	float get_threshold();
-	void set_servo_center(int servo_center_t);
 };
 
 #endif

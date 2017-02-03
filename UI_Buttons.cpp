@@ -3,6 +3,7 @@
 #include "hFramework.h"
 #include "hCloudClient.h"
 #include "UI_Buttons.h"
+#include "Addons.h"
 
 // jog, ui, recorded positions values
 extern float target[9];
@@ -30,11 +31,16 @@ extern float tempKd;
 
 void cfgHandler()
 {	
+    //UART(131000);
 	// strona startowa
     platform.ui.loadHtml({Resource::WEBIDE, "/ui.html"});
+    
+	//UART(132000);
 	// labels
 	auto info = platform.ui.label("info");
 	auto PIDinfo = platform.ui.label("PIDinfo");
+	
+	//UART(133000);
 	// mode buttons
 	auto btnmode = platform.ui.button("btnmode");
 	auto btnsend = platform.ui.button("btnsend");
@@ -133,8 +139,10 @@ void cfgHandler()
 }
 
 void onButtonEvent(hId id, ButtonEventType type)
-{
+{  
+    //UART(121100);
 	if(type == ButtonEventType::Pressed){ // Pressed
+	    //UART(121200);
 			// always
 		// PID buttons
 		if (id == "btn_kpp") tempKp+=0.05;
@@ -172,6 +180,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		if (id == "btn_pos7_show") {pos_label=7;}
 			// conditionals
 		if (mode) {						// (set&send)
+		    //UART(121210);
 			// mode buttons
 			if (id == "btnmode") mode=!mode;
 			if (id == "btnsend") {for(int k=0;k<9;k++){target[k]=temp[k];}}
@@ -221,6 +230,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 			if (id == "btn67") temp[6]-=step3;
 			if (id == "btn68") temp[6]-=step4;
 		} else {						// (contuinous sending)
+		    //UART(121220);
 			if (id == "btnmode") {mode=!mode; for(int k=0;k<9;k++){temp[k]=target[k];}}
 			// jog buttons target
 			if (id == "btn11") target[1]+=step4;
@@ -269,4 +279,5 @@ void onButtonEvent(hId id, ButtonEventType type)
 			if (id == "btn68") target[6]-=step4;
 		}
 	}
+	//UART(122000);
 }

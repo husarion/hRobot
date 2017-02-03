@@ -11,11 +11,7 @@ void MotorManagerInitServos();
 void MotorManagerInitMotor();
 void MotorManagerInitEncoders();
 
-void MotorManagerJ1UpdateTask();
-void MotorManagerJ2UpdateTask();
-void MotorManagerJ3UpdateTask();
-void MotorManagerJ5UpdateTask();
-void MotorManagerJ6UpdateTask();
+void MotorManagerUpdateTask();
 
 void MotorManagerUpdateTargetGlobal();
 void MotorManagerUpdateTargetGlobalTask();

@@ -4,6 +4,19 @@
 #include "hCloudClient.h"
 #include "ErrorLog.h"
 
+void printfErrorTask()
+{
+    for (;;) {
+		if (ErrorLogs::Err().getSize() > 0 && (int)sys.getRefTime() > 6000){
+			ErrorLogs::Err().translateError(ErrorLogs::Err().getLastError());
+			sys.delay(100);
+		}
+		else{
+		sys.delay(1000);
+		}
+	}
+}
+
 void ErrorLogs::send(int error){
     if(log_queue.size()<=255)
     log_queue.push_back(error);
@@ -20,6 +33,13 @@ void ErrorLogs::sendPar(int error, float parametr){
     if(log_queue.size()<=255){
     log_queue.push_back(error);
     log_float_queue.push_back(parametr);
+    }
+}
+
+void ErrorLogs::sendPar(int error, char* parametr){
+    if(log_queue.size()<=255){
+    log_queue.push_back(error);
+    log_char_queue.push_back(parametr);
     }
 }
 
@@ -51,6 +71,18 @@ float ErrorLogs::getLastFloat(){
     return temp;
 }
 
+void ErrorLogs::getLastChar(char* temp){
+    if(log_char_queue.size()>0){
+        temp = log_char_queue[0];
+        if(log_char_queue.size()==1){
+            log_char_queue.clear();
+        }
+        else{
+        log_char_queue.erase(log_char_queue.begin());
+        }
+    }
+}
+
 int ErrorLogs::getLastError(){
     int temp;
     if(log_queue.size()>0){
@@ -71,8 +103,10 @@ int ErrorLogs::getSize(){
 }
 
 void ErrorLogs::translateError(int error){
-    char * temp;
-    temp = new char[1024];
+   char * temp;
+   char * temp3;
+    temp = new char[255];
+    temp3 = new char[127];
     switch(error){
         case 0:
         temp = "info: OK";
@@ -124,6 +158,26 @@ void ErrorLogs::translateError(int error){
         break;
         case 16:
         temp = "worning: Saving configuration to memory";
+        break;
+        case 17:
+        //platform.printf("-----------------------> Code: ", getLastInt());
+        Serial.printf("-----------------------> Code: ", getLastInt());
+        temp =  "\r\n";
+        break;
+        case 18:
+        getLastChar(temp3);
+        Serial.printf("Point did not egsist %s", temp3);
+        temp =  "\r\n";
+        break;
+        case 19:
+        getLastChar(temp3);
+        Serial.printf("Point of name %s already egzist", temp3);
+        temp =  "\r\n";
+        break;
+        case 20:
+        getLastChar(temp3);
+        Serial.printf("No such point as : %s", temp3);
+        temp =  "\r\n";
         break;
         //tu dodac wlasne bledy aby skrypt je obsluzyl
         
