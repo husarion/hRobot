@@ -1,8 +1,11 @@
 #include <cstddef>
 #include <cstdint>
 #include "hFramework.h"
-#include "ErrorLog.h"
 #include "Addons.h"
+#include "ErrorLog.h"
+#include "GeoMath.h"
+
+// ver 6.
 
 float saturateFloat(float val, float bord){ // limits float val symetricly between -bord and bord.
     if (val<-bord){ val=-bord; } else if (val>bord) val=bord;
@@ -21,15 +24,63 @@ float circleFloat(float val){  // sub or add value to stay between -180 and 180
     return val;
 }
 
-void printfOnConsoleInWebIDE()
-{
-    for (;;) {
-		if (ErrorLogs::Err().getSize() > 0 && (int)sys.getRefTime() > 6000){
-			ErrorLogs::Err().translateError(ErrorLogs::Err().getLastError());
-			sys.delay(100);
-		}
-		else{
-		sys.delay(1000);
-		}
-	}
+float deg2rad(float deg){
+    return deg/180*3.14159265;
+}
+
+float rad2deg(float rad){
+    return rad/3.14159265*180;
+}
+
+float sq(float val){
+    return pow(val, 2);
+}
+
+void erco(int code){
+    ErrorLogs::Err().sendPar(17, code);
+    //printf("-----------------------> Code: %d\r\n",code);
+}
+
+Coordinates::Coordinates(const Coordinates & t){
+    this->k1 = t.k1;
+    this->k2 = t.k2;
+    this->k3 = t.k3;
+    this->k4 = t.k4;
+    this->k5 = t.k5;
+    this->type = t.type;
+}
+
+Coordinates::Coordinates(){}
+
+Coordinates::Coordinates(typeCo type, float k1, float k2, float k3){
+    this->k1 = k1;
+    this->k2 = k2;
+    this->k3 = k3;
+    this->type = type;
+}
+
+Coordinates::Coordinates(typeCo type, float k1, float k2, float k3, float k4, float k5){
+    this->k1 = k1;
+    this->k2 = k2;
+    this->k3 = k3;
+    this->k4 = k4;
+    this->k5 = k5;
+    this->type = type;
+}
+
+void Coordinates::Translate(typeCo t_type){
+    switch(type){
+        case cartesianCo :
+        if(t_type == cylindricalCo){*this = cartes2cylin(*this);}
+        if(t_type == jointsCo){Coordinates c(jointsCo, 0, 0, 0); *this = cartes2joints(*this, c, 0.01);}
+        break;
+        case cylindricalCo :
+        if(t_type == cartesianCo){*this = cylin2cartes(*this);}
+        if(t_type == jointsCo){Coordinates c(jointsCo, 0, 0, 0); *this = cylin2joints(*this, c, 0.01);}
+        break;
+        case jointsCo:
+        if(t_type == cartesianCo){*this = joints2cartes(*this);}
+        if(t_type == cylindricalCo){*this = joints2cylin(*this);}
+        break;
+    }
 }
