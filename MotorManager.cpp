@@ -13,8 +13,8 @@ extern float current[9];
 extern float target[9];
 Coordinates offset(jointsCo, 0, 0, 0, 0, 0);
 float jointTarget[6];
-Coordinates minimum(jointsCo, -180.0, -25, -150, -90, -180.0);
-Coordinates maximum(jointsCo, 180.0, 130.0, 60.0, 90.0, 180.0);
+Coordinates minimum(jointsCo, -180.0, -130.0, -150.0, -90.0, -180.0);
+Coordinates maximum(jointsCo, 180.0, 25.0, 60.0, 90.0, 180.0);
 
 const float encoder_tics_J1 = 20;
 const float encoder_tics_J2 = 36;
