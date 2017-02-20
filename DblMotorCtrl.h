@@ -13,7 +13,7 @@ private:
 public:
 
 	DblMotorCtrl(float kp_t, float ki_t, float kd_t);
-	int update(float error1, float error2, float t_time);
+	int update(float error1, float t_time);
 	void set_pid_values(float kp_t, float ki_t, float kd_t);
 	void set_kp(float kp_t);
 	void set_ki(float ki_t);

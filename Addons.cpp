@@ -5,14 +5,14 @@
 #include "ErrorLog.h"
 #include "GeoMath.h"
 
-// ver 6.
+// ver 7.
 
 float saturateFloat(float val, float bord){ // limits float val symetricly between -bord and bord.
     if (val<-bord){ val=-bord; } else if (val>bord) val=bord;
     return val;
 }
 float saturateFloatUnsym(float val, float max, float min){ // limits float val unsymetricly between -min and max.
-    if (val<-min){ val=-min; } else if (val>max) val=max;
+    if (val<min){ val=min; } else if (val>max) val=max;
     return val;
 }
 float thresholdFloat(float val, float th){ // cuts to zero if in threshold
@@ -38,7 +38,6 @@ float sq(float val){
 
 void erco(int code){
     ErrorLogs::Err().sendPar(17, code);
-    //printf("-----------------------> Code: %d\r\n",code);
 }
 
 Coordinates::Coordinates(const Coordinates & t){
@@ -50,7 +49,14 @@ Coordinates::Coordinates(const Coordinates & t){
     this->type = t.type;
 }
 
-Coordinates::Coordinates(){}
+Coordinates::Coordinates(){
+    this->k1 = 0.0;
+    this->k2 = 0.0;
+    this->k3 = 0.0;
+    this->k4 = 0.0;
+    this->k5 = 0.0;
+    this->type = jointsCo;
+}
 
 Coordinates::Coordinates(typeCo type, float k1, float k2, float k3){
     this->k1 = k1;
@@ -83,4 +89,10 @@ void Coordinates::Translate(typeCo t_type){
         if(t_type == cylindricalCo){*this = joints2cylin(*this);}
         break;
     }
+}
+
+float pointToPointDistance(Coordinates from, Coordinates to){
+    from.Translate(cartesianCo);
+    to.Translate(cartesianCo);
+    return sqrt((to.k1-from.k1)*(to.k1-from.k1)+(to.k2-from.k2)*(to.k2-from.k2)+(to.k3-from.k3)*(to.k3-from.k3));
 }

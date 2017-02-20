@@ -7,11 +7,11 @@
 #define ___GeoMatk2___
 
 	// constant data
-	const float d1=4.5;
-	const float a1=9.3;
-	const float d2=21;
-	const float d4=21;
-	const float d5=17;
+	const float d1=45;
+	const float a1=93;
+	const float d2=210;
+	const float d4=210;
+	const float d5=170;
 	const float angle90=deg2rad(90);
 
 	// internal calculations

@@ -26,6 +26,8 @@ public:
     void Translate(typeCo t_type);
 };
 
+float pointToPointDistance(Coordinates from, Coordinates to);
+
 float saturateFloat(float val, float bord);
 float saturateFloatUnsym(float val, float max, float min);
 float thresholdFloat(float val, float th);
