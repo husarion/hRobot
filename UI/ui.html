@@ -62,14 +62,26 @@
 				<font size="7">just control</font></p>
 			  	<dt>&nbsp;</dt>
 				<dt><font face="Lato" size="5">Movement</font></dt>
-					<dd><font face="Lato" size="5" color="#C0C0C0">cartesian</font></dd>
-					<dd><font face="Lato" size="5">joints</font></dd>
-					<dd><font face="Lato" size="5" color="#C0C0C0">tool</font></dd>
+					<dd> 
+		<button type-active id="btnCartesianMov" class="btn btn_mov" style="width: 178px; height:28px">
+		Cartesian</button> 
+				</dd>
+					<dd> 
+		<button type-active id="btnJointsMov" class="btn btn_mov" style="width: 178px; height:28px">
+		Joints</button> 
+				</dd>
+					<dd> 
+		<button type-active id="btnCodeUSBMov" class="btn btn_mov" style="width: 178px; height:28px">
+		Code USB</button> 
+				</dd>
+					<dd> 
+		<button type-active id="btnCodeUIMov" class="btn btn_mov" style="width: 178px; height:28px">
+		Code UI</button> 
+				</dd>
+				<dt><font size="2">mode 0:UI_joints 1:UI_cartesian 2:UI_code 
+				3:USB_code</font></dt>
 				<dt><font face="Lato" size="5" color="#C0C0C0">hCode</font></dt>
 					<dd><font face="Lato" size="5" color="#C0C0C0">export</font></dd>
-				<dt><font face="Lato" size="5" color="#C0C0C0">Links</font></dt>
-					<dd><font face="Lato" size="5" color="#C0C0C0">shop</font></dd>
-					<dd><font face="Lato" size="5" color="#C0C0C0">api</font></dd>
 
 
 			</dl>
@@ -82,19 +94,9 @@
 		<td valign="top" width="64%">
 			<div class="joints" align="center">
 			
-				<div class="Top_cartesian">
-					<table border="0" width="700" cellspacing="0" cellpadding="5">
-		<tr>
-			<td width="350">
-			<p align="center">
-					<font face="Lato">Modify
-			</font>
-			<td width="350">
-			<p align="center"><font face="Lato">Set</font></td>
-		</tr>
-		</table>
-		</div>
 				<div class="j1">
+					<label id="modeMov">Current mode unknown</label></div>
+				<div class="j1/j5">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -106,82 +108,36 @@
 
 			<p align="center">
 &nbsp;
-		<button type-active id="btn11" class="btn btn_mov">+</button> 
-		<button type-active id="btn12" class="btn btn_mov">:</button> 
-		<button type-active id="btn13" class="btn btn_mov">:</button> 
-		<button type-active id="btn14" class="btn btn_mov">:</button> 
-		<button id="btn10" class="btn btn_mov" style="width: 30px">j1</button> 
-		<button type-active id="btn15" class="btn btn_mov">:</button> 
-		<button type-active id="btn16" class="btn btn_mov">:</button> 
+		<button type-active id="btn18" class="btn btn_mov" style="width: 35px">-45</button> 
 		<button type-active id="btn17" class="btn btn_mov">:</button> 
-		<button type-active id="btn18" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur1">not available</label>  Set: <label id="set1">not available</label> 
-</td>
+		<button type-active id="btn16" class="btn btn_mov">:</button> 
+		<button type-active id="btn15" class="btn btn_mov">:</button> 
+		<label id="lb_mode1">.</label> 
+		<button type-active id="btn14" class="btn btn_mov">:</button> 
+		<button type-active id="btn13" class="btn btn_mov">:</button> 
+		<button type-active id="btn12" class="btn btn_mov">:</button> 
+		<button type-active id="btn11" class="btn btn_mov" style="width: 35px">+45</button> 
+		</td>
 			<td width="419" background="bg_part_bg.png">
 			<p align="center">&nbsp;
-		<button type-active id="btn41" class="btn btn_mov">+</button> 
-		<button type-active id="btn42" class="btn btn_mov">:</button> 
-		<button type-active id="btn43" class="btn btn_mov">:</button> 
-		<button type-active id="btn44" class="btn btn_mov">:</button> 
-		<button id="btn40" class="btn btn_mov" style="width: 30px">j4</button> 
-		<button type-active id="btn45" class="btn btn_mov">:</button> 
-		<button type-active id="btn46" class="btn btn_mov">:</button> 
-		<button type-active id="btn47" class="btn btn_mov">:</button> 
-		<button type-active id="btn48" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur4">not available</label>  Set: <label id="set4">not available</label></td>
-			<td width="11" background="bg_part_bg.png">
-			<p align="right">
-			<font face="Lato">
-			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
-		</tr>
-		</table>
-					&nbsp;</div>
-					<div class="j2">
-					<table border="0" width="700" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="10">
-			<font face="Lato">
-			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
-			<td width="363" background="bg_part_bg.png">
-
-
-
-			<p align="center">
-&nbsp;
-		<button type-active id="btn21" class="btn btn_mov">+</button> 
-		<button type-active id="btn22" class="btn btn_mov">:</button> 
-		<button type-active id="btn23" class="btn btn_mov">:</button> 
-		<button type-active id="btn24" class="btn btn_mov">:</button> 
-		<button id="btn20" class="btn btn_mov" style="width: 30px">j2</button> 
-		<button type-active id="btn25" class="btn btn_mov">:</button> 
-		<button type-active id="btn26" class="btn btn_mov">:</button> 
-		<button type-active id="btn27" class="btn btn_mov">:</button> 
-		<button type-active id="btn28" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur2">not available</label>  Set: <label id="set2">not available</label></td>
-			<td width="419" background="bg_part_bg.png">
-			<p align="center">&nbsp;
-		<button type-active id="btn51" class="btn btn_mov">+</button> 
-		<button type-active id="btn52" class="btn btn_mov">:</button> 
-		<button type-active id="btn53" class="btn btn_mov">:</button> 
-		<button type-active id="btn54" class="btn btn_mov">:</button> 
-		<button id="btn50" class="btn btn_mov" style="width: 30px">j5</button> 
-		<button type-active id="btn55" class="btn btn_mov">:</button> 
-		<button type-active id="btn56" class="btn btn_mov">:</button> 
+		<button type-active id="btn58" class="btn btn_mov" style="width: 35px">-45</button> 
 		<button type-active id="btn57" class="btn btn_mov">:</button> 
-		<button type-active id="btn58" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur5">not available</label>  Set: <label id="set5">not available</label></td>
+		<button type-active id="btn56" class="btn btn_mov">:</button> 
+		<button type-active id="btn55" class="btn btn_mov">:</button> 
+		<label id="lb_mode5">.</label> 
+		<button type-active id="btn54" class="btn btn_mov">:</button> 
+		<button type-active id="btn53" class="btn btn_mov">:</button> 
+		<button type-active id="btn52" class="btn btn_mov">:</button> 
+		<button type-active id="btn51" class="btn btn_mov" style="width: 35px">+45</button> 
+			</td>
 			<td width="11" background="bg_part_bg.png">
 			<p align="right">
 			<font face="Lato">
 			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
 		</tr>
 		</table>
-					&nbsp;</div>
-					<div class="j3">
+					</div>
+					<div class="j2/j6">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -193,37 +149,72 @@ Current: <label id="cur5">not available</label>  Set: <label id="set5">not avail
 
 			<p align="center">
 &nbsp;
-		<button type-active id="btn31" class="btn btn_mov">+</button> 
-		<button type-active id="btn32" class="btn btn_mov">:</button> 
-		<button type-active id="btn33" class="btn btn_mov">:</button> 
-		<button type-active id="btn34" class="btn btn_mov">:</button> 
-		<button id="btn30" class="btn btn_mov" style="width: 30px">j3</button> 
-		<button type-active id="btn35" class="btn btn_mov">:</button> 
-		<button type-active id="btn36" class="btn btn_mov">:</button> 
-		<button type-active id="btn37" class="btn btn_mov">:</button> 
-		<button type-active id="btn38" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur3">not available</label>  Set: <label id="set3">not available</label></td>
+		<button type-active id="btn28" class="btn btn_mov" style="width: 35px">-45</button> 
+		<button type-active id="btn27" class="btn btn_mov">:</button> 
+		<button type-active id="btn26" class="btn btn_mov">:</button> 
+		<button type-active id="btn25" class="btn btn_mov">:</button> 
+		<label id="lb_mode2">.</label> 
+		<button type-active id="btn24" class="btn btn_mov">:</button> 
+		<button type-active id="btn23" class="btn btn_mov">:</button> 
+		<button type-active id="btn22" class="btn btn_mov">:</button> 
+		<button type-active id="btn21" class="btn btn_mov" style="width: 35px">+45</button> 
+			</td>
 			<td width="419" background="bg_part_bg.png">
 			<p align="center">&nbsp;
-		<button type-active id="btn61" class="btn btn_mov">+</button> 
-		<button type-active id="btn62" class="btn btn_mov">:</button>  
-		<button type-active id="btn63" class="btn btn_mov">:</button> 
-		<button type-active id="btn64" class="btn btn_mov">:</button> 
-		<button id="btn60" class="btn btn_mov" style="width: 30px">j6</button> 
-		<button type-active id="btn65" class="btn btn_mov">:</button> 
-		<button type-active id="btn66" class="btn btn_mov">:</button> 
+		<button type-active id="btn68" class="btn btn_mov" style="width: 35px">-45</button> 
 		<button type-active id="btn67" class="btn btn_mov">:</button> 
-		<button type-active id="btn68" class="btn btn_mov">-</button> 
-<br>
-Current: <label id="cur6">not available</label>  Set: <label id="set6">not available</label></td>
+		<button type-active id="btn66" class="btn btn_mov">:</button> 
+		<button type-active id="btn65" class="btn btn_mov">:</button> 
+		<label id="lb_mode6">.</label> 
+		<button type-active id="btn64" class="btn btn_mov">:</button> 
+		<button type-active id="btn63" class="btn btn_mov">:</button> 
+		<button type-active id="btn62" class="btn btn_mov">:</button> 
+		<button type-active id="btn61" class="btn btn_mov" style="width: 35px">+45</button> 
+			</td>
 			<td width="11" background="bg_part_bg.png">
 			<p align="right">
 			<font face="Lato">
 			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
 		</tr>
 		</table>
-					&nbsp;</div>
+					</div>
+					<div class="j3/grabber">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="363" background="bg_part_bg.png">
+
+
+
+			<p align="center">
+&nbsp;
+		<button type-active id="btn38" class="btn btn_mov" style="width: 35px">-45</button> 
+		<button type-active id="btn37" class="btn btn_mov">:</button> 
+		<button type-active id="btn36" class="btn btn_mov">:</button> 
+		<button type-active id="btn35" class="btn btn_mov">:</button> 
+		<label id="lb_mode3">.</label> 
+		<button type-active id="btn34" class="btn btn_mov">:</button> 
+		<button type-active id="btn33" class="btn btn_mov">:</button> 
+		<button type-active id="btn32" class="btn btn_mov">:</button> 
+		<button type-active id="btn31" class="btn btn_mov" style="width: 35px">+45</button> 
+			</td>
+			<td width="419" background="bg_part_bg.png">
+			<p align="center">
+		<button type-active id="btn_close" class="btn btn_mov" style="width: 50px">close</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_stop" class="btn btn_mov" style="width: 50px">stop</button> 
+		&nbsp;&nbsp; 
+		<button type-active id="btn_open" class="btn btn_mov" style="width: 50px">open</button> 
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					</div>
 					<div class="j4">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
@@ -239,6 +230,7 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos1_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos1</button> 
 		&nbsp; 
 		<button type-active id="btn_pos1_write" class="btn btn_mov" style="width: 50px">
@@ -250,6 +242,7 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos4_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos4</button> 
 		&nbsp; 
 		<button type-active id="btn_pos4_write" class="btn btn_mov" style="width: 50px">
@@ -277,6 +270,7 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos2_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos2</button> 
 		&nbsp; 
 		<button type-active id="btn_pos2_write" class="btn btn_mov" style="width: 50px">
@@ -288,6 +282,7 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos5_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos5</button> 
 		&nbsp; 
 		<button type-active id="btn_pos5_write" class="btn btn_mov" style="width: 50px">
@@ -315,6 +310,7 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos3_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos3</button> 
 		&nbsp; 
 		<button type-active id="btn_pos3_write" class="btn btn_mov" style="width: 50px">
@@ -326,40 +322,12 @@ Current: <label id="cur6">not available</label>  Set: <label id="set6">not avail
 		Show</button> 
 		&nbsp;
 		<button type-active id="btn_pos6_read" class="btn btn_mov" style="width: 150px">
+		goto
 		Pos6</button> 
 		&nbsp; 
 		<button type-active id="btn_pos6_write" class="btn btn_mov" style="width: 50px">
 		Write</button> 
 			</td>
-			<td width="11" background="bg_part_bg.png">
-			<p align="right">
-			<font face="Lato">
-			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
-		</tr>
-		</table>
-					</div>
-					<div class="j7">
-					<table border="0" width="700" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="10">
-			<font face="Lato">
-			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
-			<td width="363" background="bg_part_bg.png">
-			<p align="center">
-		<button type-active id="btn_close" class="btn btn_mov" style="width: 50px">close</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_stop" class="btn btn_mov" style="width: 50px">stop</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_open" class="btn btn_mov" style="width: 50px">open</button> 
-			</td>
-			<td width="419" background="bg_part_bg.png">
-			<p align="center">
-		&nbsp;
-		<button type-active id="btnmode" class="btn btn_mov" style="width: 150px">Change Mode</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btnsend" class="btn btn_mov" style="width: 50px">Send</button> 
-<br>
-Current mode: <label id="mode">not available</label></td>
 			<td width="11" background="bg_part_bg.png">
 			<p align="right">
 			<font face="Lato">
@@ -392,55 +360,18 @@ Current mode: <label id="mode">not available</label></td>
 			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
 		</tr>
 		</table>
-					&nbsp;</div>
+					</div>
 				<p>
 				
 				</div>
 				
 				<div class="tool">
 				
-				<label id="info">Dodatkowe informacje niedostêpne<br>
-&nbsp;</label><div class="PIDconfig">
-					<table border="0" width="700" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="10">
-			<font face="Lato">
-			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
-			<td width="363" background="bg_part_bg.png">
-			<p align="center">
-		<button type-active id="btn_kpp" class="btn btn_mov" style="width: 50px">
-		+Kp</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_kip" class="btn btn_mov" style="width: 50px">
-		+Ki</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_kdp" class="btn btn_mov" style="width: 50px">
-		+Kd</button> 
-			<br>
-		<button type-active id="btn_kpm" class="btn btn_mov" style="width: 50px">
-		-Kp</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_kim" class="btn btn_mov" style="width: 50px">
-		-Ki</button> 
-		&nbsp;&nbsp; 
-		<button type-active id="btn_kdm" class="btn btn_mov" style="width: 50px">
-		-Kd</button> 
-			</td>
-			<td width="419" background="bg_part_bg.png">
-			<p align="center">
-Current PID: <label id="PIDinfo">not available</label></td>
-			<td width="11" background="bg_part_bg.png">
-			<p align="right">
-			<font face="Lato">
-			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
-		</tr>
-		</table>
-					&nbsp;</div>
-				<p>&nbsp;</div>
+				<label id="info">Dodatkowe informacje niedostêpne</label></div>
 		</td>
 	</tr>
 	<td>
-	<font face="Lato" size="1">mikowhy95@gmail.com v.0.01.3</font></td>
+	<font face="Lato" size="1">mikowhy95@gmail.com v.0.01.4</font></td>
 </table>
 
 <p>&nbsp;</div>
