@@ -6,6 +6,7 @@
 
 void printfErrorTask()
 {
+    Serial.init(115200);
     for (;;) {
 		if (ErrorLogs::Err().getSize() > 0 && (int)sys.getRefTime() > 6000){
 			ErrorLogs::Err().translateError(ErrorLogs::Err().getLastError());
@@ -178,6 +179,24 @@ void ErrorLogs::translateError(int error){
         getLastChar(temp3);
         Serial.printf("No such point as : %s", temp3);
         temp =  "\r\n";
+        break;
+        case 21:
+        temp = "Reding from UI\t\n";
+        break;
+        case 22:
+        temp = "Reding from Serial\t\n";
+        break;
+        case 23:
+        temp = "Curent pozytion over range - stop\t\n";
+        break;
+        case 24:
+        temp = "Set pozytion over range - stop\t\n";
+        break;
+        case 25:
+        temp = "Set pozytion over range - stop\t\n";
+        break;
+        case 26:
+        temp = "Moving from Serial coman line\t\n";
         break;
         //tu dodac wlasne bledy aby skrypt je obsluzyl
         
