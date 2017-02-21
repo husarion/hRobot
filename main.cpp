@@ -16,7 +16,8 @@
 #include "ParseCommand.h"
 
 float current[9];
-
+//jestes dupa
+int jestes dupa;
 // jog, ui, recorded positions values
 float target[9];
 float pos1[9];
