@@ -181,7 +181,7 @@ void ErrorLogs::translateError(int error){
         temp =  "\r\n";
         break;
         case 21:
-        temp = "Reding from UI\t\n";
+        temp = "Jog from UI\t\n";
         break;
         case 22:
         temp = "Reding from Serial\t\n";
@@ -197,6 +197,9 @@ void ErrorLogs::translateError(int error){
         break;
         case 26:
         temp = "Moving from Serial coman line\t\n";
+        break;
+        case 27:
+        temp = "Reding from UI\t\n";
         break;
         //tu dodac wlasne bledy aby skrypt je obsluzyl
         

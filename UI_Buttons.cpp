@@ -214,8 +214,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    mode = 1;
 		    changeInputToUI();
 			if(last_mode == 3 || last_mode == 2){
-				MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
-				}
+				target[1] = MotionManager::get().getTarget(1);
+				target[2] = MotionManager::get().getTarget(2);
+				target[3] = MotionManager::get().getTarget(3);
+				target[4] = MotionManager::get().getTarget(4);
+				target[5] = MotionManager::get().getTarget(5); 
+			}
 			last_mode = mode;
 		    ErrorLogs::Err().send(21);
 		}
@@ -223,8 +227,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    mode = 0;
             changeInputToUI();
 			if(last_mode == 3 || last_mode == 2){
-				MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
-				}
+				target[1] = MotionManager::get().getTarget(1);
+				target[2] = MotionManager::get().getTarget(2);
+				target[3] = MotionManager::get().getTarget(3);
+				target[4] = MotionManager::get().getTarget(4);
+				target[5] = MotionManager::get().getTarget(5); 
+			}
 			last_mode = mode;
             ErrorLogs::Err().send(21);
 		}
@@ -233,12 +241,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    changeInputToSerial();
 			if(last_mode == 3 || last_mode == 2){}
 			else{
-				target[1] = MotionManager::get().getTarget(1);
-				target[2] = MotionManager::get().getTarget(2);
-				target[3] = MotionManager::get().getTarget(3);
-				target[4] = MotionManager::get().getTarget(4);
-				target[5] = MotionManager::get().getTarget(5);
-			}
+				MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
+				}
 			last_mode = mode;
 			ErrorLogs::Err().send(22);
 		}
@@ -247,14 +251,10 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    changeInputToUI();
 			if(last_mode == 3 || last_mode == 2){}
 			else{
-				target[1] = MotionManager::get().getTarget(1);
-				target[2] = MotionManager::get().getTarget(2);
-				target[3] = MotionManager::get().getTarget(3);
-				target[4] = MotionManager::get().getTarget(4);
-				target[5] = MotionManager::get().getTarget(5); 
-			}
+				MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
+				}
 			last_mode = mode;
-			ErrorLogs::Err().send(21);
+			ErrorLogs::Err().send(27);
 		}
 
 		if (mode == 0 || mode == 1) {

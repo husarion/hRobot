@@ -90,3 +90,8 @@
 6380	9037	0	myproject.elf	12a926115c94792d
 9038	9587	0	CMakeFiles/myproject.bin	236525097b8b23f9
 9057	9600	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+94	2582	0	CMakeFiles/myproject.elf.dir/UI_Buttons.cpp.obj	b67a9175675f9f8
+51	2745	0	CMakeFiles/myproject.elf.dir/ErrorLog.cpp.obj	43a38e1b8d56fc2a
+2745	3851	0	myproject.elf	12a926115c94792d
+3851	4004	0	CMakeFiles/myproject.bin	236525097b8b23f9
+3871	4055	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
