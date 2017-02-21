@@ -65,9 +65,6 @@ void MotorManagerInitEncoders()
 
 	//J6
 	hMot4.setEncoderPolarity(Polarity::Reversed);
-
-
-
 }
 
 void MotorManagerInit()
@@ -78,7 +75,6 @@ void MotorManagerInit()
 	MotorManagerInitServos();
 	//UART(211300);
 	MotorManagerInitMotors();
-
 }
 
 void MotorManagerUpdateTask()

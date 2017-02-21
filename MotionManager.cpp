@@ -339,3 +339,40 @@ void MotionManager::GriperClose(){
 void MotionManager::GriperStop(){
     setGripperValume(0);
 }
+
+void MotionManager::setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5){
+    targetPoint.k1 = t_k1;
+    targetPoint.k2 = t_k2;
+    targetPoint.k3 = t_k3;
+    targetPoint.k4 = t_k4;
+    targetPoint.k5 = t_k5;
+}
+
+void MotionManager::setTarget(Coordinates* point){
+    targetPoint.k1 = point->k1;
+    targetPoint.k2 = point->k2;
+    targetPoint.k3 = point->k3;
+    targetPoint.k4 = point->k4;
+    targetPoint.k5 = point->k5;
+}
+
+float MotionManager::getTarget(int t_joint){
+    switch(t_joint){
+        case 1:
+            return targetPoint.k1;
+        break;
+        case 2:
+            return targetPoint.k2;
+        break;
+        case 3:
+            return targetPoint.k3;
+        break;
+        case 4:
+            return targetPoint.k4;
+        break;
+        case 5:
+            return targetPoint.k5;
+        break;
+    }
+    return 0;
+}

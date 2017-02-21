@@ -80,3 +80,13 @@
 11588	12051	0	CMakeFiles/myproject.bin	236525097b8b23f9
 11607	12054	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
 1	330	0	CMakeFiles/printvars	efe4a006bdabd9d2
+6	2115	0	build.ninja	c1e4819e4a4fb35e
+734	5382	0	CMakeFiles/myproject.elf.dir/ServoCtrl.cpp.obj	5607b1601b4a8873
+657	5663	0	CMakeFiles/myproject.elf.dir/MotorManager.cpp.obj	dc4a5579432b8490
+694	5867	0	CMakeFiles/myproject.elf.dir/ParseCommand.cpp.obj	bef9dc58bdc949e7
+574	5885	0	CMakeFiles/myproject.elf.dir/main.cpp.obj	ffe34a1a95f3c13f
+128	6228	0	CMakeFiles/myproject.elf.dir/UI_Buttons.cpp.obj	b67a9175675f9f8
+605	6379	0	CMakeFiles/myproject.elf.dir/MotionManager.cpp.obj	40f836c63c3f7320
+6380	9037	0	myproject.elf	12a926115c94792d
+9038	9587	0	CMakeFiles/myproject.bin	236525097b8b23f9
+9057	9600	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42

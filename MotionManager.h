@@ -64,6 +64,9 @@ public:
     void setOffset();
     bool checkRange(Coordinates* point);
     void setMinMax(joint_names joint, float t_min, float t_max);
+    void setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
+    void setTarget(Coordinates* point);
+    float getTarget(int t_joint);
     
     void GriperOpen();
     void GriperClose();

@@ -41,6 +41,7 @@ void hMain()
 	sys.setSysLogDev(&devNull);
 	sys.taskCreate(printfErrorTask);
 	sys.taskCreate(ComandInputTask, 1, 2000, "ComandInputTask");
+	changeInputToUI();
 	platform.begin(&RPi);
 	platform.ui.configHandler = cfgHandler;
 	platform.ui.onButtonEvent = onButtonEvent;
