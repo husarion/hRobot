@@ -40,7 +40,7 @@ public:
 	ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
 	                               float kp_t, float ki_t, float kd_t, float error_saturate_t,
 	                               float integrator_saturate_t);
-	int update(float error, float t_time);
+	void update(float error, float t_time);
 	void set_pid_values(float kp_t, float ki_t, float kd_t);
 	void set_kp(float kp_t);
 	void set_ki(float ki_t);

@@ -22,7 +22,7 @@ ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
 	integrator_saturate = integrator_saturate_t;
 }
 
-int ServoCtrl::update(float error, float t_time)
+void ServoCtrl::update(float error, float t_time)
 {
 
 	//UART(232000);

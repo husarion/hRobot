@@ -34,48 +34,6 @@ float tempKp = 8.4;
 float tempKi = 0.35;
 float tempKd = 9;
 
-void MovementUpdateTask()
-{
-	for (;;) {
-		if (mode != modeLast) {
-			if (mode == 1) {
-				Coordinates point_t = joints2cartes(Coordinates(jointsCo, target[1], target[2], target[3], target[4], target[5]));
-				point_t.k1 = target[1];
-				point_t.k2 = target[2];
-				point_t.k3 = target[3];
-				point_t.k4 = target[5];
-				point_t.k5 = target[6];
-			}
-			if (mode == 0) {
-				Coordinates point_t = cartes2joints(Coordinates(cartesianCo, target[1], target[2], target[3], target[4], target[5]), Coordinates(jointsCo, current[1], current[2], current[3], current[4], current[5]), 1);
-				point_t.k1 = target[1];
-				point_t.k2 = target[2];
-				point_t.k3 = target[3];
-				point_t.k4 = target[5];
-				point_t.k5 = target[6];
-			}
-			modeLast = mode;
-		}
-
-		switch (mode) {
-		case 0:
-			MotorManagerUpdateTargetGlobal();
-			sys.delay(100);
-			break;
-		case 1:
-			MotorManagerUpdateTargetDef(cartes2joints(Coordinates(cartesianCo, target[1], target[2], target[3], target[4], target[5]), Coordinates(jointsCo, current[1], current[2], current[3], current[4], current[5]), 1));
-			sys.delay(500);
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		}
-	}
-}
-
-
-
 void hMain()
 {
 	Serial.init(115200);
