@@ -6,23 +6,38 @@
 #include "Addons.h"
 
 ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
-                     float kp_t, float ki_t, float kd_t, float error_saturate_t,
-                     float integrator_saturate_t)
+                     float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
+                     float integrator_saturate_down_t, float integrator_saturate_up_t)
 {
-    //UART(231000);
+	//UART(231000);
 	servo = &servo_t;
 	servo_center = servo_center_t;
 	servo->calibrate(-100, servo_center - 700, 100, servo_center + 700);
-	servo->calibrate(-100, servo_center - 700, 100, servo_center + 700);
 	threshold_t = threshold_t;
-	kp = kp_t;
-	ki = ki_t;
-	kd = kd_t;
+	
+	kp_down = kp_down_t;
+	ki_down = ki_down_t;
+	kd_down = kd_down_t;
+	
+	kp_down = kp_down_t;
+	ki_down = ki_down_t;
+	kd_down = kd_down_t;
+	
 	error_saturate = error_saturate_t;
-	integrator_saturate = integrator_saturate_t;
+	integrator_saturate_up = integrator_saturate_up_t;
+	integrator_saturate_down = integrator_saturate_down_t;
+}
+int ServoCtrl::update(float error, float t_time)
+{
+	if (error < 0) {
+		updateDown(error, t_time);
+	} else {
+		updateUp(error, t_time);
+	}
 }
 
-void ServoCtrl::update(float error, float t_time)
+
+int ServoCtrl::updateUp(float error, float t_time)
 {
 
 	//UART(232000);
@@ -30,8 +45,23 @@ void ServoCtrl::update(float error, float t_time)
 	error = saturateFloat(error, error_saturate);
 	error_integrator += error;
 	error_deviator = (error - error_last);//(t_time-time_last);
-	error_integrator = saturateFloat(error_integrator, integrator_saturate);
-	output = error * kp + error_integrator * ki + error_deviator * kd;
+	error_integrator = saturateFloat(error_integrator, integrator_saturate_down);
+	output = error * kp_down + error_integrator * ki_down + error_deviator * kd_down;
+	make_output(output);
+	error_last = error;
+	time_last = t_time;
+}
+
+int ServoCtrl::updateDown(float error, float t_time)
+{
+
+	//UART(232000);
+	error = thresholdFloat(error, threshold);
+	error = saturateFloat(error, error_saturate);
+	error_integrator += error;
+	error_deviator = (error - error_last);//(t_time-time_last);
+	error_integrator = saturateFloat(error_integrator, integrator_saturate_down);
+	output = error * kp_down + error_integrator * ki_down + error_deviator * kd_down;
 	make_output(output);
 	error_last = error;
 	time_last = t_time;
@@ -39,36 +69,19 @@ void ServoCtrl::update(float error, float t_time)
 
 void ServoCtrl::make_output(float val)
 {
-    //UART(233000);
+	//UART(233000);
 	if (val == 0) {
 		servo->rotAbs(-1000);
 	} else {
-		output = saturateFloat(val, 100);
+		val = saturateFloat(val, 100);
 		servo->rotAbs(val);
 	}
 }
 
-void ServoCtrl::set_pid_values(float kp_t, float ki_t, float kd_t)
-{
-	kp = kp_t;
-	ki = ki_t;
-	kd = kd_t;
-}
-
-void ServoCtrl::set_kp(float kp_t) {kp = kp_t;}
-void ServoCtrl::set_ki(float ki_t) {ki = ki_t;}
-void ServoCtrl::set_kd(float kd_t) {kd = kd_t;}
-
 void ServoCtrl::set_error_saturate(float error_saturate_t) {error_saturate = error_saturate_t;}
-void ServoCtrl::set_integrator_saturate(float integrator_saturate_t) {integrator_saturate = integrator_saturate_t;}
 void ServoCtrl::set_output_saturate(float output_saturate_t) {output_saturate = output_saturate_t;}
 void ServoCtrl::set_threshold(float threshold_t) {threshold = threshold_t;}
 
-float ServoCtrl::get_kp() {return kp;}
-float ServoCtrl::get_ki() {return ki;}
-float ServoCtrl::get_kd() {return kd;}
-
 float ServoCtrl::get_error_saturate() {return error_saturate;}
-float ServoCtrl::get_integrator_saturate() {return integrator_saturate;}
 float ServoCtrl::get_output_saturate() {return output_saturate;}
 float ServoCtrl::get_threshold() {return threshold;}
