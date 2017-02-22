@@ -80,10 +80,10 @@ void MotorManagerInit()
 void MotorManagerUpdateTask()
 {
 	//UART(212100);
-	ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 100, 20);
-    ServoCtrl J3(s2, 1600, 0, 2.5, 0.5, 1.5, 100, 5);
-    ServoCtrl J5(s3, 1730, 0, 2.7, 0.2, 0.5, 75, 20);
-    ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 100, 20);
+	ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 0.9, 0.4, 0.2, 100, 20, 20);
+    ServoCtrl J3(s2, 1600, 0, 2.5, 1, 1.5, 2.5, 1, 1.5, 100, 8, 8);
+    ServoCtrl J5(s3, 1730, 0, 2.7, 0.2, 0.5, 2.7, 0.2, 0.5, 100, 20, 20);
+    ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20);
     DblMotorCtrl J2(200,8,5);
     GripperCrtl H1(h1, 1350, 0);
 
