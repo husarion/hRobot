@@ -4,21 +4,21 @@
 #include "DblMotorCtrl.h"
 #include "Addons.h"
 #include "Addons.h"
-DblMotorCtrl::DblMotorCtrl(float threshold_t,
-                     float kp_t, float ki_t, float kd_t, float error_saturate_t,
-                     float integrator_saturate_t)
+DblMotorCtrl::DblMotorCtrl(float threshold_t, float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
+                     float integrator_saturate_down_t, float integrator_saturate_up_t)
 {
     //UART(231000);
     threshold_t = threshold_t;
-    kp_up = kp_t;
-    ki_up = ki_t;
-    kd_up = kd_t;
-    kp_down = kp_t;
-    ki_down = ki_t;
-    kd_down = kd_t;
+	kp_down = kp_down_t;
+	ki_down = ki_down_t;
+	kd_down = kd_down_t;
+	
+	kp_up = kp_up_t;
+	ki_up = ki_up_t;
+	kd_up = kd_up_t;
     error_saturate = error_saturate_t;
-    integrator_saturate_up = integrator_saturate_t;
-    integrator_saturate_down = integrator_saturate_t;
+    integrator_saturate_up = integrator_saturate_up_t;
+    integrator_saturate_down = integrator_saturate_down_t;
 }
 
 int DblMotorCtrl::update(float error1, float t_time)

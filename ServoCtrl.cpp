@@ -18,9 +18,9 @@ ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
 	ki_down = ki_down_t;
 	kd_down = kd_down_t;
 	
-	kp_down = kp_down_t;
-	ki_down = ki_down_t;
-	kd_down = kd_down_t;
+	kp_up = kp_up_t;
+	ki_up = ki_up_t;
+	kd_up = kd_up_t;
 	
 	error_saturate = error_saturate_t;
 	integrator_saturate_up = integrator_saturate_up_t;

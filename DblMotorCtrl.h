@@ -26,8 +26,8 @@ private:
 	float output_saturate;
 public:
 
-	DblMotorCtrl(float threshold_t, float kp_t, float ki_t, float kd_t,
-				float error_saturate_t, float integrator_saturate_t);
+	DblMotorCtrl(float threshold_t, float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
+                     float integrator_saturate_down_t, float integrator_saturate_up_t);
 	int update(float error1, float t_time);
 	int updateUp(float error1, float t_time);
 	int updateDown(float error1, float t_time);
