@@ -11,7 +11,6 @@ GripperCrtl::GripperCrtl(IServo& servo_t, int servo_center_t, float threshold_t)
 	servo = &servo_t;
 	servo_center = servo_center_t;
 	servo->calibrate(-100, servo_center - 500, 100, servo_center + 500);
-	servo->calibrate(-100, servo_center - 500, 100, servo_center + 500);
 	threshold_t = threshold_t;
 }
 
