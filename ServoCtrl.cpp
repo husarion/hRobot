@@ -41,8 +41,8 @@ int ServoCtrl::updateUp(float error, float t_time)
 	error = saturateFloat(error, error_saturate);
 	error_integrator += error;
 	error_deviator = (error - error_last);//(t_time-time_last);
-	error_integrator = saturateFloat(error_integrator, integrator_saturate_down);
-	output = error * kp_down + error_integrator * ki_down + error_deviator * kd_down;
+	error_integrator = saturateFloat(error_integrator, integrator_saturate_up);
+	output = error * kp_up + error_integrator * ki_up + error_deviator * kd_up;
 	make_output(output);
 	error_last = error;
 	time_last = t_time;
