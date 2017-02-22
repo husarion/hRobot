@@ -43,7 +43,7 @@ void ServoCtrl::make_output(float val)
 	if (val == 0) {
 		servo->rotAbs(-1000);
 	} else {
-		output = saturateFloat(output, 100);
+		output = saturateFloat(val, 100);
 		servo->rotAbs(val);
 	}
 }
