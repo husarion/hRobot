@@ -19,7 +19,7 @@
 #define HROBOTMOTIONMANAGER
 
 enum joint_names{J1, J2, J3, J4, J5, J6};
-enum motion_type{cartesianInter, cartesianNorm, jointsInter, jointsNorm};
+enum motion_type{cartesianInter, cartesianNorm, jointsInter, jointsNorm, Delay};
 
 struct motion_inst{
     Coordinates point;
@@ -79,6 +79,7 @@ public:
     void MoveCartesianNorm();
     
     void addMotionInst(Coordinates point, motion_type movment_type);
+    void addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5, motion_type movment_type);
 };
 
 #endif

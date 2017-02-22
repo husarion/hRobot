@@ -113,6 +113,9 @@ void MotionManager::update(){
                 targetPoint = motions[0].point;
                 MoveJointNorm();
             break;
+            case Delay:
+                sys.delay(motions[0].point.k1);
+            break;
         }
         if(motions.size()==1){
             motions.clear();
@@ -135,6 +138,14 @@ void MotionManager::update(){
 void MotionManager::addMotionInst(Coordinates point, motion_type movment_type){
     motion_inst a;
     a.point = point;
+    a.type = movment_type;
+    motions.push_back(a);
+}
+
+void MotionManager::addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5, motion_type movment_type){
+    Coordinates t_point(jointsCo, t_k1, t_k2, t_k3, t_k4, t_k5);
+    motion_inst a;
+    a.point = t_point;
     a.type = movment_type;
     motions.push_back(a);
 }

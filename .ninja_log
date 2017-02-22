@@ -23,3 +23,11 @@
 905	4083	0	myproject.elf	12a926115c94792d
 4101	4684	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
 4083	4714	0	CMakeFiles/myproject.bin	236525097b8b23f9
+1	143	0	CMakeFiles/printvars	efe4a006bdabd9d2
+76	4707	0	CMakeFiles/myproject.elf.dir/main.cpp.obj	ffe34a1a95f3c13f
+373	5977	0	CMakeFiles/myproject.elf.dir/UI_Buttons.cpp.obj	b67a9175675f9f8
+339	5985	0	CMakeFiles/myproject.elf.dir/ParseCommand.cpp.obj	bef9dc58bdc949e7
+15	1613	0	CMakeFiles/myproject.elf.dir/MotionManager.cpp.obj	40f836c63c3f7320
+1614	3681	0	myproject.elf	12a926115c94792d
+3681	4026	0	CMakeFiles/myproject.bin	236525097b8b23f9
+3698	4046	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
