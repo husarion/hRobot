@@ -9,7 +9,6 @@ ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
                      float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
                      float integrator_saturate_down_t, float integrator_saturate_up_t)
 {
-	//UART(231000);
 	servo = &servo_t;
 	servo_center = servo_center_t;
 	servo->calibrate(-100, servo_center - 700, 100, servo_center + 700);
@@ -36,11 +35,8 @@ int ServoCtrl::update(float error, float t_time)
 	}
 }
 
-
 int ServoCtrl::updateUp(float error, float t_time)
 {
-
-	//UART(232000);
 	error = thresholdFloat(error, threshold);
 	error = saturateFloat(error, error_saturate);
 	error_integrator += error;
@@ -54,8 +50,6 @@ int ServoCtrl::updateUp(float error, float t_time)
 
 int ServoCtrl::updateDown(float error, float t_time)
 {
-
-	//UART(232000);
 	error = thresholdFloat(error, threshold);
 	error = saturateFloat(error, error_saturate);
 	error_integrator += error;
@@ -69,7 +63,6 @@ int ServoCtrl::updateDown(float error, float t_time)
 
 void ServoCtrl::make_output(float val)
 {
-	//UART(233000);
 	if (val == 0) {
 		servo->rotAbs(-1000);
 	} else {

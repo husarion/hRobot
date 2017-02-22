@@ -8,7 +8,6 @@
 #include "GripperCtrl.h"
 #include "Addons.h"
 
-
 extern float current[9];
 extern float target[9];
 Coordinates offset(jointsCo, 0, 0, 0, 0, 0);
@@ -39,30 +38,22 @@ void MotorManagerInitServos()
 	hServoModule.enablePower();
 }
 
-void MotorManagerInitMotors()
-{
-
-}
+void MotorManagerInitMotors(){}
 
 void MotorManagerInitEncoders()
 {
-
 	//J1
 	hMot1.setEncoderPolarity(Polarity::Reversed);
-
 	//J22
 	hMot2.setEncoderPolarity(Polarity::Reversed);
-    
 	//J3
 //	enkoder1.init();
 //	enkoder1.resetEncoderCnt();
-
 	//J5
     enkoder2.init();
 	hSens1.pin1.setIn_pu();
 	hSens2.pin1.setIn_pu();
 	enkoder2.resetEncoderCnt();
-
 	//J6
 	hMot4.setEncoderPolarity(Polarity::Reversed);
 }
@@ -88,14 +79,12 @@ void MotorManagerUpdateTask()
     GripperCrtl H1(h1, 1350, 0);
 
 	for (;;) {
-		//UART(212200);
 		// sensor
 		current[1] = (float)hMot1.getEncoderCnt() / encoder_tics_J1 + offset.k1;
 		current[2] = (float)hMot2.getEncoderCnt() / encoder_tics_J2 + offset.k2;
 		current[3] = (float)hMot3.getEncoderCnt() / encoder_tics_J3 + offset.k3;
 		current[5] = (float)enkoder2.getEncoderCnt() / encoder_tics_J5 + offset.k4;
 		current[6] = (float)hMot4.getEncoderCnt() / encoder_tics_J6 + offset.k5;
-		//UART(212300);
 		// motion
 		int t = sys.getRefTime();
         J1.update(-jointTarget[0] - current[1] , t);
@@ -110,7 +99,6 @@ void MotorManagerUpdateTask()
 		sys.delay(50);
 		LED2.toggle();
 
-		//UART(212400);
 		//configuration
 		//J2.set_pid_values(tempKp*10,tempKi*10,tempKd*10);
 	}
@@ -118,7 +106,6 @@ void MotorManagerUpdateTask()
 
 void MotorManagerUpdateTargetGlobal()
 {
-	//UART(213100);
 	jointTarget[0] = target[1];
 	jointTarget[1] = target[2];
 	jointTarget[2] = target[3];
@@ -127,18 +114,15 @@ void MotorManagerUpdateTargetGlobal()
 	jointTarget[5] = target[7];
 	
 	jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1,minimum.k1);
-	//jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2,minimum.k2);
+	jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2,minimum.k2);
 	jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3,minimum.k3);
 	jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4,minimum.k4);
 	jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5,minimum.k5);
-	
 }
 
 void MotorManagerUpdateTargetGlobalTask()
 {
-    //UART(214100);
 	for (;;) {
-	    //UART(214200);
 		MotorManagerUpdateTargetGlobal();
 		sys.delay(100);
 	}
@@ -146,7 +130,6 @@ void MotorManagerUpdateTargetGlobalTask()
 
 void MotorManagerUpdateTargetDef(float j1, float j2,  float j3,  float j5,  float j6)
 {
-	//UART(215100);
 	jointTarget[0] = j1;
 	jointTarget[1] = j2;
 	jointTarget[2] = j3;
@@ -162,7 +145,6 @@ void MotorManagerUpdateTargetDef(float j1, float j2,  float j3,  float j5,  floa
 
 void MotorManagerUpdateTargetDef(Coordinates point)
 {
-	//UART(215100);
 	if (point.type == jointsCo) {
 		jointTarget[0] = point.k1;
 		jointTarget[1] = point.k2;
