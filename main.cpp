@@ -1,4 +1,4 @@
-// hRobot_0_05_09 edited by mzabinski94@gmail.com
+// hRobot_1_00_2 edited by mzabinski94@gmail.com
 // from hRobot_0_05_06
 
 #include <cstddef>
@@ -60,5 +60,3 @@ void hMain()
 		LED1.toggle();
 	}
 }
-
-
