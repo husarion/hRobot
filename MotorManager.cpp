@@ -81,12 +81,12 @@ void MotorManagerUpdateTask()
     ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20); // ???
     GripperCrtl H1(h1);
 
-	hSens3.pin2.setIn_pd();
-	hSens3.pin3.setIn_pd();
-	hSens3.pin4.setIn_pd();
-	hSens4.pin2.setIn_pd();
-	hSens4.pin3.setIn_pd();
-	hSens4.pin4.setIn_pd();
+	hSens3.pin2.setIn();
+	hSens3.pin3.setIn();
+	hSens3.pin4.setIn();
+	hSens4.pin2.setIn();
+	hSens4.pin3.setIn();
+	hSens4.pin4.setIn();
 
 	for (;;) {
 		// sensor
@@ -140,9 +140,6 @@ void MotorManagerUpdateTask()
 			J6.update(0 , t);
 			offset.k1 = current[1];
 		}
-		
-		
-		
 		if(hSens4.pin4.read()){
         H1.update(jointTarget[5]);
 		}
