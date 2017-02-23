@@ -32,3 +32,7 @@
 2661	3573	0	myproject.elf	12a926115c94792d
 3573	3750	0	CMakeFiles/myproject.bin	236525097b8b23f9
 3591	3756	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+16	761	0	CMakeFiles/myproject.elf.dir/MotorManager.cpp.obj	dc4a5579432b8490
+761	1542	0	myproject.elf	12a926115c94792d
+1542	1620	0	CMakeFiles/myproject.bin	236525097b8b23f9
+1555	1660	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
