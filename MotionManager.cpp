@@ -125,6 +125,7 @@ void MotionManager::update(){
                 motions.erase(motions.begin());
             }
         }
+        waitForReachingTarget();
     }
     
     /////////
@@ -150,7 +151,9 @@ void MotionManager::addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4
     motions.push_back(a);
 }
 
-MotionManager::MotionManager(){}
+MotionManager::MotionManager(){
+    precysion_mode = 0;
+}
 
 MotionManager::MotionManager(const MotionManager&){}
 
@@ -386,4 +389,15 @@ float MotionManager::getTarget(int t_joint){
         break;
     }
     return 0;
+}
+
+void MotionManager::setPrecysionMode(int precysion){
+    precysion_mode = abs(precysion);
+}
+
+void MotionManager::waitForReachingTarget(){
+    if(precysion_mode == 0){}
+    else{
+        sys.delay(precysion_mode);
+    }
 }
