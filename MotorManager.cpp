@@ -81,6 +81,13 @@ void MotorManagerUpdateTask()
     ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20); // ???
     GripperCrtl H1(h1);
 
+	hSens3.pin2.setIn_pd();
+	hSens3.pin3.setIn_pd();
+	hSens3.pin4.setIn_pd();
+	hSens4.pin2.setIn_pd();
+	hSens4.pin3.setIn_pd();
+	hSens4.pin4.setIn_pd();
+
 	for (;;) {
 		// sensor
 		current[1] = (float)hMot1.getEncoderCnt() / encoder_tics_J1 + offset.k1;
@@ -90,14 +97,60 @@ void MotorManagerUpdateTask()
 		current[6] = (float)hMot4.getEncoderCnt() / encoder_tics_J6 + offset.k5;
 		// motion
 		int t = sys.getRefTime();
+
+		if(hSens3.pin2.read()){
         J1.update(-jointTarget[0] - current[1] , t);
-		hMot2.rotRel(jointTarget[1] - current[2]);
-//		hMot3.rotRel(jointTarget[1] - cur[1]);
-		J2.update(jointTarget[1] - current[2] , t);
-		J3.update(-jointTarget[2] - current[3] , t);
-		J5.update(jointTarget[3] - current[5] , t);
-		J6.update(jointTarget[4] - current[6] , t);
-		H1.update(jointTarget[5]);
+		}
+		else{
+			J1.update(0 , t);
+			offset.k1 = current[1];
+		}
+		//if(hSens3.pin3.read()){
+        //hMot2.rotRel(jointTarget[1] - current[2]);
+		//}
+		//else{
+		//	hMot2.rotRel(0);
+		//	offset.k1 = current[1];
+		//}
+		if(hSens3.pin3.read()){
+        J2.update(jointTarget[1] - current[2] , t);
+		}
+		else{
+			J2.update(0 , t);
+			offset.k1 = current[1];
+		}
+		if(hSens3.pin4.read()){
+        J3.update(-jointTarget[2] - current[3] , t);
+		}
+		else{
+			J3.update(0 , t);
+			offset.k1 = current[1];
+		}
+		if(hSens4.pin2.read()){
+        J5.update(jointTarget[3] - current[5] , t);
+		}
+		else{
+			J5.update(0 , t);
+			offset.k1 = current[1];
+		}
+		if(hSens4.pin3.read()){
+        J6.update(jointTarget[4] - current[6] , t);
+		}
+		else{
+			J6.update(0 , t);
+			offset.k1 = current[1];
+		}
+		
+		
+		
+		if(hSens4.pin4.read()){
+        H1.update(jointTarget[5]);
+		}
+		else{
+			H1.update(0);
+			offset.k1 = current[1];
+		}
+		
 		
 		sys.delay(50);
 		LED2.toggle();
