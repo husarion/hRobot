@@ -387,3 +387,14 @@ float MotionManager::getTarget(int t_joint){
     }
     return 0;
 }
+
+void MotionManager::setPrecysionMode(int precysion){
+    precysion_mode = abs(precysion);
+}
+
+void MotionManager::waitForReachingTarget(){
+    if(precysion_mode == 0){}
+    else{
+        sys.delay(precysion_mode);
+    }
+}
