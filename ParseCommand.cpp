@@ -88,6 +88,12 @@ void ComandInputTask()
 					MotionManager::get().show(param1, cartesianCo);
 				}
 			}
+			if (strcmp(command, "DELAY") == 0){
+				MotionManager::get().addMotionInst(atof(param1), 0, 0, 0, 0, Delay);
+			}
+			if (strcmp(command, "PRECYSION") == 0){
+				MotionManager::get().setPrecysionMode(atoi(param1));
+			}
 			if (strcmp(command, "CONFIG") == 0) {
 				if (strcmp(param1, "COM") == 0) {
 					if (strcmp(param2, "UI") == 0) {
