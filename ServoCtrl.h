@@ -30,6 +30,7 @@ private:
 	float error_saturate;
 	float integrator_saturate_up;
 	float integrator_saturate_down;
+	float output_saturate;
 	float error_last;
 	float error_integrator;
 	float error_deviator;
@@ -46,6 +47,12 @@ public:
 	int update(float error, float t_time);
 	int updateDown(float error, float t_time);
 	int updateUp(float error, float t_time);
+	void set_error_saturate(float error_saturate_t);
+	float get_error_saturate();
+	void set_output_saturate(float output_saturate_t);
+	float get_output_saturate();
+	void set_threshold(float threshold_t);
+	float get_threshold();
 };
 
 #endif

@@ -177,6 +177,17 @@ void sendtoMotionManager(){
 	}
 }
 
+void sendtoMotionManagerInter(){
+    if(mode == 0){
+		Coordinates a (jointsCo, target[1], target[2], target[3], target[5], target[6]);
+	   	MotionManager::get().addMotionInst(a, jointsInter);
+	}
+	if(mode == 1){
+	   Coordinates a (cartesianCo, target[1], target[2], target[3], target[5], target[6]);
+	   MotionManager::get().addMotionInst(a, cartesianInter);
+	}
+}
+
 void onButtonEvent(hId id, ButtonEventType type)
 {
 
@@ -196,8 +207,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		if (id == "btn_kim") tempKi -= 0.05;
 
 		// grabber buttons
-		if (id == "btn_close") setGripperValume(15);
-		if (id == "btn_open") setGripperValume(-15);
+		if (id == "btn_close") setGripperValume(-15);
+		if (id == "btn_open") setGripperValume(15);
 		if (id == "btn_stop") setGripperValume(0);
 
 		// show positions buttons
@@ -381,12 +392,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 			}
 
 			// read positions buttons
-			if (id == "btn_pos1_read") {for (int k = 0; k < 9; k++) {target[k] = pos1[k];} pos_label = 0;sendtoMotionManager();}
-			if (id == "btn_pos2_read") {for (int k = 0; k < 9; k++) {target[k] = pos2[k];} pos_label = 0;sendtoMotionManager();}
-			if (id == "btn_pos3_read") {for (int k = 0; k < 9; k++) {target[k] = pos3[k];} pos_label = 0;sendtoMotionManager();}
-			if (id == "btn_pos4_read") {for (int k = 0; k < 9; k++) {target[k] = pos4[k];} pos_label = 0;sendtoMotionManager();}
-			if (id == "btn_pos5_read") {for (int k = 0; k < 9; k++) {target[k] = pos5[k];} pos_label = 0;sendtoMotionManager();}
-			if (id == "btn_pos6_read") {for (int k = 0; k < 9; k++) {target[k] = pos6[k];} pos_label = 0;sendtoMotionManager();}
+			if (id == "btn_pos1_read") {for (int k = 0; k < 9; k++) {target[k] = pos1[k];} pos_label = 0;sendtoMotionManagerInter();}
+			if (id == "btn_pos2_read") {for (int k = 0; k < 9; k++) {target[k] = pos2[k];} pos_label = 0;sendtoMotionManagerInter();}
+			if (id == "btn_pos3_read") {for (int k = 0; k < 9; k++) {target[k] = pos3[k];} pos_label = 0;sendtoMotionManagerInter();}
+			if (id == "btn_pos4_read") {for (int k = 0; k < 9; k++) {target[k] = pos4[k];} pos_label = 0;sendtoMotionManagerInter();}
+			if (id == "btn_pos5_read") {for (int k = 0; k < 9; k++) {target[k] = pos5[k];} pos_label = 0;sendtoMotionManagerInter();}
+			if (id == "btn_pos6_read") {for (int k = 0; k < 9; k++) {target[k] = pos6[k];} pos_label = 0;sendtoMotionManagerInter();}
 
 			// jog buttons target
 			if (id == "btn11"){ target[1] += step4;sendtoMotionManager();}

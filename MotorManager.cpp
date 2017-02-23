@@ -19,7 +19,7 @@ Coordinates minimum(jointsCo, -360.0, -360.0, -360.0, -360.0, -360.0);
 Coordinates maximum(jointsCo, 360.0, 360.0, 360.0, 360.0, 360.0);
 
 const float encoder_tics_J1 = 20;
-const float encoder_tics_J2 = 36;
+const float encoder_tics_J2 = 18*4;
 const float encoder_tics_J3 = 20 / 4.355;
 const float encoder_tics_J5 = 4.4;
 const float encoder_tics_J6 = 0.2;
@@ -75,11 +75,11 @@ void MotorManagerUpdateTask()
 {
 	//UART(212100);
 	ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 0.9, 0.4, 0.2, 100, 20, 20); // up/down
-    DblMotorCtrl J2(0, 0, 0, 0, 200, 8, 5, 100, 20, 20); // ???
+    DblMotorCtrl J2(0, 600, 15, 0, 600, 15, 0, 100, 20, 20); // ???
     ServoCtrl J3(s2, 1600, 0, 3, 1.8, 1.5, 2, 1.1, 2, 100, 4, 4); // up/down
     ServoCtrl J5(s3, 1730, 0, 2.4, 0.2, 0.8, 2.8, 0.2, 0.5, 100, 20, 20); // down/up
-    ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 0, 0, 0, 100, 20, 20); // ???
-    GripperCrtl H1(h1, 1350, 5);
+    ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20); // ???
+    GripperCrtl H1(h1);
 
 	for (;;) {
 		// sensor
