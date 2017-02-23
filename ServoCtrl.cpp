@@ -3,7 +3,6 @@
 #include "hFramework.h"
 #include "ServoCtrl.h"
 #include "Addons.h"
-#include "Addons.h"
 
 ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
                      float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,

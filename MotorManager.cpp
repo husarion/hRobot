@@ -75,11 +75,11 @@ void MotorManagerUpdateTask()
 {
 	//UART(212100);
 	ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 0.9, 0.4, 0.2, 100, 20, 20); // up/down
-    DblMotorCtrl J2(0, 200, 8, 5, 200, 8, 5, 100, 20, 20); // ???
-    ServoCtrl J3(s2, 1600, 0, 3, 1.8, 1.5, 2, 1.1, 2, 100, 5, 5); // up/down
+    DblMotorCtrl J2(0, 0, 0, 0, 200, 8, 5, 100, 20, 20); // ???
+    ServoCtrl J3(s2, 1600, 0, 3, 1.8, 1.5, 2, 1.1, 2, 100, 4, 4); // up/down
     ServoCtrl J5(s3, 1730, 0, 2.4, 0.2, 0.8, 2.8, 0.2, 0.5, 100, 20, 20); // down/up
     ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 0, 0, 0, 100, 20, 20); // ???
-    GripperCrtl H1(h1, 1350, 0);
+    GripperCrtl H1(h1, 1350, 5);
 
 	for (;;) {
 		// sensor

@@ -3,7 +3,7 @@
 #include "hFramework.h"
 #include "DblMotorCtrl.h"
 #include "Addons.h"
-#include "Addons.h"
+
 DblMotorCtrl::DblMotorCtrl(float threshold_t, float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
                      float integrator_saturate_down_t, float integrator_saturate_up_t)
 {
