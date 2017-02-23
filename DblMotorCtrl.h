@@ -23,7 +23,7 @@ private:
 	float error1_last;
 	float output1;
 	float time_last;
-	float output_saturate;
+	float output_saturate=700;
 public:
 
 	DblMotorCtrl(float threshold_t, float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
@@ -37,12 +37,8 @@ public:
 	void set_kp(float kp_t);
 	void set_ki(float ki_t);
 	void set_kd(float kd_t);
-	void set_error_saturate(float error_saturate_t);
 	void set_output_saturate(float output_saturate_t);
-	void set_threshold(float threshold_t);
-	float get_error_saturate();
 	float get_output_saturate();
-	float get_threshold();
 };
 
 #endif

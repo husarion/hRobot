@@ -25,6 +25,7 @@ ServoCtrl::ServoCtrl(IServo& servo_t, int servo_center_t, float threshold_t,
 	integrator_saturate_up = integrator_saturate_up_t;
 	integrator_saturate_down = integrator_saturate_down_t;
 }
+
 int ServoCtrl::update(float error, float t_time)
 {
 	if (error < 0) {
@@ -69,11 +70,3 @@ void ServoCtrl::make_output(float val)
 		servo->rotAbs(val);
 	}
 }
-
-void ServoCtrl::set_error_saturate(float error_saturate_t) {error_saturate = error_saturate_t;}
-void ServoCtrl::set_output_saturate(float output_saturate_t) {output_saturate = output_saturate_t;}
-void ServoCtrl::set_threshold(float threshold_t) {threshold = threshold_t;}
-
-float ServoCtrl::get_error_saturate() {return error_saturate;}
-float ServoCtrl::get_output_saturate() {return output_saturate;}
-float ServoCtrl::get_threshold() {return threshold;}
