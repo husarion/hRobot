@@ -36,7 +36,8 @@ private:
     std::vector<char*> points_key;
     std::vector<Coordinates*> points_cor;
     std::vector<motion_inst> motions;
-    int precysion_mode;
+    bool precysion_mode;
+    int precysion_mode_time;
     
     bool checkRangeJ(Coordinates* point);
     void waitForReachingTarget();
@@ -69,7 +70,7 @@ public:
     void setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void setTarget(Coordinates* point);
     float getTarget(int t_joint);
-    void setPrecysionMode(int precysion);
+    void setPrecysionMode(bool precysion, int t_time);
 
     void GriperOpen();
     void GriperClose();

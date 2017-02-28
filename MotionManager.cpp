@@ -125,6 +125,7 @@ void MotionManager::update(){
                 motions.erase(motions.begin());
             }
         }
+        waitForReachingTarget();
     }
     
     /////////
@@ -150,7 +151,10 @@ void MotionManager::addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4
     motions.push_back(a);
 }
 
-MotionManager::MotionManager(){}
+MotionManager::MotionManager(){
+    precysion_mode_time = 0;
+    precysion_mode = false;
+}
 
 MotionManager::MotionManager(const MotionManager&){}
 
@@ -178,6 +182,9 @@ int MotionManager::Move(motion_type mode, char* point_name){
                 ErrorLogs::Err().sendPar(18, point_name);
             }
         break;
+        case cartesianNorm : break;
+        case jointsNorm : break;
+        case Delay : break;
     }
     return 26;
 }
@@ -388,13 +395,24 @@ float MotionManager::getTarget(int t_joint){
     return 0;
 }
 
-void MotionManager::setPrecysionMode(int precysion){
-    precysion_mode = abs(precysion);
+void MotionManager::setPrecysionMode(bool precysion, int t_time){
+    precysion_mode = precysion;
+    precysion_mode_time = abs(t_time);
 }
 
 void MotionManager::waitForReachingTarget(){
-    if(precysion_mode == 0){}
+    if(precysion_mode){
+        float dis;
+        do{
+            Coordinates a(jointsCo, current[1], current[2], current[3], current[5], current[6]);
+            dis = pointToPointDistanceJointMax(targetPoint, a);
+            sys.delay(10);
+        }while(dis>1);
+        if(precysion_mode_time>0)
+        sys.delay(precysion_mode_time);
+    }
     else{
-        sys.delay(precysion_mode);
+        if(precysion_mode_time>0)
+        sys.delay(precysion_mode_time);
     }
 }

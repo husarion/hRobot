@@ -199,7 +199,15 @@ void ErrorLogs::translateError(int error){
         temp = "Moving from Serial coman line\t\n";
         break;
         case 27:
-        temp = "Reding from UI\t\n";
+        temp = "Reading from UI\t\n";
+        break;
+        case 28:
+        Serial.printf("Precysion mode on, set time : ", getLastInt());
+        temp =  "\r\n";
+        break;
+        case 29:
+        Serial.printf("Precysion mode off, set time : ", getLastInt());
+        temp =  "\r\n";
         break;
         //tu dodac wlasne bledy aby skrypt je obsluzyl
         

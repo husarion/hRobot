@@ -96,3 +96,17 @@ float pointToPointDistance(Coordinates from, Coordinates to){
     to.Translate(cartesianCo);
     return sqrt((to.k1-from.k1)*(to.k1-from.k1)+(to.k2-from.k2)*(to.k2-from.k2)+(to.k3-from.k3)*(to.k3-from.k3));
 }
+
+float greaterThan(float temp1, float temp2){
+    if(temp1 > temp2){return temp1;}else{return temp2;}
+}
+
+float pointToPointDistanceJointMax(Coordinates from, Coordinates to){
+    float dis1 = abs(from.k1-to.k1);
+    float dis2 = abs(from.k2-to.k2);
+    float dis3 = abs(from.k3-to.k3);
+    float dis4 = abs(from.k4-to.k4);
+    float dis5 = abs(from.k5-to.k5);
+    
+    return greaterThan(dis1, greaterThan(dis2, greaterThan(dis3, greaterThan(dis4, dis5))));
+}

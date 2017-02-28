@@ -92,7 +92,14 @@ void ComandInputTask()
 				MotionManager::get().addMotionInst(atof(param1), 0, 0, 0, 0, Delay);
 			}
 			if (strcmp(command, "PRECYSION") == 0){
-				MotionManager::get().setPrecysionMode(atoi(param1));
+				if (strcmp(param1, "ON") == 0){
+					MotionManager::get().setPrecysionMode(true, atoi(param2));
+					ErrorLogs::Err().sendPar(28, atoi(param2));
+				}
+				if (strcmp(param1, "OFF") == 0){
+					MotionManager::get().setPrecysionMode(false, atoi(param2));
+					ErrorLogs::Err().sendPar(29, atoi(param2));
+				}
 			}
 			if (strcmp(command, "CONFIG") == 0) {
 				if (strcmp(param1, "COM") == 0) {

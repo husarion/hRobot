@@ -27,6 +27,7 @@ public:
 };
 
 float pointToPointDistance(Coordinates from, Coordinates to);
+float pointToPointDistanceJointMax(Coordinates from, Coordinates to);
 
 float saturateFloat(float val, float bord);
 float saturateFloatUnsym(float val, float max, float min);
