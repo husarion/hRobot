@@ -25,6 +25,9 @@ void MotorManagerSetOffsetDef(Coordinates current_point);
 bool CheckOverRange(Coordinates* point);
 bool CheckRange(Coordinates* point);
 
+void EndSwitchInit();
+void EndSwitchRun();
+
 void setGripperValume(int volume);
 
 #endif //__MotorManager__

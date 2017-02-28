@@ -8,6 +8,8 @@
 #include "GripperCtrl.h"
 #include "Addons.h"
 
+bool EndSwitchActive = false;
+
 extern float current[9];
 extern float target[9];
 Coordinates offset(jointsCo, 0, 0, 0, 0, 0);
@@ -27,6 +29,33 @@ const float encoder_tics_J6 = 0.2;
 extern float tempKp;
 extern float tempKi;
 extern float tempKd;
+
+//EndSwitch Variables
+//J1
+bool stateP52;
+bool stateP52last;
+float stopInP52;
+//J2
+bool stateP53;
+bool stateP53last;
+float stopInP53;
+//J3
+bool stateP54;
+bool stateP54last;
+float stopInP54;
+//J5
+bool stateP62;
+bool stateP62last;
+float stopInP62;
+//J6
+bool stateP63;
+bool stateP63last;
+float stopInP63;
+//H1
+bool stateP64;
+bool stateP64last;
+float stopInP64;
+
 
 soft_enc enkoder2(hSens1.pin1, hSens2.pin1);
 
@@ -75,37 +104,14 @@ void MotorManagerUpdateTask()
 {
 	//UART(212100);
 	ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 0.9, 0.4, 0.2, 100, 20, 20); // up/down
-	DblMotorCtrl J2(0, 600, 15, 0, 600, 15, 0, 100, 20, 20); // ???
+	DblMotorCtrl J2(0, 15, 1, 9.5, 4.25, 0.8, 11, 100, 20, 17); // up/down
 	ServoCtrl J3(s2, 1600, 0, 3, 1.8, 1.5, 2, 1.1, 2, 100, 4, 4); // up/down
 	ServoCtrl J5(s3, 1730, 0, 2.4, 0.2, 0.8, 2.8, 0.2, 0.5, 100, 20, 20); // down/up
 	ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20); // ???
 	GripperCrtl H1(h1);
 
-	hSens3.pin2.setIn(); //J1
-	bool stateP32;
-	bool stateP32last;
-	float stopInP32;
-	hSens3.pin3.setIn(); //J2
-	bool stateP33;
-	bool stateP33last;
-	float stopInP33;
-	hSens3.pin4.setIn(); //J3
-	bool stateP34;
-	bool stateP34last;
-	float stopInP34;
-	hSens4.pin2.setIn(); //J5
-	bool stateP42;
-	bool stateP42last;
-	float stopInP42;
-	hSens4.pin3.setIn(); //J6
-	bool stateP43;
-	bool stateP43last;
-	float stopInP43;
-	hSens4.pin4.setIn(); //H1
-	bool stateP44;
-	bool stateP44last;
-	float stopInP44;
-
+	EndSwitchInit();
+	
 	for (;;) {
 		// sensor
 		current[1] = (float)hMot1.getEncoderCnt() / encoder_tics_J1 + offset.k1;
@@ -115,59 +121,14 @@ void MotorManagerUpdateTask()
 		current[6] = (float)hMot4.getEncoderCnt() / encoder_tics_J6 + offset.k5;
 		// motion
 
-		stateP32 = hSens3.pin2.read(); //J1
-		if (stateP32 && !stateP32last) {
-			stopInP32 = current[1];
+		if (EndSwitchActive) {
+			EndSwitchRun();
 		}
-		if (stateP32) {
-			jointTarget[0] = stopInP32;
-		}
-		stateP32last = stateP32;
-		stateP33 = hSens3.pin3.read(); //J2
-		if (stateP33 && !stateP33last) {
-			stopInP33 = current[2];
-		}
-		if (stateP33) {
-			jointTarget[1] = stopInP33;
-		}
-		stateP33last = stateP33;
-		stateP34 = hSens3.pin4.read(); //J3
-		if (stateP34 && !stateP34last) {
-			stopInP34 = current[3];
-		}
-		if (stateP34) {
-			jointTarget[2] = stopInP34;
-		}
-		stateP34last = stateP34;
-		stateP42 = hSens4.pin2.read(); //J5
-		if (stateP42 && !stateP42last) {
-			stopInP42 = current[5];
-		}
-		if (stateP42) {
-			jointTarget[3] = stopInP42;
-		}
-		stateP42last = stateP42;
-		stateP43 = hSens4.pin3.read(); //J6
-		if (stateP43 && !stateP43last) {
-			stopInP43 = current[6];
-		}
-		if (stateP43) {
-			jointTarget[4] = stopInP43;
-		}
-		stateP43last = stateP43;
-		stateP44 = hSens4.pin4.read(); //H1
-		if (stateP44 && !stateP44last) {
-			stopInP44 = 0;
-		}
-		if (stateP44) {
-			jointTarget[5] = stopInP44;
-		}
-		stateP44last = stateP44;
 
 
 		int t = sys.getRefTime();
 		J1.update(-jointTarget[0] - current[1] , t);
-		J2.update(jointTarget[1] - current[2] , t);
+		J2.update(-(jointTarget[1] - current[2]) , t);
 		J3.update(-jointTarget[2] - current[3] , t);
 		J5.update(jointTarget[3] - current[5] , t);
 		J6.update(jointTarget[4] - current[6] , t);
@@ -277,4 +238,66 @@ bool CheckIfInRange(Coordinates* point)
 void setGripperValume(int volume)
 {
 	jointTarget[5] = volume;
+}
+
+void EndSwitchInit()
+{
+	hSens5.pin2.setIn_pu(); //J1
+	hSens5.pin3.setIn_pu(); //J2
+	hSens5.pin4.setIn_pu(); //J3
+	hSens6.pin2.setIn_pu(); //J5
+	hSens6.pin3.setIn_pu(); //J6
+	hSens6.pin4.setIn_pu(); //H1
+}
+
+void EndSwitchRun()
+{
+	stateP52 = hSens5.pin2.read(); //J1
+	if (stateP52 && !stateP52last) {
+		stopInP52 = current[1];
+	}
+	if (stateP52) {
+		jointTarget[0] = stopInP52;
+	}
+	stateP52last = stateP52;
+	stateP53 = hSens5.pin3.read(); //J2
+	if (stateP53 && !stateP53last) {
+		stopInP53 = current[2];
+	}
+	if (stateP53) {
+		jointTarget[1] = stopInP53;
+	}
+	stateP53last = stateP53;
+	stateP54 = hSens5.pin4.read(); //J3
+	if (stateP54 && !stateP54last) {
+		stopInP54 = current[3];
+	}
+	if (stateP54) {
+		jointTarget[2] = stopInP54;
+	}
+	stateP54last = stateP54;
+	stateP62 = hSens6.pin2.read(); //J5
+	if (stateP62 && !stateP62last) {
+		stopInP62 = current[5];
+	}
+	if (stateP62) {
+		jointTarget[3] = stopInP62;
+	}
+	stateP62last = stateP62;
+	stateP63 = hSens6.pin3.read(); //J6
+	if (stateP63 && !stateP63last) {
+		stopInP63 = current[6];
+	}
+	if (stateP63) {
+		jointTarget[4] = stopInP63;
+	}
+	stateP63last = stateP63;
+	stateP64 = hSens6.pin4.read(); //H1
+	if (stateP64 && !stateP64last) {
+		stopInP64 = 0;
+	}
+	if (stateP64) {
+		jointTarget[5] = stopInP64;
+	}
+	stateP64last = stateP64;
 }

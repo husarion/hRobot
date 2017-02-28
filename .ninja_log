@@ -81,3 +81,10 @@
 1858	3221	0	myproject.elf	12a926115c94792d
 3221	3597	0	CMakeFiles/myproject.bin	236525097b8b23f9
 3238	3603	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+143	2323	0	CMakeFiles/myproject.elf.dir/MotorManager.cpp.obj	dc4a5579432b8490
+59	2324	0	CMakeFiles/myproject.elf.dir/main.cpp.obj	ffe34a1a95f3c13f
+203	2435	0	CMakeFiles/myproject.elf.dir/UI_Buttons.cpp.obj	b67a9175675f9f8
+95	2937	0	CMakeFiles/myproject.elf.dir/MotionManager.cpp.obj	40f836c63c3f7320
+2938	4131	0	myproject.elf	12a926115c94792d
+4146	4304	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+4131	4305	0	CMakeFiles/myproject.bin	236525097b8b23f9
