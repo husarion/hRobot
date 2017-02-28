@@ -8,7 +8,7 @@
 #include "GripperCtrl.h"
 #include "Addons.h"
 
-bool EndSwitchActive = false;
+bool EndSwitchActive = true;
 
 extern float current[9];
 extern float target[9];
@@ -98,6 +98,7 @@ void MotorManagerInit()
 	MotorManagerInitServos();
 	//UART(211300);
 	MotorManagerInitMotors();
+	MotorManagerEndSwitchInit();
 }
 
 void MotorManagerUpdateTask()
@@ -110,7 +111,7 @@ void MotorManagerUpdateTask()
 	ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20); // ???
 	GripperCrtl H1(h1);
 
-	EndSwitchInit();
+	MotorManagerEndSwitchInit();
 	
 	for (;;) {
 		// sensor
@@ -240,7 +241,7 @@ void setGripperValume(int volume)
 	jointTarget[5] = volume;
 }
 
-void EndSwitchInit()
+void MotorManagerEndSwitchInit()
 {
 	hSens5.pin2.setIn_pu(); //J1
 	hSens5.pin3.setIn_pu(); //J2
