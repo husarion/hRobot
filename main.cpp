@@ -18,15 +18,6 @@
 float current[9];
 // jog, ui, recorded positions values
 float target[9];
-float pos1[9];
-float pos2[9];
-float pos3[9];
-float pos4[9];
-float pos5[9];
-float pos6[9];
-int mode = 0; // 0:UI_joints 1:UI_cartesian 2:UI_code 3:USB_code
-int modeLast;
-int pos_label; //switch counter for position label
 
 // temp PID values for calibration
 float tempKp = 8.4;

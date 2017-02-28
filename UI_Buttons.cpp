@@ -15,16 +15,16 @@
 // jog, ui, recorded positions values
 extern float target[9];
 extern float temp[9];
-extern float pos1[9];
-extern float pos2[9];
-extern float pos3[9];
-extern float pos4[9];
-extern float pos5[9];
-extern float pos6[9];
-extern int mode;
-extern int last_mode = 3;
+float pos1[9];
+float pos2[9];
+float pos3[9];
+float pos4[9];
+float pos5[9];
+float pos6[9];
+int mode;
+int last_mode = 3;
 int modeLastBtn = -1;
-extern int pos_label; //switch counter for position
+int pos_label; //switch counter for position
 
 // jog UI steps
 float step1;
@@ -38,15 +38,22 @@ extern float tempKi;
 extern float tempKd;
 
 char UIcon[512];
+char UIcon_pass[512];
 
 void readUI(char* temp, int size)
 {
 	for (int i = 0; i < size; i++) {
-		temp[i] = UIcon[0];
+		temp[i] = UIcon_pass[0];
 		for (int k = 0; k < 511; k++) {
-			UIcon[i] = UIcon[i + 1];
+			UIcon_pass[i] = UIcon_pass[i + 1];
 		}
-		UIcon[511] = '\n';
+		UIcon_pass[511] = (char)0;
+	}
+}
+
+void passUIcom(){
+	for (int i=0; i<512; i++){
+		UIcon_pass[i]=UIcon[i];
 	}
 }
 
@@ -144,7 +151,7 @@ void cfgHandler()
 	auto btn_kdm = platform.ui.button("btn_kdm");
 
 	//UI command line
-	auto btn_com = platform.ui.button("btn_do_code");
+	auto btn_com = platform.ui.button("btn_do");
 
 	//Movement changing buttons
 	auto btnCartesianMov = platform.ui.button("btnCartesianMov");
@@ -159,6 +166,7 @@ void onValueChangeEvent(hId id, const char* data)
 {
 	int i = 0;
 	if (id == "hCode_line") {
+	    for(int i=0; i<512; i++)UIcon[i]=0;
 		while (data[i] != NULL) {
 			UIcon[i] = data[i];
 			i++;
@@ -210,6 +218,9 @@ void onButtonEvent(hId id, ButtonEventType type)
 		if (id == "btn_close") setGripperValume(-15);
 		if (id == "btn_open") setGripperValume(15);
 		if (id == "btn_stop") setGripperValume(0);
+
+		// do button for code execution
+		if (id == "btn_do")passUIcom();
 
 		// show positions buttons
 		if (id == "btn_pos1_show") {pos_label = 1;}
