@@ -154,6 +154,7 @@ void MotionManager::addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4
 MotionManager::MotionManager(){
     precysion_mode_time = 0;
     precysion_mode = false;
+    precysion_mode_volume = 100;
 }
 
 MotionManager::MotionManager(const MotionManager&){}
@@ -395,9 +396,10 @@ float MotionManager::getTarget(int t_joint){
     return 0;
 }
 
-void MotionManager::setPrecysionMode(bool precysion, int t_time){
+void MotionManager::setPrecysionMode(bool precysion, float t_volume, int t_time){
     precysion_mode = precysion;
     precysion_mode_time = abs(t_time);
+    precysion_mode_volume = abs(t_volume);
 }
 
 void MotionManager::waitForReachingTarget(){
@@ -407,7 +409,7 @@ void MotionManager::waitForReachingTarget(){
             Coordinates a(jointsCo, current[1], current[2], current[3], current[5], current[6]);
             dis = pointToPointDistanceJointMax(targetPoint, a);
             sys.delay(10);
-        }while(dis>1);
+        }while(dis>precysion_mode_volume);
         if(precysion_mode_time>0)
         sys.delay(precysion_mode_time);
     }

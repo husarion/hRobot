@@ -202,11 +202,11 @@ void ErrorLogs::translateError(int error){
         temp = "Reading from UI\t\n";
         break;
         case 28:
-        Serial.printf("Precysion mode on, set time : ", getLastInt());
+        Serial.printf("Precysion mode on, set time : %d", getLastInt());
         temp =  "\r\n";
         break;
         case 29:
-        Serial.printf("Precysion mode off, set time : ", getLastInt());
+        Serial.printf("Precysion mode off, set time : %d", getLastInt());
         temp =  "\r\n";
         break;
         //tu dodac wlasne bledy aby skrypt je obsluzyl

@@ -93,11 +93,11 @@ void ComandInputTask()
 			}
 			if (strcmp(command, "PRECYSION") == 0){
 				if (strcmp(param1, "ON") == 0){
-					MotionManager::get().setPrecysionMode(true, atoi(param2));
+					MotionManager::get().setPrecysionMode(true, atof(param2), atoi(param3));
 					ErrorLogs::Err().sendPar(28, atoi(param2));
 				}
 				if (strcmp(param1, "OFF") == 0){
-					MotionManager::get().setPrecysionMode(false, atoi(param2));
+					MotionManager::get().setPrecysionMode(false, atof(param2), atoi(param3));
 					ErrorLogs::Err().sendPar(29, atoi(param2));
 				}
 			}
