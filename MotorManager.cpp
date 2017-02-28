@@ -28,8 +28,6 @@ extern float tempKp;
 extern float tempKi;
 extern float tempKd;
 
-
-
 soft_enc enkoder2(hSens1.pin1, hSens2.pin1);
 
 IServo& s1 = hServoModule.servo1;

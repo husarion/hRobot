@@ -44,3 +44,17 @@
 124	353	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
 71	162	0	CMakeFiles/myproject.bin	236525097b8b23f9
 86	195	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+0	260	0	CMakeFiles/printvars	efe4a006bdabd9d2
+16	1831	0	CMakeFiles/myproject.elf.dir/MotionManager.cpp.obj	40f836c63c3f7320
+1832	10355	0	myproject.elf	12a926115c94792d
+10355	10991	0	CMakeFiles/myproject.bin	236525097b8b23f9
+10375	11207	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+111	844	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+95	847	0	CMakeFiles/myproject.bin	236525097b8b23f9
+1	627	0	CMakeFiles/printvars	efe4a006bdabd9d2
+0	534	0	CMakeFiles/printvars	efe4a006bdabd9d2
+0	795	0	CMakeFiles/printvars	efe4a006bdabd9d2
+19	1365	0	CMakeFiles/myproject.elf.dir/MotorManager.cpp.obj	dc4a5579432b8490
+1365	4123	0	myproject.elf	12a926115c94792d
+4124	4794	0	CMakeFiles/myproject.bin	236525097b8b23f9
+4137	4810	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
