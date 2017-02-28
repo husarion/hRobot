@@ -91,3 +91,10 @@
 1172	2337	0	myproject.elf	12a926115c94792d
 2337	2489	0	CMakeFiles/myproject.bin	236525097b8b23f9
 2355	2489	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42
+53	3107	0	CMakeFiles/myproject.elf.dir/main.cpp.obj	ffe34a1a95f3c13f
+408	3109	0	CMakeFiles/myproject.elf.dir/UI_Buttons.cpp.obj	b67a9175675f9f8
+372	3385	0	CMakeFiles/myproject.elf.dir/ParseCommand.cpp.obj	bef9dc58bdc949e7
+458	3567	0	CMakeFiles/myproject.elf.dir/UI_Labels.cpp.obj	6a9231e02b8205ab
+3568	5848	0	myproject.elf	12a926115c94792d
+5848	6330	0	CMakeFiles/myproject.bin	236525097b8b23f9
+5868	6351	0	CMakeFiles/myproject.hex	858fe5b6c75f0f42

@@ -37,7 +37,6 @@ void ComandInputTask()
     for (;;)
     {
 	sys.delay(100);
-
 	if (1 == parseCommand.parse(command, param1, param2, param3, param4, param5, param6, param7))
 	{
 	    //printf("%s\n", command);
@@ -238,14 +237,20 @@ bool ParseCommand::parse(char *command, char *p1, char *p2, char *p3, char *p4, 
     char c;
     char begin_str[] = "\r\n> ";
 
-    if (state == PARSE_END)
+    if (state == PARSE_END && !UIconection)
     {
 	d->write(begin_str, sizeof(begin_str));
 	state = PARSE_COMMAND;
     }
 
+	if (checkUIcon() && UIconection)
+	{
+	return 0;
+	}
+
     if (UIconection)
     {
+	state = PARSE_COMMAND;
 	readUI(&c, 1);
     }
     else
@@ -269,6 +274,7 @@ bool ParseCommand::parse(char *command, char *p1, char *p2, char *p3, char *p4, 
 	i_5 = 0;
 	i_6 = 0;
 	i_7 = 0;
+	readUIAll();
 	state = PARSE_END;
 	return 1;
     }

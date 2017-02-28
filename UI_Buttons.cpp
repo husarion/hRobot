@@ -39,6 +39,15 @@ extern float tempKd;
 
 char UIcon[512];
 char UIcon_pass[512];
+bool comend_to_do = false;
+
+bool checkUIcon(){
+	return comend_to_do;
+}
+
+void readUIAll(){
+	comend_to_do = false;
+}
 
 void readUI(char *temp, int size)
 {
@@ -241,8 +250,10 @@ void onButtonEvent(hId id, ButtonEventType type)
 	    setGripperValume(0);
 
 	// do button for code execution
-	if (id == "btn_do")
-	    passUIcom();
+	if (id == "btn_do"){
+		passUIcom();
+		comend_to_do = true;
+	}
 
 	// show positions buttons
 	if (id == "btn_pos1_show")
