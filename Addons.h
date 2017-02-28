@@ -7,19 +7,24 @@
 #ifndef __Addons__
 #define __Addons__
 
-enum typeCo{cartesianCo, cylindricalCo, jointsCo};
+enum typeCo
+{
+    cartesianCo,
+    cylindricalCo,
+    jointsCo
+};
 
-class Coordinates{
-private:
-    
-public:
+class Coordinates
+{
+  private:
+  public:
     typeCo type;
     float k1;
     float k2;
     float k3;
     float k4;
     float k5;
-    Coordinates(const Coordinates & t);
+    Coordinates(const Coordinates &t);
     Coordinates();
     Coordinates(typeCo type, float k1, float k2, float k3);
     Coordinates(typeCo type, float k1, float k2, float k3, float k4, float k5);
