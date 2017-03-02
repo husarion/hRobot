@@ -42,5 +42,7 @@ float deg2rad(float deg);
 float rad2deg(float rad);
 float sq(float val);
 void erco(int code);
+float sind(float deg);
+float cosd(float deg);
 
 #endif //__Addons__

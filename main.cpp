@@ -26,29 +26,29 @@ float tempKd = 9;
 
 void hMain()
 {
-    Serial.init(115200);
-    sys.setLogDev(&Serial);
-    MotorManagerInit();
-    sys.setSysLogDev(&devNull);
-    sys.taskCreate(printfErrorTask);
-    sys.taskCreate(ComandInputTask, 1, 2000, "ComandInputTask");
-    //changeInputToUI();
-    platform.begin(&RPi);
-    platform.ui.configHandler = cfgHandler;
-    platform.ui.onButtonEvent = onButtonEvent;
-    //platform.ui.onValueChangeEvent = onValueChangeEvent;
-    platform.ui.setProjectId("@@@PROJECT_ID@@@");
+	Serial.init(115200);
+	sys.setLogDev(&Serial);
+	MotorManagerInit();
+	sys.setSysLogDev(&devNull);
+	sys.taskCreate(printfErrorTask);
+	sys.taskCreate(ComandInputTaskSerial, 1, 2000, "ComandInputTS");
+	sys.taskCreate(ComandInputTaskUI, 1, 2000, "ComandInputTU");
+	//changeInputToSerial();
+	platform.begin(&RPi);
+	platform.ui.configHandler = cfgHandler;
+	platform.ui.onButtonEvent = onButtonEvent;
+	platform.ui.onValueChangeEvent = onValueChangeEvent;
+	platform.ui.setProjectId("@@@PROJECT_ID@@@");
 
-    sys.taskCreate(MotorManagerUpdateTask, 2, 400, "MotorManUpdate");
+	sys.taskCreate(MotorManagerUpdateTask, 2, 400, "MotorManUpdate");
 
-    sys.taskCreate(MotionTask);
+	sys.taskCreate(MotionTask);
+    
+	sys.taskCreate(printOnLabelsTask, 2, 2000, "labelsTask");
 
-    sys.taskCreate(printOnLabelsTask, 2, 2000, "labelsTask");
-
-    for (;;)
-    {
-	//printOnLabels();
-	sys.delay(1000);
-	LED1.toggle();
-    }
+	for (;;) {
+		//printOnLabels();
+		sys.delay(1000);
+		LED1.toggle();
+	}
 }

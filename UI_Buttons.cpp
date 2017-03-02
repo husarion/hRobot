@@ -39,27 +39,17 @@ extern float tempKd;
 
 char UIcon[512];
 char UIcon_pass[512];
-bool comend_to_do = false;
 
-bool checkUIcon(){
-	return comend_to_do;
-}
-
-void readUIAll(){
-	comend_to_do = false;
-}
-
-void readUI(char *temp, int size)
+char readUI()
 {
-    for (int i = 0; i < size; i++)
-    {
-	temp[i] = UIcon_pass[0];
+    char t;
+	t = UIcon_pass[0];
 	for (int k = 0; k < 511; k++)
 	{
-	    UIcon_pass[i] = UIcon_pass[i + 1];
+	    UIcon_pass[k] = UIcon_pass[k + 1];
 	}
 	UIcon_pass[511] = (char)0;
-    }
+    return t;
 }
 
 void passUIcom()
@@ -178,8 +168,9 @@ void onValueChangeEvent(hId id, const char *data)
     int i = 0;
     if (id == "hCode_line")
     {
-	for (int i = 0; i < 512; i++)
+	for (int i = 0; i < 512; i++){
 	    UIcon[i] = 0;
+	}
 	while (data[i] != NULL)
 	{
 	    UIcon[i] = data[i];
@@ -252,7 +243,6 @@ void onButtonEvent(hId id, ButtonEventType type)
 	// do button for code execution
 	if (id == "btn_do"){
 		passUIcom();
-		comend_to_do = true;
 	}
 
 	// show positions buttons

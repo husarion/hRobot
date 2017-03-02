@@ -80,6 +80,7 @@ class MotionManager
     bool checkPoint(char *name);
     void show(char *name);
     void show(char *name, typeCo type);
+    void show(Coordinates point);
     void showAll();
     void showCurrent();
     void setOffset(float t_k1, float t_k2, float t_k3);

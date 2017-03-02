@@ -10,8 +10,6 @@ void cfgHandler();
 void onButtonEvent(hId id, ButtonEventType type);
 void onValueChangeEvent(hId id, const char *data);
 
-void readUI(char *temp, int size);
-bool checkUIcon();
-void readUIAll();
+char readUI();
 
 #endif //__UI_Buttons__

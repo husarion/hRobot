@@ -13,7 +13,8 @@
 #include "Addons.h"
 #include "UI_Buttons.h"
 
-ParseCommand parseCommand(Serial);
+ParseCommand parseCommand(Serial, false);
+ParseCommand parseCommandUI(true);
 
 void clearChar(char *t, int size)
 {
@@ -21,7 +22,7 @@ void clearChar(char *t, int size)
 	t[i] = 0;
 }
 
-void ComandInputTask()
+void ComandInputTaskSerial()
 {
     char command[20];
     char param1[20];
@@ -138,18 +139,18 @@ void ComandInputTask()
 			ErrorLogs::Err().send(22);
 		    }
 		}
-		if (strcmp(param1, "OFFSET") == 0)
+		if (strcmp(command, "OFFSET") == 0)
 		{
-		    if (strcmp(param2, "ONPOINT") == 0)
+		    if (strcmp(param1, "ONPOINT") == 0)
 		    {
 			MotionManager::get().setOffset();
 		    }
-		    if (strcmp(param2, "INPOINT") == 0)
+		    if (strcmp(param1, "INPOINT") == 0)
 		    {
-			MotionManager::get().setOffset(param3);
+			MotionManager::get().setOffset(param2);
 		    }
 		}
-		if (strcmp(param1, "RESETPOINTS") == 0)
+		if (strcmp(command, "RESETPOINTS") == 0)
 		{
 		    MotionManager::get().clearPoints();
 		}
@@ -180,7 +181,167 @@ void ComandInputTask()
     }
 }
 
-ParseCommand::ParseCommand(hStreamDev &dev)
+void ComandInputTaskUI()
+{
+    char command[20];
+    char param1[20];
+    char param2[20];
+    char param3[20];
+    char param4[20];
+    char param5[20];
+    char param6[20];
+    char param7[20];
+
+    sys.setSysLogDev(&devNull);
+
+    for (;;)
+    {
+	sys.delay(100);
+	if (1 == parseCommandUI.parse(command, param1, param2, param3, param4, param5, param6, param7))
+	{
+	    //printf("%s\n", command);
+	    if (strcmp(command, "MOVE") == 0)
+	    {
+		ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, param1));
+	    }
+	    if (strcmp(command, "MOVES") == 0)
+	    {
+		ErrorLogs::Err().send(MotionManager::get().Move(cartesianInter, param1));
+	    }
+	    if (strcmp(command, "SET") == 0)
+	    {
+		if (strcmp(param2, "J") == 0)
+		{
+		    MotionManager::get().addPoint(param1, jointsCo, atof(param3), atof(param4), atof(param5), atof(param6), atof(param7));
+		}
+		if (strcmp(param2, "R") == 0)
+		{
+		    MotionManager::get().addPoint(param1, cylindricalCo, atof(param3), atof(param4), atof(param5), atof(param6), atof(param7));
+		}
+		if (strcmp(param2, "C") == 0)
+		{
+		    MotionManager::get().addPoint(param1, cartesianCo, atof(param3), atof(param4), atof(param5), atof(param6), atof(param7));
+		}
+		if (strcmp(param2, "HERE") == 0)
+		{
+		    //twoży punkt o nazwie param1 z obecnej pozycji
+		    if (strcmp(param3, "J") == 0)
+		    {
+			MotionManager::get().addPoint(param1, jointsCo);
+		    }
+		    if (strcmp(param3, "R") == 0)
+		    {
+			MotionManager::get().addPoint(param1, cylindricalCo);
+		    }
+		    if (strcmp(param3, "C") == 0)
+		    {
+			MotionManager::get().addPoint(param1, cartesianCo);
+		    }
+		}
+	    }
+	    if (strcmp(command, "SHOWALL") == 0)
+	    {
+		MotionManager::get().showAll();
+	    }
+	    if (strcmp(command, "SHOWCURRENT") == 0)
+	    {
+		MotionManager::get().showCurrent();
+	    }
+	    if (strcmp(command, "SHOW") == 0)
+	    {
+		if (strcmp(param2, "") == 0)
+		{
+		    MotionManager::get().show(param1);
+		}
+		if (strcmp(param2, "J") == 0)
+		{
+		    MotionManager::get().show(param1, jointsCo);
+		}
+		if (strcmp(param2, "R") == 0)
+		{
+		    MotionManager::get().show(param1, cylindricalCo);
+		}
+		if (strcmp(param2, "C") == 0)
+		{
+		    MotionManager::get().show(param1, cartesianCo);
+		}
+	    }
+	    if (strcmp(command, "DELAY") == 0)
+	    {
+		MotionManager::get().addMotionInst(atof(param1), 0, 0, 0, 0, Delay);
+	    }
+	    if (strcmp(command, "PRECYSION") == 0)
+	    {
+		if (strcmp(param1, "ON") == 0)
+		{
+		    MotionManager::get().setPrecysionMode(true, atof(param2), atoi(param3));
+		    ErrorLogs::Err().sendPar(28, atoi(param2));
+		}
+		if (strcmp(param1, "OFF") == 0)
+		{
+		    MotionManager::get().setPrecysionMode(false, atof(param2), atoi(param3));
+		    ErrorLogs::Err().sendPar(29, atoi(param2));
+		}
+	    }
+	    if (strcmp(command, "CONFIG") == 0)
+	    {
+		if (strcmp(param1, "COM") == 0)
+		{
+		    if (strcmp(param2, "UI") == 0)
+		    {
+			parseCommand.changeToUI();
+			ErrorLogs::Err().send(21);
+		    }
+		    if (strcmp(param2, "SERIAL") == 0)
+		    {
+			parseCommand.changeToSerial();
+			ErrorLogs::Err().send(22);
+		    }
+		}
+		if (strcmp(command, "OFFSET") == 0)
+		{
+		    if (strcmp(param1, "ONPOINT") == 0)
+		    {
+			MotionManager::get().setOffset();
+		    }
+		    if (strcmp(param1, "INPOINT") == 0)
+		    {
+			MotionManager::get().setOffset(param2);
+		    }
+		}
+		if (strcmp(command, "RESETPOINTS") == 0)
+		{
+		    MotionManager::get().clearPoints();
+		}
+	    }
+
+	    if (strcmp(command, "H1OPEN") == 0)
+	    {
+		MotionManager::get().GriperOpen();
+	    }
+	    if (strcmp(command, "H1CLOSE") == 0)
+	    {
+		MotionManager::get().GriperClose();
+	    }
+	    if (strcmp(command, "H1STOP") == 0)
+	    {
+		MotionManager::get().GriperStop();
+	    }
+
+	    clearChar(command, 20);
+	    clearChar(param1, 20);
+	    clearChar(param2, 20);
+	    clearChar(param3, 20);
+	    clearChar(param4, 20);
+	    clearChar(param5, 20);
+	    clearChar(param6, 20);
+	    clearChar(param7, 20);
+	}
+    }
+}
+
+
+ParseCommand::ParseCommand(hStreamDev &dev, bool fromUI)
 {
     d = &dev;
     state = PARSE_END;
@@ -194,17 +355,38 @@ ParseCommand::ParseCommand(hStreamDev &dev)
     i_6 = 0;
     i_7 = 0;
 
-    UIconection = false;
+    UIconectionStatic = fromUI;
+    UIconection = fromUI;
+}
+
+ParseCommand::ParseCommand(bool fromUI)
+{
+    //d = &dev;
+    state = PARSE_END;
+
+    i_c = 0;
+    i_1 = 0;
+    i_2 = 0;
+    i_3 = 0;
+    i_4 = 0;
+    i_5 = 0;
+    i_6 = 0;
+    i_7 = 0;
+
+    UIconectionStatic = fromUI;
+    UIconection = fromUI;
 }
 
 void changeInputToUI()
 {
     parseCommand.changeToUI();
+    parseCommandUI.changeToUI();
 }
 
 void changeInputToSerial()
 {
     parseCommand.changeToSerial();
+    parseCommandUI.changeToSerial();
 }
 
 void ParseCommand::changeToUI()
@@ -236,35 +418,32 @@ bool ParseCommand::parse(char *command, char *p1, char *p2, char *p3, char *p4, 
 {
     char c;
     char begin_str[] = "\r\n> ";
-
-    if (state == PARSE_END && !UIconection)
+    if (state == PARSE_END)
     {
+    if(!UIconectionStatic){
 	d->write(begin_str, sizeof(begin_str));
 	state = PARSE_COMMAND;
     }
+    else{
+    state = PARSE_COMMAND;
+    }
+    }
 
-	if (checkUIcon() && UIconection)
-	{
-	return 0;
-	}
-
-    if (UIconection)
+    if (UIconectionStatic)
     {
-	state = PARSE_COMMAND;
-	readUI(&c, 1);
+    c = readUI();
     }
     else
     {
 	d->read(&c, 1);
     }
-    //LED2.toggle();
 
     if (c == '\r')
     {
-	return 0;
+	    return 0;
     }
 
-    if ((c == '\n') /* || (c == 'r')*/)
+    if (c == '\n' || c == 0)
     {
 	i_c = 0;
 	i_1 = 0;
@@ -274,7 +453,6 @@ bool ParseCommand::parse(char *command, char *p1, char *p2, char *p3, char *p4, 
 	i_5 = 0;
 	i_6 = 0;
 	i_7 = 0;
-	readUIAll();
 	state = PARSE_END;
 	return 1;
     }

@@ -20,7 +20,7 @@ extern float current[9];
 extern float target[9];
 
 const int time_motion_task = 100;
-float time_iteration = 100;
+float time_iteration = 75;
 int step_mul = 10;
 
 Coordinates to_send;
@@ -67,12 +67,16 @@ void MotionManager::MoveJointNorm()
 }
 
 void MotionManager::MoveJointInter()
-{
+{   
+    if (targetPoint.type != jointsCo)
+    {
+        targetPoint.Translate(jointsCo);
+    }
     /////////
     float internal_speed = 5; //5mm/s
     float ovrd = 1;           //100% OVRD
     /////////
-
+    
     float dis = pointToPointDistance(targetPoint, curentPoint);
     int steps = (int)(dis / (internal_speed * ovrd * 10)) * step_mul;
 
@@ -368,6 +372,27 @@ void MotionManager::show(char *name, typeCo type)
     {
         ErrorLogs::Err().sendPar(20, name);
     }
+}
+
+void MotionManager::show(Coordinates point){
+    switch (point.type)
+        {
+        case cartesianCo:
+            Serial.printf("Point : x: %f, y: %f, z: %f, A: %f, B: %f", point.k1, point.k2, point.k3, point.k4, point.k5);
+            break;
+        case cylindricalCo:
+            Serial.printf("Point : r: %f, h: %f, alpha: %f, A: %f, B: %f", point.k1, point.k2, point.k3, point.k4, point.k5);
+            break;
+        case jointsCo:
+            Serial.printf("Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", point.k1, point.k2, point.k3, point.k4, point.k5);
+            break;
+        }
+        if (point.type == cartesianCo)
+            Serial.printf(" type: cartesian\n");
+        if (point.type == cylindricalCo)
+            Serial.printf(" type: cylindrical\n");
+        if (point.type == jointsCo)
+            Serial.printf(" type: joints\n");
 }
 
 void MotionManager::showAll()

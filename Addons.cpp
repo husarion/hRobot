@@ -6,6 +6,13 @@
 #include "GeoMath.h"
 
 // ver 7.
+float sind(float deg){
+    return sin(deg2rad(deg));
+}
+
+float cosd(float deg){
+    return cos(deg2rad(deg));
+}
 
 float saturateFloat(float val, float bord){ // limits float val symetricly between -bord and bord.
     if (val<-bord){ val=-bord; } else if (val>bord) val=bord;
