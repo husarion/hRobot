@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <cstring>
-#include <map>
 
 #include "hFramework.h"
 #include "MotionManager.h"
@@ -42,7 +41,7 @@ void MotionManager::MoveCartesianInter()
     }
 
     float dis = sqrt(pow(curentPoint.k1-targetPoint.k1, 2)+pow(curentPoint.k2-targetPoint.k2, 2)+pow(curentPoint.k3-targetPoint.k3, 2));
-    
+
     int samp = (dis/10);
 
     float disn = dis/samp;

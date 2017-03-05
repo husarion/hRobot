@@ -7,8 +7,7 @@
 #include "DblMotorCtrl.h"
 #include "GripperCtrl.h"
 #include "Addons.h"
-
-bool EndSwitchActive = true;
+#include "Config.h"
 
 extern float current[9];
 extern float target[9];
@@ -17,14 +16,8 @@ float jointTarget[6];
 //Coordinates minimum(jointsCo, -180.0, -120.0, -55.0, -150.0, -180.0);
 //Coordinates maximum(jointsCo, 180.0, 30.0, 170.0, 105.0, 180.0);
 
-Coordinates minimum(jointsCo, -360.0, -360.0, -360.0, -360.0, -360.0);
-Coordinates maximum(jointsCo, 360.0, 360.0, 360.0, 360.0, 360.0);
-
-const float encoder_tics_J1 = 20;
-const float encoder_tics_J2 = 18 * 4;
-const float encoder_tics_J3 = 20 / 4.355;
-const float encoder_tics_J5 = 4.4;
-const float encoder_tics_J6 = 0.2;
+Coordinates minimum(jointsCo, J1_min, J2_min, J3_min, J4_min, J5_min);
+Coordinates maximum(jointsCo, J1_max, J2_max, J3_max, J4_max, J5_max);
 
 extern float tempKp;
 extern float tempKi;
@@ -57,12 +50,6 @@ bool stateP64last;
 float stopInP64;
 
 soft_enc enkoder2(hSens1.pin1, hSens2.pin1);
-
-IServo &s1 = hServoModule.servo1;
-IServo &s2 = hServoModule.servo2;
-IServo &s3 = hServoModule.servo3;
-IServo &s4 = hServoModule.servo4;
-IServo &h1 = hServoModule.servo5;
 
 void MotorManagerInitServos()
 {
@@ -103,11 +90,21 @@ void MotorManagerInit()
 void MotorManagerUpdateTask()
 {
     //UART(212100);
-    ServoCtrl J1(s1, 1125, 2, 0.9, 0.4, 0.2, 0.9, 0.4, 0.2, 100, 20, 20); // up/down
-    DblMotorCtrl J2(0, 15, 1, 9.5, 4.25, 0.8, 11, 100, 20, 17);           // up/down
-    ServoCtrl J3(s2, 1600, 0, 3, 1.8, 1.5, 2, 1.1, 2, 100, 4, 4);         // up/down
-    ServoCtrl J5(s3, 1730, 0, 2.4, 0.2, 0.8, 2.8, 0.2, 0.5, 100, 20, 20); // down/up
-    ServoCtrl J6(s4, 1470, 7.5, 2, 0, 0.5, 2, 0, 0.5, 100, 20, 20);       // ???
+    ServoCtrl J1(s1, J1_middle, J1_threshold, J1_kp_down, J1_ki_down,
+    J1_kd_down, J1_kp_up, J1_ki_up, J1_kd_up, J1_error_saturate, 
+    J1_integrator_saturate_down, J1_integrator_saturate_up);
+    DblMotorCtrl J2(J2_threshold, J2_kp_down, J2_ki_down, J2_kd_down, 
+    J2_kp_up, J2_ki_up, J2_kd_up, J2_error_saturate, 
+    J2_integrator_saturate_down, J2_integrator_saturate_up);
+    ServoCtrl J3(s2, J3_middle, J3_threshold, J3_kp_down, J3_ki_down, 
+    J3_kd_down, J3_kp_up, J3_ki_up, J3_kd_up, J3_error_saturate, 
+    J3_integrator_saturate_down, J3_integrator_saturate_up);
+    ServoCtrl J5(s3, J5_middle, J5_threshold, J5_kp_down, J5_ki_down, 
+    J5_kd_down, J5_kp_up, J5_ki_up, J5_kd_up, J5_error_saturate, 
+    J5_integrator_saturate_down, J5_integrator_saturate_up);
+    ServoCtrl J6(s4, J6_middle, J6_threshold, J6_kp_down, J6_ki_down, 
+    J6_kd_down, J6_kp_up, J6_ki_up, J6_kd_up, J6_error_saturate, 
+    J6_integrator_saturate_down, J6_integrator_saturate_up);
     GripperCrtl H1(h1);
 
     MotorManagerEndSwitchInit();
