@@ -2,7 +2,6 @@
 #define NO_MIN_MAX
 #define END_SWITCH_ENABLE
 
-
 #ifndef HROBOTCONFIG
 #define HROBOTCONFIG
 

@@ -3,13 +3,11 @@
 
 #include <cstddef>
 #include <cstdint>
-#include "hFramework.h"
 #include "hCloudClient.h"
 #include <iostream>
 #include <cstdio>
 #include <stdio.h>
 #include <string.h>
-#include <map>
 #include <vector>
 
 #include "hFramework.h"
@@ -27,6 +25,7 @@ enum joint_names
     J5,
     J6
 };
+
 enum motion_type
 {
     cartesianInter,

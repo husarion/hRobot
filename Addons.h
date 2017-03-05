@@ -14,6 +14,33 @@ enum typeCo
     jointsCo
 };
 
+enum instruction_input_type{UI, SERIAL, JOG, CODE};
+
+enum instruction_command{
+                        SET_J, SET_C, SET_R, SET_HERE_J, SET_HERE_C, SET_HERE_R,
+                        SHOWALL,
+                        SHOWCURRENT, SHOWCURRENT_J, SHOWCURRENT_C, SHOWCURRENT_R,
+                        SHOW, SHOW_J, SHOW_C, SHOW_R,
+                        MOVE,
+                        MOVES,
+                        DELAY,
+                        H1OPEN, H1CLOSE, H1STOP,
+                        RESETPOINTS,
+                        PRECYSION_ON, PRECYSION_OFF,
+                        CONFIG_COM_STRIM, CONFIG_COM_UI, CONFIG_COM_SERIAL, CONFIG_COM_JOG, CONFIG_COM_CODE,
+                        OFFSET_ONPOINT, OFFSET_INPOINT
+                        };
+
+struct instruction_code{
+    instruction_command comand;
+    const char* point_name;
+    float param1;
+    float param2;
+    float param3;
+    float param4;
+    float param5;
+};
+
 class Coordinates
 {
   private:

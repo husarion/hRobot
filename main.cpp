@@ -1,19 +1,11 @@
-// hRobot_1_00_2 edited by mzabinski94@gmail.com
-// from hRobot_0_05_06
+// hRobot_1_00_10 edited by mzabinski94@gmail.com
+// from hRobot_1_00_09
 
 #include <cstddef>
 #include <cstdint>
 #include "hFramework.h"
 #include "hCloudClient.h"
-#include "Addons.h"
-#include "GeoMath.h"
-#include "ErrorLog.h"
-#include "UI_Buttons.h"
-#include "UI_Labels.h"
-#include "ParseCommand.h"
-#include "MotionManager.h"
-#include "MotorManager.h"
-#include "ParseCommand.h"
+#include "Arm.h"
 
 float current[9];
 // jog, ui, recorded positions values
@@ -28,26 +20,10 @@ void hMain()
 {
 	Serial.init(115200);
 	sys.setLogDev(&Serial);
-	MotorManagerInit();
-	sys.setSysLogDev(&devNull);
-	sys.taskCreate(printfErrorTask);
-	sys.taskCreate(ComandInputTaskSerial, 1, 2000, "ComandInputTS");
-	sys.taskCreate(ComandInputTaskUI, 1, 2000, "ComandInputTU");
-	//changeInputToSerial();
-	platform.begin(&RPi);
-	platform.ui.configHandler = cfgHandler;
-	platform.ui.onButtonEvent = onButtonEvent;
-	platform.ui.onValueChangeEvent = onValueChangeEvent;
-	platform.ui.setProjectId("@@@PROJECT_ID@@@");
-
-	sys.taskCreate(MotorManagerUpdateTask, 2, 400, "MotorManUpdate");
-
-	sys.taskCreate(MotionTask);
-    
-	sys.taskCreate(printOnLabelsTask, 2, 2000, "labelsTask");
+	Arm hRobot;
+	hRobot.ArmInit();
 
 	for (;;) {
-		//printOnLabels();
 		sys.delay(1000);
 		LED1.toggle();
 	}
