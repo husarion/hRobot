@@ -11,6 +11,9 @@
 #include "MotionManager.h"
 #include "ErrorLog.h"
 #include "ParseCommand.h"
+#include "Arm.h"
+
+extern Arm hRobot;
 
 // jog, ui, recorded positions values
 extern float target[9];
@@ -58,6 +61,7 @@ void passUIcom()
     {
 	UIcon_pass[i] = UIcon[i];
     }
+	hRobot.AddInstruction(UIcon_pass, UI);
 }
 
 void cfgHandler()
@@ -282,7 +286,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCartesianMov")
 	{
 	    mode = 1;
-	    changeInputToUI();
+		hRobot.ChangeInstructionInputType(UI, cartesianCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		target[1] = MotionManager::get().getTarget(1);
@@ -297,7 +301,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnJointsMov")
 	{
 	    mode = 0;
-	    changeInputToUI();
+		hRobot.ChangeInstructionInputType(UI, jointsCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		target[1] = MotionManager::get().getTarget(1);
@@ -312,7 +316,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCodeUSBMov")
 	{
 	    mode = 3;
-	    changeInputToSerial();
+		hRobot.ChangeInstructionInputType(SERIAL);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }
@@ -326,7 +330,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCodeUIMov")
 	{
 	    mode = 2;
-	    changeInputToUI();
+		hRobot.ChangeInstructionInputType(UI);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }

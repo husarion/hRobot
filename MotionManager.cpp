@@ -629,3 +629,5 @@ void MotionManager::waitForReachingTarget()
             sys.delay(precysion_mode_time);
     }
 }
+
+bool MotionManager::Istruction(instruction_code instruction){}//TODO:

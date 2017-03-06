@@ -28,12 +28,20 @@ void Arm::ChangeInstructionInputType(instruction_input_type new_type, typeCo jog
     jog_type = jog_new_type;
 }
 
+void Arm::ChangeInstructionInputType(instruction_input_type new_type){
+    input_type = new_type;
+}
+
 bool Arm::AddInstruction(instruction_code instruction, instruction_input_type from){
     if(from != input_type){
         return false;
     }
     else{
+		//
+		//if
+		//
 
+		return MotionManager::get().Istruction(instruction);
     }
 }//TODO:
 
@@ -42,18 +50,109 @@ bool Arm::AddInstruction(char* instruction, instruction_input_type from){
         return false;
     }
     else{
-        
-    }
-}//TODO:
+        char command[20];
+		char param1[20];
+		char param2[20];
+		char param3[20];
+		char param4[20];
+		char param5[20];
+		char param6[20];
+		char param7[20];
 
-bool Arm::AddInstructionStream(char* instruction, instruction_input_type from){
-    if(from != input_type){
-        return false;
+		for(int i = 0; i<20; i++){
+			command[i] = 0;
+			param1[i] = 0;
+			param2[i] = 0;
+			param3[i] = 0;
+			param4[i] = 0;
+			param5[i] = 0;
+			param6[i] = 0;
+			param7[i] = 0;
+		}
+
+		int i = 0;
+		int j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				command[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param1[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param2[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param3[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param4[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param5[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param6[j] = instruction[i];
+			}
+			i++;
+		}
+		j = 0;
+		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+			if(j < 20){
+				param7[j] = instruction[i];
+			}
+			i++;
+		}
+		return AddInstruction(CommandTranslation(command, param1, param2, param3, param4, param5, param6, param7), from);
     }
-    else{
-        
+}
+
+void Arm::AddInstructionStream(char* instruction, instruction_input_type from){
+    if(from == input_type){
+		int i = 0;
+		int j = 0;
+		while(instruction[i] != 0){
+			char* s;
+			s = new char[160];
+			for(int i = 0; i<160; i++){
+				s[i] = 0;
+			}
+			while(instruction[i] != (int)";"){
+				s[j] = instruction[i];
+				i++;
+				j++;
+			}
+			s[j+1] = 0;
+			j = 0;
+			AddInstruction(s, from);
+			sys.delay(100);
+		}
     }
-}//TODO:
+}
 
 instruction_code Arm::CommandTranslation(const char* command, const  char* param1, const  char* param2, 
 const  char* param3, const char* param4, const char* param5, const char* param6, const char* param7){
@@ -219,6 +318,9 @@ const  char* param3, const char* param4, const char* param5, const char* param6,
             instruction_code code = {H1STOP, "", 0, 0, 0, 0, 0};
             return code;
 	    }
+
+		instruction_code code = {NOCOMMAND, "", 0, 0, 0, 0, 0};
+    	return code;
     }
 
 void Arm::ArmInit(){
@@ -226,7 +328,6 @@ void Arm::ArmInit(){
 	sys.setSysLogDev(&devNull);
 	sys.taskCreate(printfErrorTask);
 	sys.taskCreate(ComandInputTaskSerial, 1, 2000, "ComandInputTS");
-	sys.taskCreate(ComandInputTaskUI, 1, 2000, "ComandInputTU");
 	platform.begin(&RPi);
 	platform.ui.configHandler = cfgHandler;
 	platform.ui.onButtonEvent = onButtonEvent;

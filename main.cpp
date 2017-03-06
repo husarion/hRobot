@@ -16,11 +16,12 @@ float tempKp = 8.4;
 float tempKi = 0.35;
 float tempKd = 9;
 
+Arm hRobot;
+
 void hMain()
 {
 	Serial.init(115200);
 	sys.setLogDev(&Serial);
-	Arm hRobot;
 	hRobot.ArmInit();
 
 	for (;;) {

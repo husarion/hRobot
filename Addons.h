@@ -17,6 +17,7 @@ enum typeCo
 enum instruction_input_type{UI, SERIAL, JOG, CODE};
 
 enum instruction_command{
+                        NOCOMMAND,
                         SET_J, SET_C, SET_R, SET_HERE_J, SET_HERE_C, SET_HERE_R,
                         SHOWALL,
                         SHOWCURRENT, SHOWCURRENT_J, SHOWCURRENT_C, SHOWCURRENT_R,

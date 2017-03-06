@@ -91,6 +91,7 @@ class MotionManager
     void setTarget(Coordinates *point);
     float getTarget(int t_joint);
     void setPrecysionMode(bool precysion, float t_volume, int t_time);
+    bool Istruction(instruction_code instruction);
 
     void GriperOpen();
     void GriperClose();
