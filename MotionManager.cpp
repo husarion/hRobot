@@ -20,7 +20,7 @@ extern float target[9];
 
 const int time_motion_task = 100;
 float time_iteration = 75;
-int step_mul = 10;
+float step_mul = 10;
 
 Coordinates to_send;
 
@@ -175,21 +175,20 @@ void MotionManager::MoveJointInter()
     {
         targetPoint.Translate(jointsCo);
     }
+    
     /////////
     float internal_speed = 5; //5mm/s
     float ovrd = 1;           //100% OVRD
     /////////
-    
-    float dis = pointToPointDistance(targetPoint, curentPoint);
-    int steps = (int)(dis / (internal_speed * ovrd * 10)) * step_mul;
-
+    float dis; 
+    dis = pointToPointDistance(targetPoint, curentPoint);
+    int steps = (int)((dis / (internal_speed * ovrd * 10)) * step_mul);
     float j1_iter_step = (targetPoint.k1 - curentPoint.k1) / steps;
     float j2_iter_step = (targetPoint.k2 - curentPoint.k2) / steps;
     float j3_iter_step = (targetPoint.k3 - curentPoint.k3) / steps;
     float j5_iter_step = (targetPoint.k4 - curentPoint.k4) / steps;
     float j6_iter_step = (targetPoint.k5 - curentPoint.k5) / steps;
     to_send = curentPoint;
-
     for (int i = 0; i < steps; i++)
     {
         to_send.k1 += j1_iter_step;
@@ -528,6 +527,12 @@ void MotionManager::showCurrent()
     Serial.printf("Current Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f\n", curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5);
 }
 
+void MotionManager::showCurrent(typeCo t_type){
+    Coordinates a = curentPoint;
+    a.Translate(t_type);
+    Serial.printf("Current Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f\n", a.k1, a.k2, a.k3, a.k4, a.k5);
+}
+
 void MotionManager::setOffset(char *point)
 {
     Coordinates a;
@@ -630,4 +635,129 @@ void MotionManager::waitForReachingTarget()
     }
 }
 
-bool MotionManager::Istruction(instruction_code instruction){}//TODO:
+bool MotionManager::Istruction(instruction_code instruction){
+    if(instruction.comand == SET_J){
+        addPoint(instruction.point_name, jointsCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
+        return true;
+    }
+    if(instruction.comand == SET_R){
+        addPoint(instruction.point_name, cylindricalCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
+        return true;
+    }
+    if(instruction.comand == SET_C){
+        addPoint(instruction.point_name, cartesianCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
+        return true;
+    }
+    if(instruction.comand == SET_HERE_J){
+       addPoint(instruction.point_name, jointsCo);
+        return true;
+    }
+    if(instruction.comand == SET_HERE_R){
+       addPoint(instruction.point_name, cylindricalCo);
+        return true;
+    }
+    if(instruction.comand == SET_HERE_C){
+       addPoint(instruction.point_name, cartesianCo);
+        return true;
+    }
+    if(instruction.comand == SHOW){
+        show(instruction.point_name);
+        return true;
+    }
+    if(instruction.comand == SHOW_J){
+        show(instruction.point_name, jointsCo);
+        return true;
+    }
+    if(instruction.comand == SHOW_R){
+        show(instruction.point_name, cylindricalCo);
+        return true;
+    }
+    if(instruction.comand == SHOW_C){
+        show(instruction.point_name, cartesianCo);
+        return true;
+    }
+    if(instruction.comand == SHOWALL){
+        showAll();
+        return true;
+    }
+    if(instruction.comand == SHOWCURRENT){
+        showCurrent();
+        return true;
+    }
+    if(instruction.comand == SHOWCURRENT_J){
+        showCurrent(jointsCo);
+        return true;
+    }
+    if(instruction.comand == SHOWCURRENT_R){
+        showCurrent(cylindricalCo);
+        return true;
+    }
+    if(instruction.comand == SHOWCURRENT_C){
+        showCurrent(cartesianCo);
+        return true;
+    }
+    if(instruction.comand == DELAY){
+        addMotionInst(instruction.param1, 0, 0, 0, 0, Delay);
+        return true;
+    }
+    if(instruction.comand == PRECYSION_ON){
+        setPrecysionMode(true, instruction.param2, (int)instruction.param3);
+		ErrorLogs::Err().sendPar(28, (int)instruction.param2);
+        return true;
+    }
+    if(instruction.comand == PRECYSION_OFF){
+        setPrecysionMode(false, instruction.param2, (int)instruction.param3);
+		ErrorLogs::Err().sendPar(29, (int)instruction.param2);
+        return true;
+    }
+    if(instruction.comand == RESETPOINTS){
+        clearPoints();
+        return true;
+    }
+    if(instruction.comand == OFFSET_ONPOINT){
+        setOffset();
+        return true;
+    }
+    if(instruction.comand == OFFSET_INPOINT){
+        setOffset(instruction.point_name);
+        return true;
+    }
+    if(instruction.comand == H1OPEN){
+        GriperOpen();
+        return true;
+    }
+    if(instruction.comand == H1CLOSE){
+        GriperClose();
+        return true;
+    }
+    if(instruction.comand == H1STOP){
+        GriperStop();
+        return true;
+    }
+    if(instruction.comand == MOVES){
+        ErrorLogs::Err().send(Move(cartesianInter, instruction.point_name));
+        return true;
+    }
+    if(instruction.comand == MOVE){
+        ErrorLogs::Err().send(Move(jointsInter, instruction.point_name));
+        return true;
+    }
+    if(instruction.comand == MOVE_JI){
+        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
+        return true;
+    }
+    if(instruction.comand == MOVE_CI){
+        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
+        return true;
+    }
+    if(instruction.comand == MOVE_JN){
+        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
+        return true;
+    }
+    if(instruction.comand == MOVE_CN){
+        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
+        return true;
+    }
+    
+    return false;
+}

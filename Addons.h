@@ -14,7 +14,7 @@ enum typeCo
     jointsCo
 };
 
-enum instruction_input_type{UI, SERIAL, JOG, CODE};
+enum instruction_input_type{UI, SERIAL, JOG, CODE, STREAM};
 
 enum instruction_command{
                         NOCOMMAND,
@@ -22,7 +22,7 @@ enum instruction_command{
                         SHOWALL,
                         SHOWCURRENT, SHOWCURRENT_J, SHOWCURRENT_C, SHOWCURRENT_R,
                         SHOW, SHOW_J, SHOW_C, SHOW_R,
-                        MOVE,
+                        MOVE, MOVE_JI, MOVE_CI, MOVE_JN, MOVE_CN,
                         MOVES,
                         DELAY,
                         H1OPEN, H1CLOSE, H1STOP,
@@ -34,7 +34,7 @@ enum instruction_command{
 
 struct instruction_code{
     instruction_command comand;
-    const char* point_name;
+    char* point_name;
     float param1;
     float param2;
     float param3;

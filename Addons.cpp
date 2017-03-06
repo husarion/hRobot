@@ -101,7 +101,12 @@ void Coordinates::Translate(typeCo t_type){
 float pointToPointDistance(Coordinates from, Coordinates to){
     from.Translate(cartesianCo);
     to.Translate(cartesianCo);
-    return sqrt((to.k1-from.k1)*(to.k1-from.k1)+(to.k2-from.k2)*(to.k2-from.k2)+(to.k3-from.k3)*(to.k3-from.k3));
+    float x = pow(to.k1-from.k1, 2);
+    float y = pow(to.k2-from.k2, 2);
+    float z = pow(to.k3-from.k3, 2);
+    float s = x+y+z;
+    float t = sqrt(s);
+    return t;
 }
 
 float greaterThan(float temp1, float temp2){

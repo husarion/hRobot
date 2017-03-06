@@ -61,36 +61,42 @@ class MotionManager
 
     MotionManager();
     MotionManager(const MotionManager &);
-
+    
+    Coordinates findPoint(char *name);
+    bool checkPoint(char *name);
+    bool checkRange(Coordinates *point);
+    
+    void showAll();
+    void showCurrent();
+    void showCurrent(typeCo t_type);
+    void setOffset(float t_k1, float t_k2, float t_k3);
+    void setOffset(char *point);
+    void setOffset();
+    void setPrecysionMode(bool precysion, float t_volume, int t_time);
+    void addPoint(char *name, typeCo type, float k1, float k2, float k3);
+    void addPoint(char *name, typeCo type, float k1, float k2, float k3, float k4, float k5);
+    void addPoint(char *name, typeCo type);
+    void clearPoints();
+    void changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
+    int Move(motion_type mode, char *point_name);
+    
   public:
     static MotionManager &get()
     {
         static MotionManager singleton;
         return singleton;
     }
-
-    int Move(motion_type mode, char *point_name);
-    void addPoint(char *name, typeCo type, float k1, float k2, float k3);
-    void addPoint(char *name, typeCo type, float k1, float k2, float k3, float k4, float k5);
-    void addPoint(char *name, typeCo type);
-    void clearPoints();
-    Coordinates findPoint(char *name);
-    void changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
-    bool checkPoint(char *name);
+    
     void show(char *name);
     void show(char *name, typeCo type);
     void show(Coordinates point);
-    void showAll();
-    void showCurrent();
-    void setOffset(float t_k1, float t_k2, float t_k3);
-    void setOffset(char *point);
-    void setOffset();
-    bool checkRange(Coordinates *point);
+    
     void setMinMax(joint_names joint, float t_min, float t_max);
     void setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void setTarget(Coordinates *point);
     float getTarget(int t_joint);
-    void setPrecysionMode(bool precysion, float t_volume, int t_time);
+    
+    
     bool Istruction(instruction_code instruction);
 
     void GriperOpen();

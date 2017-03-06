@@ -7,10 +7,7 @@
 #include "hCloudClient.h"
 #include "UI_Buttons.h"
 #include "Addons.h"
-#include "MotorManager.h"
-#include "MotionManager.h"
 #include "ErrorLog.h"
-#include "ParseCommand.h"
 #include "Arm.h"
 
 extern Arm hRobot;
@@ -42,18 +39,6 @@ extern float tempKd;
 
 char UIcon[512];
 char UIcon_pass[512];
-
-char readUI()
-{
-    char t;
-	t = UIcon_pass[0];
-	for (int k = 0; k < 511; k++)
-	{
-	    UIcon_pass[k] = UIcon_pass[k + 1];
-	}
-	UIcon_pass[511] = (char)0;
-    return t;
-}
 
 void passUIcom()
 {
@@ -183,31 +168,31 @@ void onValueChangeEvent(hId id, const char *data)
     }
 }
 
-void sendtoMotionManager()
+void sendInstruction()
 {
     if (mode == 0)
     {
-	Coordinates a(jointsCo, target[1], target[2], target[3], target[5], target[6]);
-	MotionManager::get().addMotionInst(a, jointsNorm);
+	    instruction_code code = {MOVE_JN, "", target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
     }
     if (mode == 1)
     {
-	Coordinates a(cartesianCo, target[1], target[2], target[3], target[5], target[6]);
-	MotionManager::get().addMotionInst(a, cartesianNorm);
+    	instruction_code code = {MOVE_CN, "", target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
     }
 }
 
-void sendtoMotionManagerInter()
+void sendInstructionInter()
 {
     if (mode == 0)
     {
-	Coordinates a(jointsCo, target[1], target[2], target[3], target[5], target[6]);
-	MotionManager::get().addMotionInst(a, jointsInter);
+        instruction_code code = {MOVE_JI, "", target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
     }
     if (mode == 1)
     {
-	Coordinates a(cartesianCo, target[1], target[2], target[3], target[5], target[6]);
-	MotionManager::get().addMotionInst(a, cartesianInter);
+        instruction_code code = {MOVE_CI, "", target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
     }
 }
 
@@ -237,12 +222,18 @@ void onButtonEvent(hId id, ButtonEventType type)
 	    tempKi -= 0.05;
 
 	// grabber buttons
-	if (id == "btn_close")
-	    setGripperValume(-15);
-	if (id == "btn_open")
-	    setGripperValume(15);
-	if (id == "btn_stop")
-	    setGripperValume(0);
+	if (id == "btn_close"){
+	    instruction_code code = {H1OPEN, "", 0, 0, 0, 0, 0};
+        hRobot.AddInstruction(code, JOG);
+	}
+	if (id == "btn_open"){
+	    instruction_code code = {H1CLOSE, "", 0, 0, 0, 0, 0};
+        hRobot.AddInstruction(code, JOG);
+	}
+	if (id == "btn_stop"){
+	    instruction_code code = {H1STOP, "", 0, 0, 0, 0, 0};
+        hRobot.AddInstruction(code, JOG);
+	}
 
 	// do button for code execution
 	if (id == "btn_do"){
@@ -289,11 +280,11 @@ void onButtonEvent(hId id, ButtonEventType type)
 		hRobot.ChangeInstructionInputType(UI, cartesianCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
-		target[1] = MotionManager::get().getTarget(1);
-		target[2] = MotionManager::get().getTarget(2);
-		target[3] = MotionManager::get().getTarget(3);
-		target[4] = MotionManager::get().getTarget(4);
-		target[5] = MotionManager::get().getTarget(5);
+		//target[1] = MotionManager::get().getTarget(1);
+		//target[2] = MotionManager::get().getTarget(2);
+		//target[3] = MotionManager::get().getTarget(3);
+		//target[4] = MotionManager::get().getTarget(4);
+		//target[5] = MotionManager::get().getTarget(5);
 	    }
 	    last_mode = mode;
 	    ErrorLogs::Err().send(21);
@@ -304,11 +295,11 @@ void onButtonEvent(hId id, ButtonEventType type)
 		hRobot.ChangeInstructionInputType(UI, jointsCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
-		target[1] = MotionManager::get().getTarget(1);
-		target[2] = MotionManager::get().getTarget(2);
-		target[3] = MotionManager::get().getTarget(3);
-		target[4] = MotionManager::get().getTarget(4);
-		target[5] = MotionManager::get().getTarget(5);
+		//target[1] = MotionManager::get().getTarget(1);
+		//target[2] = MotionManager::get().getTarget(2);
+		//target[3] = MotionManager::get().getTarget(3);
+		//target[4] = MotionManager::get().getTarget(4);
+		//target[5] = MotionManager::get().getTarget(5);
 	    }
 	    last_mode = mode;
 	    ErrorLogs::Err().send(21);
@@ -322,7 +313,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	    }
 	    else
 	    {
-		MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
+		//MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
 	    }
 	    last_mode = mode;
 	    ErrorLogs::Err().send(22);
@@ -336,7 +327,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	    }
 	    else
 	    {
-		MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
+		//MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
 	    }
 	    last_mode = mode;
 	    ErrorLogs::Err().send(27);
@@ -388,7 +379,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 49;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos2_write")
 	    {
@@ -407,7 +399,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 50;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos3_write")
 	    {
@@ -426,7 +419,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 51;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+	    instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos4_write")
 	    {
@@ -445,7 +439,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 52;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos5_write")
 	    {
@@ -464,7 +459,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 53;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos6_write")
 	    {
@@ -483,7 +479,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 54;
 		temp[2] = 85;
 		temp[3] = 73;
-		MotionManager::get().addPoint(temp, jointsCo, target[1], target[2], target[3], target[4], target[5]);
+		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+        hRobot.AddInstruction(code, JOG);
 	    }
 
 	    // read positions buttons
@@ -494,7 +491,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos1[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 	    if (id == "btn_pos2_read")
 	    {
@@ -503,7 +500,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos2[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 	    if (id == "btn_pos3_read")
 	    {
@@ -512,7 +509,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos3[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 	    if (id == "btn_pos4_read")
 	    {
@@ -521,7 +518,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos4[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 	    if (id == "btn_pos5_read")
 	    {
@@ -530,7 +527,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos5[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 	    if (id == "btn_pos6_read")
 	    {
@@ -539,213 +536,213 @@ void onButtonEvent(hId id, ButtonEventType type)
 		    target[k] = pos6[k];
 		}
 		pos_label = 0;
-		sendtoMotionManagerInter();
+		sendInstructionInter();
 	    }
 
 	    // jog buttons target
 	    if (id == "btn11")
 	    {
 		target[1] += step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn12")
 	    {
 		target[1] += step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn13")
 	    {
 		target[1] += step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn14")
 	    {
 		target[1] += step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn15")
 	    {
 		target[1] -= step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn16")
 	    {
 		target[1] -= step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn17")
 	    {
 		target[1] -= step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn18")
 	    {
 		target[1] -= step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 
 	    if (id == "btn21")
 	    {
 		target[2] += step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn22")
 	    {
 		target[2] += step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn23")
 	    {
 		target[2] += step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn24")
 	    {
 		target[2] += step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn25")
 	    {
 		target[2] -= step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn26")
 	    {
 		target[2] -= step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn27")
 	    {
 		target[2] -= step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn28")
 	    {
 		target[2] -= step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 
 	    if (id == "btn31")
 	    {
 		target[3] += step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn32")
 	    {
 		target[3] += step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn33")
 	    {
 		target[3] += step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn34")
 	    {
 		target[3] += step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn35")
 	    {
 		target[3] -= step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn36")
 	    {
 		target[3] -= step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn37")
 	    {
 		target[3] -= step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn38")
 	    {
 		target[3] -= step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 
 	    if (id == "btn51")
 	    {
 		target[5] += step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn52")
 	    {
 		target[5] += step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn53")
 	    {
 		target[5] += step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn54")
 	    {
 		target[5] += step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn55")
 	    {
 		target[5] -= step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn56")
 	    {
 		target[5] -= step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn57")
 	    {
 		target[5] -= step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn58")
 	    {
 		target[5] -= step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 
 	    if (id == "btn61")
 	    {
 		target[6] += step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn62")
 	    {
 		target[6] += step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn63")
 	    {
 		target[6] += step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn64")
 	    {
 		target[6] += step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn65")
 	    {
 		target[6] -= step1;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn66")
 	    {
 		target[6] -= step2;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn67")
 	    {
 		target[6] -= step3;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	    if (id == "btn68")
 	    {
 		target[6] -= step4;
-		sendtoMotionManager();
+		sendInstruction();
 	    }
 	}
 	/*else
