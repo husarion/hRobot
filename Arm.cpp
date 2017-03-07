@@ -177,18 +177,18 @@ void Arm::AddInstructionStream(char* instruction, instruction_input_type from){
     if(from == input_type){
 		int i = 0;
 		int j = 0;
-		while(instruction[i] != 0){
+		while(instruction[i]>31){
 			char* s;
-			s = new char[160];
+			s = new char[255];
 			for(int i = 0; i<160; i++){
 				s[i] = 0;
 			}
-			while(instruction[i] != (int)";"){
+			while(instruction[i]!=59){
 				s[j] = instruction[i];
 				i++;
 				j++;
 			}
-			s[j+1] = 0;
+			i++;
 			j = 0;
 			AddInstruction(s, from);
 			sys.delay(100);
