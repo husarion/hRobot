@@ -34,8 +34,8 @@ const float J5_max = 180.0;
 const float encoder_tics_J1 = 20;
 const float encoder_tics_J2 = 18 * 4;
 const float encoder_tics_J3 = 20 / 4.355;
-const float encoder_tics_J5 = 0.2;
-const float encoder_tics_J6 = 4.4;
+const float encoder_tics_J5 = 4.4;
+const float encoder_tics_J6 = 0.2;
 
 #ifdef END_SWITCH_ENABLE
 bool EndSwitchActive = true;
