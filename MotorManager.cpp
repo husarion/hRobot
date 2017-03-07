@@ -73,7 +73,7 @@ void MotorManagerInitEncoders()
     hSens2.pin1.setIn_pu();
     enkoder2.resetEncoderCnt();
     //J6
-    hMot4.setEncoderPolarity(Polarity::Reversed);
+    enkoder2.setEncoderPolarity(Polarity::Reversed);
 }
 
 void MotorManagerInit()
@@ -115,8 +115,8 @@ void MotorManagerUpdateTask()
         current[1] = (float)hMot1.getEncoderCnt() / encoder_tics_J1 + offset.k1;
         current[2] = (float)hMot2.getEncoderCnt() / encoder_tics_J2 + offset.k2;
         current[3] = (float)hMot3.getEncoderCnt() / encoder_tics_J3 + offset.k3;
-        current[5] = (float)enkoder2.getEncoderCnt() / encoder_tics_J5 + offset.k4;
-        current[6] = (float)hMot4.getEncoderCnt() / encoder_tics_J6 + offset.k5;
+        current[5] = (float)hMot4.getEncoderCnt() / encoder_tics_J5 + offset.k4;
+        current[6] = (float)enkoder2.getEncoderCnt() / encoder_tics_J6 + offset.k5;
         // motion
 
         if (EndSwitchActive)
