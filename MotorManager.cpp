@@ -73,7 +73,7 @@ void MotorManagerInitEncoders()
     hSens2.pin1.setIn_pu();
     enkoder2.resetEncoderCnt();
     //J6
-    enkoder2.setEncoderPolarity(Polarity::Reversed);
+    //enkoder2.setEncoderPolarity(Polarity::Reversed);
 }
 
 void MotorManagerInit()
