@@ -37,8 +37,9 @@ enum motion_type
 
 struct motion_inst
 {
+    instruction_code instruction;
     Coordinates point;
-    motion_type type;
+    //motion_type type;
 };
 
 void MotionTask();
@@ -78,7 +79,7 @@ class MotionManager
     void addPoint(char *name, typeCo type);
     void clearPoints();
     void changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
-    int Move(motion_type mode, char *point_name);
+    //int Move(motion_type mode, char *point_name);
     
   public:
     static MotionManager &get()
@@ -109,8 +110,7 @@ class MotionManager
     void MoveCartesianInter();
     void MoveCartesianNorm();
 
-    void addMotionInst(Coordinates point, motion_type movment_type);
-    void addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5, motion_type movment_type);
+    void addMotionInst(motion_inst instruction);
 };
 
 #endif

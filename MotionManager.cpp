@@ -214,28 +214,196 @@ void MotionManager::update()
 
     if (motions.size() > 0)
     {
-        switch (motions[0].type)
-        {
-        case cartesianInter:
-            targetPoint = motions[0].point;
-            MoveCartesianInter();
-            break;
-        case cartesianNorm:
-            targetPoint = motions[0].point;
-            MoveCartesianNorm();
-            break;
-        case jointsInter:
+        switch(motions[0].instruction.comand){
+        case NOCOMMAND: break;
+        
+        case SET_J:
+            addPoint(motions[0].instruction.point_name, jointsCo, 
+            motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, 
+            motions[0].instruction.param5);
+        break;
+        case SET_C:
+            addPoint(motions[0].instruction.point_name, cartesianCo, 
+            motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, 
+            motions[0].instruction.param5);break;
+        case SET_R:
+            addPoint(motions[0].instruction.point_name, cylindricalCo, 
+            motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, 
+            motions[0].instruction.param5);break;
+        case SET_HERE_J:
+            addPoint(motions[0].instruction.point_name, jointsCo);    
+        break;
+        case SET_HERE_C:
+            addPoint(motions[0].instruction.point_name, cartesianCo);
+        break;
+        case SET_HERE_R:
+            addPoint(motions[0].instruction.point_name, cylindricalCo);
+        break;
+        
+        case SHOWALL:
+            showAll();
+        break;
+        case SHOWCURRENT:
+            showCurrent();
+        break;
+        case SHOWCURRENT_J:
+            showCurrent(jointsCo);
+        break;
+        case SHOWCURRENT_C:
+            showCurrent(cartesianCo);
+        break;
+        case SHOWCURRENT_R:
+            showCurrent(cylindricalCo);
+        break;
+        case SHOW:
+            show(motions[0].instruction.point_name);
+        break;
+        case SHOW_J:
+            show(motions[0].instruction.point_name, jointsCo);
+        break;
+        case SHOW_C:
+            show(motions[0].instruction.point_name, cartesianCo);
+        break;
+        case SHOW_R:
+            show(motions[0].instruction.point_name, cylindricalCo);
+        break;
+        
+        case MOVE:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(jointsCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
             targetPoint = motions[0].point;
             MoveJointInter();
-            break;
-        case jointsNorm:
+        break;
+        case MOVE_JI:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(jointsCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
+            targetPoint = motions[0].point;
+            MoveJointInter();
+            targetPoint = motions[0].point;
+            MoveJointInter();
+        break;
+        case MOVE_CI:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(cartesianCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
+            targetPoint = motions[0].point;
+            MoveCartesianInter();
+        break;
+        case MOVE_JN:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(jointsCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
+            targetPoint = motions[0].point;
+            MoveJointInter();
             targetPoint = motions[0].point;
             MoveJointNorm();
-            break;
-        case Delay:
-            sys.delay(motions[0].point.k1);
-            break;
+        break;
+        case MOVE_CN:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(jointsCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
+            targetPoint = motions[0].point;
+            MoveJointInter();
+            targetPoint = motions[0].point;
+            MoveCartesianNorm();
+        break;
+        
+        case MOVES:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(cartesianCo);
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
+            targetPoint = motions[0].point;
+            MoveCartesianInter();
+        break;
+        
+        case DELAY:
+            sys.delay(motions[0].instruction.param1);
+        break;
+        
+        case H1OPEN:
+            GriperOpen();
+        break;
+        case H1CLOSE:
+            GriperClose();
+        break;
+        case H1STOP:
+            GriperStop();
+        break;
+        
+        case RESETPOINTS:
+            clearPoints();
+        break;
+        
+        case PRECYSION_ON:
+            setPrecysionMode(true, motions[0].instruction.param2, (int)motions[0].instruction.param3);
+		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
+        break;
+        case PRECYSION_OFF:
+            setPrecysionMode(false, motions[0].instruction.param2, (int)motions[0].instruction.param3);
+		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
+        break;
+        
+        case CONFIG_COM_STRIM: break;
+        case CONFIG_COM_UI: break;
+        case CONFIG_COM_SERIAL: break;
+        case CONFIG_COM_JOG: break;
+        case CONFIG_COM_CODE: break;
+        
+        case OFFSET_ONPOINT:
+            setOffset();
+        break;
+        case OFFSET_INPOINT:
+            setOffset(motions[0].instruction.point_name);
+        break;
         }
+        
         if (motions.size() == 1)
         {
             motions.clear();
@@ -258,21 +426,9 @@ void MotionManager::update()
     //printf("tar: %f\tcur: %f\tsend: %f\t\n", targetPoint.k1, curentPoint.k1, to_send.k1);
 }
 
-void MotionManager::addMotionInst(Coordinates point, motion_type movment_type)
-{
-    motion_inst a;
-    a.point = point;
-    a.type = movment_type;
-    motions.push_back(a);
-}
-
-void MotionManager::addMotionInst(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5, motion_type movment_type)
-{
-    Coordinates t_point(jointsCo, t_k1, t_k2, t_k3, t_k4, t_k5);
-    motion_inst a;
-    a.point = t_point;
-    a.type = movment_type;
-    motions.push_back(a);
+void MotionManager::addMotionInst(motion_inst instruction)
+{   
+    motions.push_back(instruction);
 }
 
 MotionManager::MotionManager()
@@ -283,46 +439,6 @@ MotionManager::MotionManager()
 }
 
 MotionManager::MotionManager(const MotionManager &) {}
-
-int MotionManager::Move(motion_type mode, char *point_name)
-{
-    switch (mode)
-    {
-    case jointsInter:
-        if (checkPoint(point_name))
-        {
-            Coordinates a;
-            a = findPoint(point_name);
-            a.Translate(jointsCo);
-            addMotionInst(a, jointsInter);
-        }
-        else
-        {
-            ErrorLogs::Err().sendPar(18, point_name);
-        }
-        break;
-    case cartesianInter:
-        if (checkPoint(point_name))
-        {
-            Coordinates a;
-            a = findPoint(point_name);
-            a.Translate(jointsCo);
-            addMotionInst(a, cartesianInter);
-        }
-        else
-        {
-            ErrorLogs::Err().sendPar(18, point_name);
-        }
-        break;
-    case cartesianNorm:
-        break;
-    case jointsNorm:
-        break;
-    case Delay:
-        break;
-    }
-    return 26;
-}
 
 void MotionManager::addPoint(char *name, typeCo type, float k1, float k2, float k3)
 {
@@ -636,128 +752,19 @@ void MotionManager::waitForReachingTarget()
 }
 
 bool MotionManager::Istruction(instruction_code instruction){
-    if(instruction.comand == SET_J){
-        addPoint(instruction.point_name, jointsCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
-        return true;
+    motion_inst a;
+    a.instruction.comand = instruction.comand;
+    a.instruction.param1 = instruction.param1;
+    a.instruction.param2 = instruction.param2;
+    a.instruction.param3 = instruction.param3;
+    a.instruction.param4 = instruction.param4;
+    a.instruction.param5 = instruction.param5;
+    for(int i=0; i< 20; i++){
+        a.instruction.point_name = instruction.point_name;
     }
-    if(instruction.comand == SET_R){
-        addPoint(instruction.point_name, cylindricalCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
-        return true;
+    if(instruction.point_name != ""){
+        a.point = findPoint(a.instruction.point_name);
     }
-    if(instruction.comand == SET_C){
-        addPoint(instruction.point_name, cartesianCo, instruction.param1, instruction.param2, instruction.param3, instruction.param4, instruction.param5);
-        return true;
-    }
-    if(instruction.comand == SET_HERE_J){
-       addPoint(instruction.point_name, jointsCo);
-        return true;
-    }
-    if(instruction.comand == SET_HERE_R){
-       addPoint(instruction.point_name, cylindricalCo);
-        return true;
-    }
-    if(instruction.comand == SET_HERE_C){
-       addPoint(instruction.point_name, cartesianCo);
-        return true;
-    }
-    if(instruction.comand == SHOW){
-        show(instruction.point_name);
-        return true;
-    }
-    if(instruction.comand == SHOW_J){
-        show(instruction.point_name, jointsCo);
-        return true;
-    }
-    if(instruction.comand == SHOW_R){
-        show(instruction.point_name, cylindricalCo);
-        return true;
-    }
-    if(instruction.comand == SHOW_C){
-        show(instruction.point_name, cartesianCo);
-        return true;
-    }
-    if(instruction.comand == SHOWALL){
-        showAll();
-        return true;
-    }
-    if(instruction.comand == SHOWCURRENT){
-        showCurrent();
-        return true;
-    }
-    if(instruction.comand == SHOWCURRENT_J){
-        showCurrent(jointsCo);
-        return true;
-    }
-    if(instruction.comand == SHOWCURRENT_R){
-        showCurrent(cylindricalCo);
-        return true;
-    }
-    if(instruction.comand == SHOWCURRENT_C){
-        showCurrent(cartesianCo);
-        return true;
-    }
-    if(instruction.comand == DELAY){
-        addMotionInst(instruction.param1, 0, 0, 0, 0, Delay);
-        return true;
-    }
-    if(instruction.comand == PRECYSION_ON){
-        setPrecysionMode(true, instruction.param2, (int)instruction.param3);
-		ErrorLogs::Err().sendPar(28, (int)instruction.param2);
-        return true;
-    }
-    if(instruction.comand == PRECYSION_OFF){
-        setPrecysionMode(false, instruction.param2, (int)instruction.param3);
-		ErrorLogs::Err().sendPar(29, (int)instruction.param2);
-        return true;
-    }
-    if(instruction.comand == RESETPOINTS){
-        clearPoints();
-        return true;
-    }
-    if(instruction.comand == OFFSET_ONPOINT){
-        setOffset();
-        return true;
-    }
-    if(instruction.comand == OFFSET_INPOINT){
-        setOffset(instruction.point_name);
-        return true;
-    }
-    if(instruction.comand == H1OPEN){
-        GriperOpen();
-        return true;
-    }
-    if(instruction.comand == H1CLOSE){
-        GriperClose();
-        return true;
-    }
-    if(instruction.comand == H1STOP){
-        GriperStop();
-        return true;
-    }
-    if(instruction.comand == MOVES){
-        ErrorLogs::Err().send(Move(cartesianInter, instruction.point_name));
-        return true;
-    }
-    if(instruction.comand == MOVE){
-        ErrorLogs::Err().send(Move(jointsInter, instruction.point_name));
-        return true;
-    }
-    if(instruction.comand == MOVE_JI){
-        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
-        return true;
-    }
-    if(instruction.comand == MOVE_CI){
-        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
-        return true;
-    }
-    if(instruction.comand == MOVE_JN){
-        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
-        return true;
-    }
-    if(instruction.comand == MOVE_CN){
-        //ErrorLogs::Err().send(MotionManager::get().Move(jointsInter, instruction.point_name));
-        return true;
-    }
-    
-    return false;
+    addMotionInst(a);
+    return true;
 }
