@@ -24,6 +24,9 @@ void hMain()
 	sys.setLogDev(&Serial);
 	hRobot.ArmInit();
 
+	sys.delay(10000);
+    //hRobot.AddInstructionStream("SET P2 J 0 -20 30 0 0; SET P1 J; SHOWALL; SHOW P1; SHOW P2;\n", SERIAL);
+
 	for (;;) {
 		sys.delay(1000);
 		LED1.toggle();

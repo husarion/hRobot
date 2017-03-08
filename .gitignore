@@ -3,6 +3,7 @@
 /.vscode/c_cpp_properties.json
 /.vscode/tasks.json
 /.vscode/launch.json
+/.vscode/debugger.bat
 /CMakeCache.txt
 /CMakeFiles
 Makefile
