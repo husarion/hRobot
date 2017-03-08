@@ -53,6 +53,7 @@ bool Arm::AddInstruction(instruction_code instruction, instruction_input_type fr
     }
     else{
 		if(instruction.comand == NOCOMMAND){
+			ErrorLogs::Err().send(30);
 		    return false;
 		}
 		if(instruction.comand == CONFIG_COM_STRIM){

@@ -241,6 +241,9 @@ void ErrorLogs::translateError(int error)
         Serial.printf("Precysion mode off, set time : %d", getLastInt());
         temp = "\r\n";
         break;
+    case 30:
+        temp = "Comand unknown\r\n";
+        break;
     //tu dodac wlasne bledy aby skrypt je obsluzyl
 
     //
