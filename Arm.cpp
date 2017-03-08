@@ -106,63 +106,70 @@ bool Arm::AddInstruction(char* instruction, instruction_input_type from){
 
 		int i = 0;
 		int j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				command[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param1[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param2[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param3[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param4[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param5[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param6[j] = instruction[i];
 			}
 			i++;
 			j++;
 		}
+		i++;
 		j = 0;
-		while((int)instruction[i] != (int)" " || (int)instruction[i] != (int)"\n"){
+		while(instruction[i] > 32){
 			if(j < 20){
 				param7[j] = instruction[i];
 			}
@@ -182,6 +189,9 @@ void Arm::AddInstructionStream(char* instruction, instruction_input_type from){
 			s = new char[255];
 			for(int i = 0; i<160; i++){
 				s[i] = 0;
+			}
+			if(instruction[i] == 32){
+				i++;
 			}
 			while(instruction[i]!=59){
 				s[j] = instruction[i];
