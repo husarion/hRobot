@@ -39,108 +39,75 @@ void MotionManager::MoveCartesianInter()
     {
         targetPoint.Translate(cartesianCo);
     }
-
+    Coordinates begin = curentPoint;
     float dis = sqrt(pow(curentPoint.k1-targetPoint.k1, 2)+pow(curentPoint.k2-targetPoint.k2, 2)+pow(curentPoint.k3-targetPoint.k3, 2));
 
-    int samp = (dis/10);
+    float speed = 10;//mm/s
+    float l = dis*speed*1000/time_iteration;
 
-    float disn = dis/samp;
-    float disn_c = dis/samp;
+    float x1 = curentPoint.k1;
+    float y1 = curentPoint.k2;
+    float z1 = curentPoint.k3;
+    float x2 = targetPoint.k1;
+    float y2 = targetPoint.k2;
+    float z2 = targetPoint.k3;
 
-    float a, b, bd, ad, cd, delta, x1, x2, x, y1, y2, y, z1, z2, z, dis_test1, dis_test2;
+    float a = (y1 - y2) / (x1 - x2);
+    float b = y1 - x1*a;
+    float c = (z1 - z2) / (y1 - y2);
+    float d = z1 - y1*c;
 
-    for(int i=1; i<samp; i++){
-        a = (curentPoint.k2-targetPoint.k2)/(curentPoint.k1-targetPoint.k1);
-        b = curentPoint.k2-a*curentPoint.k1;
+    float p_dis = 0;
+    float x, y, z, delta, kx, ky;
+    to_send = curentPoint;
+    while((dis-p_dis)>1){
+        x = to_send.k1;
+        y = to_send.k2;
+        z = to_send.k3;
 
-        bd = -2*curentPoint.k1 + 2*a*b - 2*a*curentPoint.k2;
-        ad = pow(a, 2)+1;
-        cd = -pow(disn, 2) + pow(curentPoint.k1, 2) + pow(b, 2) - 2*b*curentPoint.k2 - pow(curentPoint.k2,2);
-
-        delta = pow(bd, 2) - 4*ad*cd;
-        if(delta == 0){
-            x = -bd / (2*ad);
-        }
-        else{
-        x1 = (-bd + sqrt(delta) )/(2*ad);
-        x2 = (-bd - sqrt(delta) )/(2*ad);
-
-        dis_test1 = abs(curentPoint.k1-targetPoint.k1);
-        dis_test2 = abs(x1-targetPoint.k1);
-
-        if(dis_test2 < dis_test1){
+        delta = pow(2*x-2*y*a+2*a*b-2*z*c+2*c*d, 2)-4*(1+a*a+c*c)*(-l*l+x*x+y*y+b*b-2*y*b+z*z+d*d-2*z*d);
+        x1 = ((-2*x+2*y*a-2*a*b+2*z*c-2*z*d-2*z*d)+sqrt(delta))/(2+2*a*a+2*c*c);
+        x2 = ((-2*x+2*y*a-2*a*b+2*z*c-2*z*d-2*z*d)-sqrt(delta))/(2+2*a*a+2*c*c);
+        if(targetPoint.k1-x1<targetPoint.k1-x2){
+            kx = pow(x - x1, 2);
             x = x1;
         }
         else{
+            kx = pow(x - x2, 2);
             x = x2;
         }
-        }
-        a = (curentPoint.k1-targetPoint.k1)/(curentPoint.k2-targetPoint.k2);
-        b = curentPoint.k1-a*curentPoint.k2;
 
-        bd = 2*a*b - 2*a*curentPoint.k1 - 2*curentPoint.k2;
-        ad = pow(a, 2)+1;
-        cd = -pow(disn, 2) + pow(b, 2) - 2*b*curentPoint.k1 + pow(curentPoint.k1, 2) + pow(curentPoint.k2, 2);
-
-        delta = pow(bd, 2) - 4*ad*cd;
-        if(delta == 0){
-            y = -bd / (2*ad);
-        }
-        else{
-        y1 = (-bd + sqrt(delta) )/(2*ad);
-        y2 = (-bd - sqrt(delta) )/(2*ad);
-
-        dis_test1 = abs(curentPoint.k2-targetPoint.k2);
-        dis_test2 = abs(y1-targetPoint.k2);
-
-        if(dis_test2 < dis_test1){
+        delta = pow(-2*y-2*z*c+2*c*d, 2)-4*(1+c*c)*(-l*l+kx+y*y+z*z+d*d-2*z*d);
+        y1 = ((2*y+2*z*c-2*c*d)+sqrt(delta))/(2+2*c*c);
+        y2 = ((2*y+2*z*c-2*c*d)-sqrt(delta))/(2+2*c*c);
+        if(targetPoint.k2-y1<targetPoint.k2-y2){
+            ky = pow(y - y1, 2);
             y = y1;
         }
         else{
+            ky = pow(y - y2, 2);
             y = y2;
         }
-        }
 
-        a = (curentPoint.k2-targetPoint.k2)/(curentPoint.k3-targetPoint.k3);
-        b = curentPoint.k2-a*curentPoint.k3;
-
-        bd = -2*curentPoint.k3 + 2*a*b - 2* a * curentPoint.k2;
-        ad = pow(a, 2)+1;
-        cd = -pow(disn, 2) + pow(curentPoint.k3, 2) + pow(b, 2) - 2*b*curentPoint.k2 + pow(curentPoint.k2, 2);
-
-        delta = pow(bd, 2) - 4*ad*cd;
-        if(delta == 0){
-            z = -bd / (2*ad);
+        delta = (4*z*z) - 4*(kx+ky+z*z-l*l);
+        z1 = ((-2*z)+sqrt(delta))/(2);
+        z2 = ((-2*z)-sqrt(delta))/(2);
+        if(targetPoint.k3-z1<targetPoint.k3-z2){
+            z = z1;
         }
         else{
-            z1 = (-bd + sqrt(delta) )/(2*ad);
-            z2 = (-bd - sqrt(delta) )/(2*ad);
-
-            dis_test1 = abs(curentPoint.k3-targetPoint.k3);
-            dis_test2 = abs(z1-targetPoint.k3);
-
-            if(dis_test2 < dis_test1){
-                z = z1;
-            }
-            else{
-                z = z2;
-            }
+            z = z2;
         }
-
-        if(targetPoint.k1<x || targetPoint.k2<y || targetPoint.k3<z){
-            break;
-        }
-        else{
-            to_send.type = cartesianCo;
-            to_send.k1 = x;
-            to_send.k2 = y;
-            to_send.k3 = z;
-            to_send.k4 = targetPoint.k4;
-            to_send.k5 = targetPoint.k5;
-            MotorManagerUpdateTargetDef(to_send);
-            disn = disn + disn_c;
-        }
+        to_send.k1 = x;
+        to_send.k2 = y;
+        to_send.k3 = z;
+        to_send.k4 = targetPoint.k4;
+        to_send.k5 = targetPoint.k5;
+        MotorManagerUpdateTargetDef(to_send);
+        sys.delay(time_iteration);
+        p_dis = sqrt(pow(begin.k1-to_send.k1, 2)+pow(begin.k2-to_send.k2, 2)+pow(begin.k3-to_send.k3, 2));
     }
+    
 }
 
 void MotionManager::MoveCartesianNorm()
