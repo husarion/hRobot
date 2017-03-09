@@ -217,6 +217,11 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
+			if (strcmp(param2, "D") == 0){
+            instruction_code code = {MOVE_D, temp, (float)atof(param3), 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+	        }
 	        if (strcmp(param2, "JI") == 0){
             instruction_code code = {MOVE_JI, "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
@@ -248,9 +253,16 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    }
 	    if (strcmp(command, "MOVES") == 0)
 	    {
-            instruction_code code = {MOVES, temp, 0, 0, 0, 0, 0};
-            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
-            return code;
+			if (strcmp(param2, "") == 0){
+            	instruction_code code = {MOVES, temp, 0, 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param2, "D") == 0){
+            	instruction_code code = {MOVES_D, temp, (float)atof(param3), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
 	    }
 	    if (strcmp(command, "SET") == 0)
 	    {

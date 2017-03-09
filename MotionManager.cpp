@@ -244,13 +244,31 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(jointsCo);
+                targetPoint = a;
+                MoveJointInter();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveJointInter();
+        break;
+        case MOVE_D:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(cartesianCo);
+                a.k3 = a.k3 + motions[0].instruction.param1;
+                
+                a.Translate(jointsCo);
+                show(a);
+                targetPoint = a;
+                MoveJointInter();
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
         break;
         case MOVE_JI:
             if (checkPoint(motions[0].instruction.point_name))
@@ -258,15 +276,13 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(jointsCo);
+                targetPoint = a;
+                MoveJointInter();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveJointInter();
-            targetPoint = motions[0].point;
-            MoveJointInter();
         break;
         case MOVE_CI:
             if (checkPoint(motions[0].instruction.point_name))
@@ -274,13 +290,13 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(cartesianCo);
+                targetPoint = a;
+                MoveCartesianInter();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveCartesianInter();
         break;
         case MOVE_JN:
             if (checkPoint(motions[0].instruction.point_name))
@@ -288,15 +304,13 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(jointsCo);
+                targetPoint = a;
+                MoveJointNorm();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveJointInter();
-            targetPoint = motions[0].point;
-            MoveJointNorm();
         break;
         case MOVE_CN:
             if (checkPoint(motions[0].instruction.point_name))
@@ -304,15 +318,13 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(jointsCo);
+                targetPoint = a;
+                MoveCartesianNorm();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveJointInter();
-            targetPoint = motions[0].point;
-            MoveCartesianNorm();
         break;
         
         case MOVES:
@@ -321,13 +333,28 @@ void MotionManager::update()
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(cartesianCo);
+                targetPoint = a;
+                MoveCartesianInter();
             }
             else
             {
                 ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
             }
-            targetPoint = motions[0].point;
-            MoveCartesianInter();
+        break;
+        case MOVES_D:
+            if (checkPoint(motions[0].instruction.point_name))
+            {
+                Coordinates a;
+                a = findPoint(motions[0].instruction.point_name);
+                a.Translate(cartesianCo);
+                a.k3 = a.k3 + motions[0].instruction.param1;
+                targetPoint = a;
+                MoveCartesianInter();
+            }
+            else
+            {
+                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+            }
         break;
         
         case DELAY:
