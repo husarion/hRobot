@@ -7,7 +7,6 @@
 // internal data
 	
 //float step=deg2rad(45);
-	
 
 Coordinates  joints2cylin(Coordinates temp)
 {
@@ -46,7 +45,7 @@ float  convergenceCartesian(Coordinates temp1, Coordinates temp2)
 
 float  convergenceCylindrical(Coordinates temp1, Coordinates temp2)
 {
-	return sqrt(sq(temp1.k1 - temp2.k1) + sq(temp1.k2 - temp2.k2)) + sqrt(sq(((temp1.k4 - temp2.k4)))) / 5;
+	return sqrt(sq(temp1.k1 - temp2.k1) + sq(temp1.k2 - temp2.k2)) + abs(temp1.k4 - temp2.k4) / 5;
 }
 
 Coordinates  cartes2joints(Coordinates cartes_target, Coordinates joints, float accuracy)

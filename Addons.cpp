@@ -40,7 +40,8 @@ float rad2deg(float rad){
 }
 
 float sq(float val){
-    return pow(val, 2);
+    return val*val;
+
 }
 
 void erco(int code){

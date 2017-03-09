@@ -449,13 +449,13 @@ void Arm::ArmInit(){
 	MotorManagerInit();
 	sys.setSysLogDev(&devNull);
 	sys.taskCreate(printfErrorTask);
-	sys.taskCreate(ComandInputTaskSerial, 1, 2000, "ComandInputTS");
+	sys.taskCreate(ComandInputTaskSerial, 1, 400, "ComITS");
 	platform.begin(&RPi);
 	platform.ui.configHandler = cfgHandler;
 	platform.ui.onButtonEvent = onButtonEvent;
 	platform.ui.onValueChangeEvent = onValueChangeEvent;
 	platform.ui.setProjectId("@@@PROJECT_ID@@@");
-	sys.taskCreate(MotorManagerUpdateTask, 2, 400, "MotorManUpdate");
-	sys.taskCreate(MotionTask);
-	sys.taskCreate(printOnLabelsTask, 2, 2000, "labelsTask");
+	sys.taskCreate(MotorManagerUpdateTask, 2, 400, "MorManU");
+	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
+	sys.taskCreate(printOnLabelsTask, 2, 1500, "labelsT");
 }

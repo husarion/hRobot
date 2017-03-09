@@ -18,17 +18,21 @@ float tempKd = 9;
 
 Arm hRobot;
 
+char taskList[1000];
+
 void hMain()
 {
 	Serial.init(115200);
 	sys.setLogDev(&Serial);
 	hRobot.ArmInit();
 
-	sys.delay(10000);
-    hRobot.AddInstructionStream("SET P2 J 0 0 30 0 0; SET P1 J; SHOWALL; MOVE P2; MOVE P1;\n", SERIAL);
+	sys.delay(3000);
+    hRobot.AddInstructionStream("SET P1 C 255 0 133 0 0; SET P0 J; SHOWALL;\n", SERIAL);
 
 	for (;;) {
 		sys.delay(1000);
 		LED1.toggle();
+		//sys.getTaskList(taskList);
+        //Serial.printf("\r\nName\tState\tPriority\tStack\tNum\r\n******************************\r\n%s", taskList);
 	}
 }
