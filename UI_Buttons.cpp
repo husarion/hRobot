@@ -9,8 +9,10 @@
 #include "Addons.h"
 #include "ErrorLog.h"
 #include "Arm.h"
+#include "CommandInput.h"
 
 extern Arm hRobot;
+extern CommandInput InputData;
 
 // jog, ui, recorded positions values
 extern float target[9];
@@ -46,7 +48,7 @@ void passUIcom()
     {
 	UIcon_pass[i] = UIcon[i];
     }
-	hRobot.AddInstruction(UIcon_pass, UI);
+	InputData.AddInstruction(UIcon_pass, UI);
 }
 
 void cfgHandler()
@@ -173,12 +175,12 @@ void sendInstruction()
     if (mode == 0)
     {
 	    instruction_code code = {MOVE_JN, "", target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
     }
     if (mode == 1)
     {
     	instruction_code code = {MOVE_CN, "", target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
     }
 }
 
@@ -187,12 +189,12 @@ void sendInstructionInter()
     if (mode == 0)
     {
         instruction_code code = {MOVE_JI, "", target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
     }
     if (mode == 1)
     {
         instruction_code code = {MOVE_CI, "", target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
     }
 }
 
@@ -224,15 +226,15 @@ void onButtonEvent(hId id, ButtonEventType type)
 	// grabber buttons
 	if (id == "btn_close"){
 	    instruction_code code = {H1OPEN, "", 0, 0, 0, 0, 0};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	}
 	if (id == "btn_open"){
 	    instruction_code code = {H1CLOSE, "", 0, 0, 0, 0, 0};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	}
 	if (id == "btn_stop"){
 	    instruction_code code = {H1STOP, "", 0, 0, 0, 0, 0};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	}
 
 	// do button for code execution
@@ -277,7 +279,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCartesianMov")
 	{
 	    mode = 1;
-		hRobot.ChangeInstructionInputType(UI, cartesianCo);
+		InputData.ChangeInstructionInputType(UI, cartesianCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		//target[1] = MotionManager::get().getTarget(1);
@@ -292,7 +294,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnJointsMov")
 	{
 	    mode = 0;
-		hRobot.ChangeInstructionInputType(UI, jointsCo);
+		InputData.ChangeInstructionInputType(UI, jointsCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		//target[1] = MotionManager::get().getTarget(1);
@@ -307,7 +309,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCodeUSBMov")
 	{
 	    mode = 3;
-		hRobot.ChangeInstructionInputType(SERIAL);
+		InputData.ChangeInstructionInputType(SERIAL);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }
@@ -321,7 +323,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "btnCodeUIMov")
 	{
 	    mode = 2;
-		hRobot.ChangeInstructionInputType(UI);
+		InputData.ChangeInstructionInputType(UI);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }
@@ -380,7 +382,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos2_write")
 	    {
@@ -400,7 +402,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos3_write")
 	    {
@@ -420,7 +422,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 	    instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos4_write")
 	    {
@@ -440,7 +442,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos5_write")
 	    {
@@ -460,7 +462,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos6_write")
 	    {
@@ -480,7 +482,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
-        hRobot.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, JOG);
 	    }
 
 	    // read positions buttons

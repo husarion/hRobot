@@ -15,11 +15,11 @@ struct soft_enc_desc
     uint8_t encPins;
 };
 
-class soft_enc
+class SoftEnc
 {
   public:
-    ~soft_enc() {}
-    soft_enc(IGPIO_int &p1, IGPIO_int &p2);
+    ~SoftEnc() {}
+    SoftEnc(IGPIO_int &p1, IGPIO_int &p2);
     void init();
     /**
 	 * @brief Get number of encoder ticks.

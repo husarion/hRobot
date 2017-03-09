@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "hFramework.h"
 #include "MotorManager.h"
-#include "soft_enc.h"
+#include "SoftEnc.h"
 #include "ServoCtrl.h"
 #include "DblMotorCtrl.h"
 #include "GripperCtrl.h"
@@ -49,7 +49,7 @@ bool stateP64;
 bool stateP64last;
 float stopInP64;
 
-soft_enc enkoder2(hSens1.pin1, hSens2.pin1);
+SoftEnc enkoder2(hSens1.pin1, hSens2.pin1);
 
 void MotorManagerInitServos()
 {

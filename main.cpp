@@ -6,6 +6,7 @@
 #include "hFramework.h"
 #include "hCloudClient.h"
 #include "Arm.h"
+#include "CommandInput.h"
 
 float current[9];
 // jog, ui, recorded positions values
@@ -17,6 +18,7 @@ float tempKi = 0.35;
 float tempKd = 9;
 
 Arm hRobot;
+CommandInput InputData(&hRobot);
 
 char taskList[1000];
 
@@ -27,7 +29,7 @@ void hMain()
 	hRobot.ArmInit();
 
 	sys.delay(3000);
-    hRobot.AddInstructionStream("SET P1 C 255 0 133 0 0; SET P0 J; SHOWALL;\n", SERIAL);
+    InputData.AddInstructionStream("SET P1 C 255 0 133 0 0; SET P0 J; SHOWALL;\n", SERIAL);
 
 	for (;;) {
 		sys.delay(1000);

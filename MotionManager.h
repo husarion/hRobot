@@ -80,9 +80,17 @@ class MotionManager
     void clearPoints();
     void changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     //int Move(motion_type mode, char *point_name);
-    
+    void addMotionInst(motion_inst instruction);
+    void MoveJointInter();
+    void MoveJointNorm();
+    void MoveCartesianInter();
+    void MoveCartesianNorm();
+    void GriperOpen();
+    void GriperClose();
+    void GriperStop();
+
   public:
-    static MotionManager &get()
+    static MotionManager & get()
     {
         static MotionManager singleton;
         return singleton;
@@ -96,21 +104,10 @@ class MotionManager
     void setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void setTarget(Coordinates *point);
     float getTarget(int t_joint);
-    
-    
+        
     bool Istruction(instruction_code instruction);
 
-    void GriperOpen();
-    void GriperClose();
-    void GriperStop();
-
-    void update();
-    void MoveJointInter();
-    void MoveJointNorm();
-    void MoveCartesianInter();
-    void MoveCartesianNorm();
-
-    void addMotionInst(motion_inst instruction);
+     void update();
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "soft_enc.h"
+#include "SoftEnc.h"
 #include "hFramework.h"
 
 void handler1(void *p)
@@ -65,7 +65,7 @@ void handler2(void *p)
     }
 }
 
-void soft_enc::init()
+void SoftEnc::init()
 {
     desc.enc_cnt = 0;
     desc.encPins |= ((desc.pin2->read()) << 1) + (desc.pin1->read());
@@ -76,18 +76,18 @@ void soft_enc::init()
     desc.enc_cnt = 0;
 }
 
-soft_enc::soft_enc(IGPIO_int &p1, IGPIO_int &p2)
+SoftEnc::SoftEnc(IGPIO_int &p1, IGPIO_int &p2)
 {
     desc.pin1 = &p1;
     desc.pin2 = &p2;
 }
 
-int32_t soft_enc::getEncoderCnt()
+int32_t SoftEnc::getEncoderCnt()
 {
     return desc.enc_cnt;
 }
 
-void soft_enc::resetEncoderCnt()
+void SoftEnc::resetEncoderCnt()
 {
     desc.enc_cnt = 0;
 }

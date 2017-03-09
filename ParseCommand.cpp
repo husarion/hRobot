@@ -13,8 +13,10 @@
 #include "Addons.h"
 #include "UI_Buttons.h"
 #include "Arm.h"
+#include "CommandInput.h"
 
 extern Arm hRobot;
+extern CommandInput InputData;
 
 ParseCommand parseCommand(Serial);
 
@@ -42,7 +44,7 @@ void ComandInputTaskSerial()
 	sys.delay(100);
 	if (1 == parseCommand.parse(command, param1, param2, param3, param4, param5, param6, param7))
 	{
-		hRobot.AddInstruction(hRobot.CommandTranslation(command, param1, param2, param3, param4, param5, param6, param7), SERIAL);
+		InputData.AddInstruction(InputData.CommandTranslation(command, param1, param2, param3, param4, param5, param6, param7), SERIAL);
 	}
     }
 }
