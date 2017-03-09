@@ -246,6 +246,7 @@ void MotionManager::update()
                 a.Translate(jointsCo);
                 targetPoint = a;
                 MoveJointInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -259,11 +260,10 @@ void MotionManager::update()
                 a = findPoint(motions[0].instruction.point_name);
                 a.Translate(cartesianCo);
                 a.k3 = a.k3 + motions[0].instruction.param1;
-                
                 a.Translate(jointsCo);
-                show(a);
                 targetPoint = a;
                 MoveJointInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -278,6 +278,7 @@ void MotionManager::update()
                 a.Translate(jointsCo);
                 targetPoint = a;
                 MoveJointInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -292,6 +293,7 @@ void MotionManager::update()
                 a.Translate(cartesianCo);
                 targetPoint = a;
                 MoveCartesianInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -306,6 +308,7 @@ void MotionManager::update()
                 a.Translate(jointsCo);
                 targetPoint = a;
                 MoveJointNorm();
+                waitForReachingTarget();
             }
             else
             {
@@ -320,6 +323,7 @@ void MotionManager::update()
                 a.Translate(jointsCo);
                 targetPoint = a;
                 MoveCartesianNorm();
+                waitForReachingTarget();
             }
             else
             {
@@ -335,6 +339,7 @@ void MotionManager::update()
                 a.Translate(cartesianCo);
                 targetPoint = a;
                 MoveCartesianInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -350,6 +355,7 @@ void MotionManager::update()
                 a.k3 = a.k3 + motions[0].instruction.param1;
                 targetPoint = a;
                 MoveCartesianInter();
+                waitForReachingTarget();
             }
             else
             {
@@ -376,11 +382,11 @@ void MotionManager::update()
         break;
         
         case PRECYSION_ON:
-            setPrecysionMode(true, motions[0].instruction.param2, (int)motions[0].instruction.param3);
+            setPrecysionMode(true, motions[0].instruction.param1, (int)motions[0].instruction.param2);
 		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
         break;
         case PRECYSION_OFF:
-            setPrecysionMode(false, motions[0].instruction.param2, (int)motions[0].instruction.param3);
+            setPrecysionMode(false, motions[0].instruction.param1, (int)motions[0].instruction.param2);
 		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
         break;
         
@@ -409,7 +415,6 @@ void MotionManager::update()
                 motions.erase(motions.begin());
             }
         }
-        waitForReachingTarget();
     }
 
     /////////

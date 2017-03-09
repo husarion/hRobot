@@ -45,7 +45,8 @@ float  convergenceCartesian(Coordinates temp1, Coordinates temp2)
 
 float  convergenceCylindrical(Coordinates temp1, Coordinates temp2)
 {
-	return sqrt(sq(temp1.k1 - temp2.k1) + sq(temp1.k2 - temp2.k2)) + abs(temp1.k4 - temp2.k4) / 5;
+	Serial.printf("obojetnie1 %f\tobojetnie2 %f\n", sqrt(sq(temp1.k1 - temp2.k1) + sq(temp1.k2 - temp2.k2)), (temp1.k4 - temp2.k4) / 2);
+	return sqrt(sq(temp1.k1 - temp2.k1) + sq(temp1.k2 - temp2.k2)) + abs(temp1.k4 - temp2.k4) / 2;
 }
 
 Coordinates  cartes2joints(Coordinates cartes_target, Coordinates joints, float accuracy)
@@ -109,7 +110,7 @@ Coordinates  cylin2joints(Coordinates cylin_target, Coordinates joints, float ac
 		}
 		//k4 modifk2
 		joints_temp = joints;	// make work object
-		joints_temp.k4 += st;	// modifk2 up
+		joints_temp.k4 += st*10;	// modifk2 up
 		cylin_temp = joints2cylin(joints_temp); // make material to compare
 		convergence = convergenceCylindrical(cylin_target, cylin_temp); // compare Coordinatess
 		if (convergence < convergenceLast) { // if better
@@ -117,7 +118,7 @@ Coordinates  cylin2joints(Coordinates cylin_target, Coordinates joints, float ac
 			joints = joints_temp; // save new Coordinates
 			//printf("5");
 		} else {
-			joints_temp.k4 -= st * 2;	// modifk2 up
+			joints_temp.k4 -= st * 20;	// modifk2 up
 			cylin_temp = joints2cylin(joints_temp); // make material to compare
 			convergence = convergenceCylindrical(cylin_target, cylin_temp); // compare cylin-cosd
 			if (convergence < convergenceLast) { // if better
@@ -128,12 +129,13 @@ Coordinates  cylin2joints(Coordinates cylin_target, Coordinates joints, float ac
 		}
 		cylin_temp = joints2cylin(joints); // make material to compare
 		convergence = convergenceCylindrical(cylin_target, cylin_temp);
-		//printf("convergence: %f, target k1: %f, ta rget k2: %f, temp k1: %f, temp k2: %f\k1\n", convergenceLast, cylin_target.k1, cylin_target.k2, cylin_temp.k1, cylin_temp.k2);
+		//Serial.printf("convergence: %f, target k1: %f, ta rget k2: %f, temp k1: %f, temp k2: %f\k1\n", convergenceLast, cylin_target.k1, cylin_target.k2, cylin_temp.k1, cylin_temp.k2);
+		Serial.printf("convergence: %f, st : %f\n", convergenceLast, st);
 		//printf("current calculated Coordinates: k1=%f, k2=%f, k3=%f, k4=%f, k5=%f\k1\n", rad2deg(joints.k1), rad2deg(joints.k2), rad2deg(joints.k3), rad2deg(joints.k4), rad2deg(joints.k5));
 		if (convergence >= convergenceLastLast) { // if tk2e re was ank2 imp rovement, ck2ange step.
 			st = st / 2;
 			if (st <= (accuracy / 10000000000000)) { // fell in extremum trap
-				//->printf("fell in extremum trap\t\n");
+				Serial.printf("fell in extremum trap\t\n");
 				done = true;
 				//joints=Coordinates(-0,-0,-0,-0,-0); //  TODO:  no idea what to return...
 			}
