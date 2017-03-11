@@ -39,75 +39,32 @@ void MotionManager::MoveCartesianInter()
     {
         targetPoint.Translate(cartesianCo);
     }
-    Coordinates begin = curentPoint;
-    float dis = sqrt(pow(curentPoint.k1-targetPoint.k1, 2)+pow(curentPoint.k2-targetPoint.k2, 2)+pow(curentPoint.k3-targetPoint.k3, 2));
+    Coordinates curentPointC = curentPoint;
+    curentPointC.Translate(cartesianCo);
+    float dis = sqrt(pow(curentPointC.k1-targetPoint.k1, 2)+pow(curentPointC.k2-targetPoint.k2, 2)+pow(curentPointC.k3-targetPoint.k3, 2));
 
     float speed = 10;//mm/s
-    float l = dis*speed*1000/time_iteration;
+    float l = dis*speed/time_iteration;
+    int iter = dis/l;
 
-    float x1 = curentPoint.k1;
-    float y1 = curentPoint.k2;
-    float z1 = curentPoint.k3;
-    float x2 = targetPoint.k1;
-    float y2 = targetPoint.k2;
-    float z2 = targetPoint.k3;
+    float x_tra = (targetPoint.k1 - curentPointC.k1 )/iter;
+    float y_tra = (targetPoint.k2 - curentPointC.k2 )/iter;
+    float z_tra = (targetPoint.k3 - curentPointC.k3 )/iter;
+    float a_tra = (targetPoint.k4 - curentPointC.k4 )/iter;
+    float b_tra = (targetPoint.k5 - curentPointC.k5 )/iter;
 
-    float a = (y1 - y2) / (x1 - x2);
-    float b = y1 - x1*a;
-    float c = (z1 - z2) / (y1 - y2);
-    float d = z1 - y1*c;
-
-    float p_dis = 0;
-    float x, y, z, delta, kx, ky;
-    to_send = curentPoint;
-    while((dis-p_dis)>1){
-        x = to_send.k1;
-        y = to_send.k2;
-        z = to_send.k3;
-
-        delta = pow(2*x-2*y*a+2*a*b-2*z*c+2*c*d, 2)-4*(1+a*a+c*c)*(-l*l+x*x+y*y+b*b-2*y*b+z*z+d*d-2*z*d);
-        x1 = ((-2*x+2*y*a-2*a*b+2*z*c-2*z*d-2*z*d)+sqrt(delta))/(2+2*a*a+2*c*c);
-        x2 = ((-2*x+2*y*a-2*a*b+2*z*c-2*z*d-2*z*d)-sqrt(delta))/(2+2*a*a+2*c*c);
-        if(targetPoint.k1-x1<targetPoint.k1-x2){
-            kx = pow(x - x1, 2);
-            x = x1;
-        }
-        else{
-            kx = pow(x - x2, 2);
-            x = x2;
-        }
-
-        delta = pow(-2*y-2*z*c+2*c*d, 2)-4*(1+c*c)*(-l*l+kx+y*y+z*z+d*d-2*z*d);
-        y1 = ((2*y+2*z*c-2*c*d)+sqrt(delta))/(2+2*c*c);
-        y2 = ((2*y+2*z*c-2*c*d)-sqrt(delta))/(2+2*c*c);
-        if(targetPoint.k2-y1<targetPoint.k2-y2){
-            ky = pow(y - y1, 2);
-            y = y1;
-        }
-        else{
-            ky = pow(y - y2, 2);
-            y = y2;
-        }
-
-        delta = (4*z*z) - 4*(kx+ky+z*z-l*l);
-        z1 = ((-2*z)+sqrt(delta))/(2);
-        z2 = ((-2*z)-sqrt(delta))/(2);
-        if(targetPoint.k3-z1<targetPoint.k3-z2){
-            z = z1;
-        }
-        else{
-            z = z2;
-        }
-        to_send.k1 = x;
-        to_send.k2 = y;
-        to_send.k3 = z;
-        to_send.k4 = targetPoint.k4;
-        to_send.k5 = targetPoint.k5;
+    to_send = curentPointC;
+    for(int i =0; i< iter; i++){
+        to_send.k1 += x_tra;
+        to_send.k2 += y_tra;
+        to_send.k3 += z_tra;
+        to_send.k4 += a_tra;
+        to_send.k5 += b_tra;
         MotorManagerUpdateTargetDef(to_send);
         sys.delay(time_iteration);
-        p_dis = sqrt(pow(begin.k1-to_send.k1, 2)+pow(begin.k2-to_send.k2, 2)+pow(begin.k3-to_send.k3, 2));
     }
-    
+    to_send = targetPoint;
+    MotorManagerUpdateTargetDef(to_send);
 }
 
 void MotionManager::MoveCartesianNorm()
@@ -147,7 +104,8 @@ void MotionManager::MoveJointInter()
     float internal_speed = 5; //5mm/s
     float ovrd = 1;           //100% OVRD
     /////////
-    float dis; 
+    //curentPoint.Translate(jointsCo);
+    float dis;
     dis = pointToPointDistance(targetPoint, curentPoint);
     int steps = (int)((dis / (internal_speed * ovrd * 10)) * step_mul);
     float j1_iter_step = (targetPoint.k1 - curentPoint.k1) / steps;
@@ -163,21 +121,21 @@ void MotionManager::MoveJointInter()
         to_send.k3 += j3_iter_step;
         to_send.k4 += j5_iter_step;
         to_send.k5 += j6_iter_step;
-
         MotorManagerUpdateTargetDef(to_send);
-
         sys.delay(time_iteration);
     }
 }
 
 void MotionManager::update()
 {
-    //curentPoint.k1 = current[1];
-    //curentPoint.k2 = current[2];
-    //curentPoint.k3 = current[3];
-    //curentPoint.k4 = current[5];
-    //curentPoint.k5 = current[6];
-    curentPoint = targetPoint;
+    curentPoint.k1 = current[1];
+    curentPoint.k2 = current[2];
+    curentPoint.k3 = current[3];
+    curentPoint.k4 = current[5];
+    curentPoint.k5 = current[6];
+    curentPoint.type = jointsCo;
+    //curentPoint = targetPoint;
+    //curentPoint.Translate(jointsCo);
 
     if (motions.size() > 0)
     {

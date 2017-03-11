@@ -182,8 +182,10 @@ void MotorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j
 
 void MotorManagerUpdateTargetDef(Coordinates point)
 {
-    if (point.type == jointsCo)
+    if (point.type != jointsCo)
     {
+        point.Translate(jointsCo);
+    }
         jointTarget[0] = point.k1;
         jointTarget[1] = point.k2;
         jointTarget[2] = point.k3;
@@ -195,7 +197,6 @@ void MotorManagerUpdateTargetDef(Coordinates point)
         jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
         jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4, minimum.k4);
         jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
-    }
 }
 
 void MotorManagerSetOffsetDef(int t_joint, float value)

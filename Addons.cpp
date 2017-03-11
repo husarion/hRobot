@@ -70,6 +70,8 @@ Coordinates::Coordinates(typeCo type, float k1, float k2, float k3){
     this->k1 = k1;
     this->k2 = k2;
     this->k3 = k3;
+    this->k4 = 0;
+    this->k5 = 0;
     this->type = type;
 }
 

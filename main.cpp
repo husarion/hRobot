@@ -29,7 +29,7 @@ void hMain()
 	hRobot.ArmInit();
 
 	sys.delay(3000);
-    InputData.AddInstructionStream("SET P0 J; SHOWALL; PRECYSION OFF 0 3000; MOVE P0; MOVE P0 D 100; MOVE P0 D -100; MOVE P0;\n", SERIAL);
+    InputData.AddInstructionStream("SET P0 J; SET P1 C 255 0 50 0 0; SHOWALL;\n", SERIAL);
 
 	for (;;) {
 		sys.delay(1000);
