@@ -32,18 +32,18 @@ class DblMotorCtrl
     int update(float error1, float t_time);
     int updateUp(float error1, float t_time);
     int updateDown(float error1, float t_time);
-    void make_output(float o1);
+    void makeOutput(float o1);
     void set_pid_valuesUp(float kp_t, float ki_t, float kd_t);
     void set_pid_valuesDown(float kp_t, float ki_t, float kd_t);
     void set_kp(float kp_t);
     void set_ki(float ki_t);
     void set_kd(float kd_t);
-    void set_error_saturate(float error_saturate_t);
-    void set_output_saturate(float output_saturate_t);
-    void set_threshold(float threshold_t);
-    float get_error_saturate();
-    float get_output_saturate();
-    float get_threshold();
+    void setErrorSaturate(float error_saturate_t);
+    void setOutputSaturate(float output_saturate_t);
+    void setThreshold(float threshold_t);
+    float getErrorSaturate();
+    float getOutputSaturate();
+    float getThreshold();
 };
 
 #endif

@@ -26,20 +26,10 @@ enum joint_names
     J6
 };
 
-enum motion_type
-{
-    cartesianInter,
-    cartesianNorm,
-    jointsInter,
-    jointsNorm,
-    Delay
-};
-
 struct motion_inst
 {
     instruction_code instruction;
     Coordinates point;
-    //motion_type type;
 };
 
 void MotionTask();
@@ -53,9 +43,9 @@ class MotionManager
     std::vector<char *> points_key;
     std::vector<Coordinates *> points_cor;
     std::vector<motion_inst> motions;
-    bool precysion_mode;
-    int precysion_mode_time;
-    float precysion_mode_volume;
+    bool presition_mode;
+    int presition_mode_time;
+    float presition_mode_value;
 
     bool checkRangeJ(Coordinates *point);
     void waitForReachingTarget();
@@ -69,25 +59,24 @@ class MotionManager
     
     void showAll();
     void showCurrent();
-    void showCurrent(typeCo t_type);
+    void showCurrent(type_co t_type);
     void setOffset(float t_k1, float t_k2, float t_k3);
     void setOffset(char *point);
     void setOffset();
-    void setPrecysionMode(bool precysion, float t_volume, int t_time);
-    void addPoint(char *name, typeCo type, float k1, float k2, float k3);
-    void addPoint(char *name, typeCo type, float k1, float k2, float k3, float k4, float k5);
-    void addPoint(char *name, typeCo type);
+    void setPresitionMode(bool presition, float t_volume, int t_time);
+    void addPoint(char *name, type_co type, float k1, float k2, float k3);
+    void addPoint(char *name, type_co type, float k1, float k2, float k3, float k4, float k5);
+    void addPoint(char *name, type_co type);
     void clearPoints();
-    void changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
-    //int Move(motion_type mode, char *point_name);
+    void changeCoordinates(char *name, type_co t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void addMotionInst(motion_inst instruction);
-    void MoveJointInter();
-    void MoveJointNorm();
-    void MoveCartesianInter();
-    void MoveCartesianNorm();
-    void GriperOpen();
-    void GriperClose();
-    void GriperStop();
+    void moveJointInter();
+    void moveJointNorm();
+    void moveCartesianInter();
+    void moveCartesianNorm();
+    void griperOpen();
+    void griperClose();
+    void griperStop();
 
   public:
     static MotionManager & get()
@@ -96,8 +85,8 @@ class MotionManager
         return singleton;
     }
     
-    void show(char *name);
-    void show(char *name, typeCo type);
+    void show(char* name);
+    void show(char* name, type_co type);
     void show(Coordinates point);
     
     void setMinMax(joint_names joint, float t_min, float t_max);
@@ -105,9 +94,9 @@ class MotionManager
     void setTarget(Coordinates *point);
     float getTarget(int t_joint);
         
-    bool Istruction(instruction_code instruction);
+    bool instruction(instruction_code instruction);
 
-     void update();
+    void update();
 };
 
 #endif

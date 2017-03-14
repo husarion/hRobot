@@ -7,11 +7,7 @@
 
 using namespace hFramework;
 
-void changeInputToUI();
-void changeInputToSerial();
-
-void ComandInputTaskSerial();
-void ComandInputTaskUI();
+void comandInputTaskSerial();
 
 typedef enum {
 	PARSE_COMMAND,

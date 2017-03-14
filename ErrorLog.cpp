@@ -9,9 +9,9 @@ void printfErrorTask()
     Serial.init(115200);
     for (;;)
     {
-        if (ErrorLogs::Err().getSize() > 0 && (int)sys.getRefTime() > 6000)
+        if (ErrorLogs::err().getSize() > 0 && (int)sys.getRefTime() > 6000)
         {
-            ErrorLogs::Err().translateError(ErrorLogs::Err().getLastError());
+            ErrorLogs::err().translateError(ErrorLogs::err().getLastError());
             sys.delay(100);
         }
         else
@@ -145,22 +145,22 @@ void ErrorLogs::translateError(int error)
         temp = "error: Fatal error";
         break;
     case 2:
-        temp = "worning: Test 1";
+        temp = "warning: Test 1";
         break;
     case 3:
-        temp = "worning: Test 2";
+        temp = "warning: Test 2";
         break;
     case 4:
-        temp = "worning: Test 3";
+        temp = "warning: Test 3";
         break;
     case 5:
-        temp = "error: This is not a error you are looking for";
+        temp = "error: There is no error you are looking for";
         break;
     case 6:
         temp = "error: Involid joint number";
         break;
     case 7:
-        temp = "info: New engine add";
+        temp = "info: New engine added";
         break;
     case 8:
         temp = "error: Servo fault";
@@ -181,17 +181,17 @@ void ErrorLogs::translateError(int error)
         temp = "info: Client task started";
         break;
     case 14:
-        temp = "info: Lading configuration from memory";
+        temp = "info: Loading configuration from memory";
         break;
     case 15:
-        temp = "worning: No configuration in memory";
+        temp = "warning: No configuration in memory";
         break;
     case 16:
-        temp = "worning: Saving configuration to memory";
+        temp = "warning: Saving configuration to memory";
         break;
     case 17:
-        //platform.printf("-----------------------> Code: ", getLastInt());
-        Serial.printf("-----------------------> Code: ", getLastInt());
+        //platform.printf("-----------------------> Code: ", getLastInt());   //print on serial in WebIDE
+        Serial.printf("-----------------------> Code: ", getLastInt());   //print on serial via USB
         temp = "\r\n";
         break;
     case 18:
@@ -234,11 +234,11 @@ void ErrorLogs::translateError(int error)
         temp = "Reading from UI\t\n";
         break;
     case 28:
-        Serial.printf("Precysion mode on, set time : %d", getLastInt());
+        Serial.printf("Presition mode on, set time : %d", getLastInt());
         temp = "\r\n";
         break;
     case 29:
-        Serial.printf("Precysion mode off, set time : %d", getLastInt());
+        Serial.printf("Presition mode off, set time : %d", getLastInt());
         temp = "\r\n";
         break;
     case 30:

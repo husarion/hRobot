@@ -45,7 +45,7 @@ float sq(float val){
 }
 
 void erco(int code){
-    ErrorLogs::Err().sendPar(17, code);
+    ErrorLogs::err().sendPar(17, code);
 }
 
 Coordinates::Coordinates(const Coordinates & t){
@@ -66,7 +66,7 @@ Coordinates::Coordinates(){
     this->type = jointsCo;
 }
 
-Coordinates::Coordinates(typeCo type, float k1, float k2, float k3){
+Coordinates::Coordinates(type_co type, float k1, float k2, float k3){
     this->k1 = k1;
     this->k2 = k2;
     this->k3 = k3;
@@ -75,7 +75,7 @@ Coordinates::Coordinates(typeCo type, float k1, float k2, float k3){
     this->type = type;
 }
 
-Coordinates::Coordinates(typeCo type, float k1, float k2, float k3, float k4, float k5){
+Coordinates::Coordinates(type_co type, float k1, float k2, float k3, float k4, float k5){
     this->k1 = k1;
     this->k2 = k2;
     this->k3 = k3;
@@ -84,7 +84,7 @@ Coordinates::Coordinates(typeCo type, float k1, float k2, float k3, float k4, fl
     this->type = type;
 }
 
-void Coordinates::Translate(typeCo t_type){
+void Coordinates::translate(type_co t_type){
     switch(type){
         case cartesianCo :
         if(t_type == cylindricalCo){*this = cartes2cylin(*this);}
@@ -102,8 +102,8 @@ void Coordinates::Translate(typeCo t_type){
 }
 
 float pointToPointDistance(Coordinates from, Coordinates to){
-    from.Translate(cartesianCo);
-    to.Translate(cartesianCo);
+    from.translate(cartesianCo);
+    to.translate(cartesianCo);
     float x = pow(to.k1-from.k1, 2);
     float y = pow(to.k2-from.k2, 2);
     float z = pow(to.k3-from.k3, 2);

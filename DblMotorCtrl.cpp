@@ -4,11 +4,20 @@
 #include "DblMotorCtrl.h"
 #include "Addons.h"
 #include "Addons.h"
-DblMotorCtrl::DblMotorCtrl(float threshold_t, float kp_down_t, float ki_down_t, float kd_down_t, float kp_up_t, float ki_up_t, float kd_up_t, float error_saturate_t,
-                           float integrator_saturate_down_t, float integrator_saturate_up_t)
-{
-    //UART(231000);
-    threshold_t = threshold_t;
+
+DblMotorCtrl::DblMotorCtrl(
+	float threshold_t, 
+	float kp_down_t, 
+	float ki_down_t, 
+	float kd_down_t, 
+	float kp_up_t, 
+	float ki_up_t, 
+	float kd_up_t, 
+	float error_saturate_t,
+	float integrator_saturate_down_t, 
+	float integrator_saturate_up_t ){
+
+    threshold = threshold_t;
     kp_down = kp_down_t;
     ki_down = ki_down_t;
     kd_down = kd_down_t;
@@ -35,7 +44,6 @@ int DblMotorCtrl::update(float error1, float t_time)
 
 int DblMotorCtrl::updateUp(float error1, float t_time)
 {
-    //UART(232000);
     error1 = thresholdFloat(error1, threshold);
     error1 = saturateFloat(error1, error_saturate);
     error1_integrator += error1;
@@ -46,12 +54,11 @@ int DblMotorCtrl::updateUp(float error1, float t_time)
 
     time_last = t_time;
 
-    make_output(output1);
+    makeOutput(output1);
 }
 
 int DblMotorCtrl::updateDown(float error1, float t_time)
 {
-    //UART(232000);
     error1 = thresholdFloat(error1, threshold);
     error1 = saturateFloat(error1, error_saturate);
     error1_integrator += error1;
@@ -62,9 +69,9 @@ int DblMotorCtrl::updateDown(float error1, float t_time)
 
     time_last = t_time;
 
-    make_output(output1);
+    makeOutput(output1);
 }
-void DblMotorCtrl::make_output(float o1)
+void DblMotorCtrl::makeOutput(float o1)
 {
     hMot2.setPower(saturateFloat(-o1, 100) * 7);
 }
@@ -83,32 +90,32 @@ void DblMotorCtrl::set_pid_valuesDown(float kp_t, float ki_t, float kd_t)
     kd_down = kd_t;
 }
 
-void DblMotorCtrl::set_error_saturate(float error_saturate_t)
+void DblMotorCtrl::setErrorSaturate(float error_saturate_t)
 {
     error_saturate = error_saturate_t;
 }
 
-void DblMotorCtrl::set_output_saturate(float output_saturate_t)
+void DblMotorCtrl::setOutputSaturate(float output_saturate_t)
 {
     output_saturate = output_saturate_t;
 }
 
-void DblMotorCtrl::set_threshold(float threshold_t)
+void DblMotorCtrl::setThreshold(float threshold_t)
 {
     threshold = threshold_t;
 }
 
-float DblMotorCtrl::get_error_saturate()
+float DblMotorCtrl::getErrorSaturate()
 {
     return error_saturate;
 }
 
-float DblMotorCtrl::get_output_saturate()
+float DblMotorCtrl::getOutputSaturate()
 {
     return output_saturate;
 }
 
-float DblMotorCtrl::get_threshold()
+float DblMotorCtrl::getThreshold()
 {
     return threshold;
 }

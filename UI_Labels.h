@@ -6,7 +6,7 @@
 #ifndef __UI_Labels__
 #define __UI_Labels__
 
-void printOnLabelsTask();
+void taskPrintOnLabels();
 void printOnLabels();
 
 #endif //__UI_Labels__
