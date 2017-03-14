@@ -7,7 +7,7 @@
 #ifndef __Addons__
 #define __Addons__
 
-enum typeCo
+enum type_co
 {
     cartesianCo,
     cylindricalCo,
@@ -46,7 +46,7 @@ class Coordinates
 {
   private:
   public:
-    typeCo type;
+    type_co type;
     float k1;
     float k2;
     float k3;
@@ -54,9 +54,9 @@ class Coordinates
     float k5;
     Coordinates(const Coordinates &t);
     Coordinates();
-    Coordinates(typeCo type, float k1, float k2, float k3);
-    Coordinates(typeCo type, float k1, float k2, float k3, float k4, float k5);
-    void Translate(typeCo t_type);
+    Coordinates(type_co type, float k1, float k2, float k3);
+    Coordinates(type_co type, float k1, float k2, float k3, float k4, float k5);
+    void translate(type_co t_type);
 };
 
 float pointToPointDistance(Coordinates from, Coordinates to);

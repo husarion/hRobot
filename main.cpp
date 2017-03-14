@@ -9,18 +9,12 @@
 #include "CommandInput.h"
 
 float current[9];
-// jog, ui, recorded positions values
 float target[9];
-
-// temp PID values for calibration
-float tempKp = 8.4;
-float tempKi = 0.35;
-float tempKd = 9;
 
 Arm hRobot;
 CommandInput InputData(&hRobot);
 
-char taskList[1000];
+//char taskList[1000];
 
 void hMain()
 {

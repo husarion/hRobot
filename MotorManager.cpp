@@ -13,15 +13,9 @@ extern float current[9];
 extern float target[9];
 Coordinates offset(jointsCo, 0, 0, 0, 0, 0);
 float jointTarget[6];
-//Coordinates minimum(jointsCo, -180.0, -120.0, -55.0, -150.0, -180.0);
-//Coordinates maximum(jointsCo, 180.0, 30.0, 170.0, 105.0, 180.0);
 
 Coordinates minimum(jointsCo, J1_min, J2_min, J3_min, J4_min, J5_min);
 Coordinates maximum(jointsCo, J1_max, J2_max, J3_max, J4_max, J5_max);
-
-extern float tempKp;
-extern float tempKi;
-extern float tempKd;
 
 //EndSwitch Variables
 //J1
@@ -49,16 +43,16 @@ bool stateP64;
 bool stateP64last;
 float stopInP64;
 
-SoftEnc enkoder2(hSens1.pin1, hSens2.pin1);
+SoftEnc soft_enkoder(hSens1.pin1, hSens2.pin1);
 
-void MotorManagerInitServos()
+void motorManagerInitServos()
 {
     hServoModule.enablePower();
 }
 
-void MotorManagerInitMotors() {}
+void motorManagerInitMotors() {}
 
-void MotorManagerInitEncoders()
+void motorManagerInitEncoders()
 {
     //J1
     hMot1.setEncoderPolarity(Polarity::Reversed);
@@ -68,26 +62,22 @@ void MotorManagerInitEncoders()
     //	enkoder1.init();
     //	enkoder1.resetEncoderCnt();
     //J5
-    enkoder2.init();
+    soft_enkoder.init();
     hSens1.pin1.setIn_pu();
     hSens2.pin1.setIn_pu();
-    enkoder2.resetEncoderCnt();
+    soft_enkoder.resetEncoderCnt();
     //J6
-    //enkoder2.setEncoderPolarity(Polarity::Reversed);
+    //soft_enkoder.setEncoderPolarity(Polarity::Reversed);
 }
 
-void MotorManagerInit()
+void motorManagerInit()
 {
-    //UART(211100);
-    MotorManagerInitEncoders();
-    //UART(211200);
-    MotorManagerInitServos();
-    //UART(211300);
-    MotorManagerInitMotors();
-    MotorManagerEndSwitchInit();
+    motorManagerInitEncoders();
+    motorManagerInitServos();
+    motorManagerEndswitchInit();
 }
 
-void MotorManagerUpdateTask()
+void motorManagerUpdateTask()
 {
     //UART(212100);
     ServoCtrl J1(s1, J1_middle, J1_threshold, J1_kp_down, J1_ki_down,
@@ -107,8 +97,6 @@ void MotorManagerUpdateTask()
     J6_integrator_saturate_down, J6_integrator_saturate_up);
     GripperCrtl H1(h1);
 
-    MotorManagerEndSwitchInit();
-
     for (;;)
     {
         // sensor
@@ -116,12 +104,12 @@ void MotorManagerUpdateTask()
         current[2] = (float)hMot2.getEncoderCnt() / encoder_tics_J2 + offset.k2;
         current[3] = (float)hMot3.getEncoderCnt() / encoder_tics_J3 + offset.k3;
         current[5] = (float)hMot4.getEncoderCnt() / encoder_tics_J5 + offset.k4;
-        current[6] = (float)enkoder2.getEncoderCnt() / encoder_tics_J6 + offset.k5;
+        current[6] = (float)soft_enkoder.getEncoderCnt() / encoder_tics_J6 + offset.k5;
         // motion
 
-        if (EndSwitchActive)
+        if (endswitch_active)
         {
-            EndSwitchRun();
+            endswitchRun();
         }
 
         int t = sys.getRefTime();
@@ -140,7 +128,7 @@ void MotorManagerUpdateTask()
     }
 }
 
-void MotorManagerUpdateTargetGlobal()
+void motorManagerUpdateTargetGlobal()
 {
     jointTarget[0] = target[1];
     jointTarget[1] = target[2];
@@ -156,16 +144,16 @@ void MotorManagerUpdateTargetGlobal()
     jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
 }
 
-void MotorManagerUpdateTargetGlobalTask()
+void motorManagerUpdateTargetGlobalTask()
 {
     for (;;)
     {
-        MotorManagerUpdateTargetGlobal();
+        motorManagerUpdateTargetGlobal();
         sys.delay(100);
     }
 }
 
-void MotorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j6)
+void motorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j6)
 {
     jointTarget[0] = j1;
     jointTarget[1] = j2;
@@ -180,11 +168,11 @@ void MotorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j
     jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
 }
 
-void MotorManagerUpdateTargetDef(Coordinates point)
+void motorManagerUpdateTargetDef(Coordinates point)
 {
     if (point.type != jointsCo)
     {
-        point.Translate(jointsCo);
+        point.translate(jointsCo);
     }
         jointTarget[0] = point.k1;
         jointTarget[1] = point.k2;
@@ -199,7 +187,7 @@ void MotorManagerUpdateTargetDef(Coordinates point)
         jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
 }
 
-void MotorManagerSetOffsetDef(int t_joint, float value)
+void motorManagerSetOffsetDef(int t_joint, float value)
 {
     switch (t_joint)
     {
@@ -221,13 +209,13 @@ void MotorManagerSetOffsetDef(int t_joint, float value)
     }
 }
 
-void MotorManagerSetOffsetDef(Coordinates current_point)
+void motorManagerSetOffsetDef(Coordinates current_point)
 {
-    current_point.Translate(jointsCo);
+    current_point.translate(jointsCo);
     offset = current_point;
 }
 
-bool CheckIfInRange(Coordinates *point)
+bool checkIfInRange(Coordinates *point)
 {
     if (point->k1 != saturateFloatUnsym(point->k1, maximum.k1, minimum.k1))
         return false;
@@ -247,7 +235,7 @@ void setGripperValume(int volume)
     jointTarget[5] = volume;
 }
 
-void MotorManagerEndSwitchInit()
+void motorManagerEndSwitchInit()
 {
     hSens5.pin2.setIn_pu(); //J1
     hSens5.pin3.setIn_pu(); //J2
@@ -257,7 +245,7 @@ void MotorManagerEndSwitchInit()
     hSens6.pin4.setIn_pu(); //H1
 }
 
-void EndSwitchRun()
+void endSwitchRun()
 {
     stateP52 = hSens5.pin2.read(); //J1
     if (stateP52 && !stateP52last)

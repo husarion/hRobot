@@ -33,14 +33,14 @@ void MotionTask()
     }
 }
 
-void MotionManager::MoveCartesianInter()
+void MotionManager::moveCartesianInter()
 {
     if (targetPoint.type != cartesianCo)
     {
-        targetPoint.Translate(cartesianCo);
+        targetPoint.translate(cartesianCo);
     }
     Coordinates curentPointC = curentPoint;
-    curentPointC.Translate(cartesianCo);
+    curentPointC.translate(cartesianCo);
     float dis = sqrt(pow(curentPointC.k1-targetPoint.k1, 2)+pow(curentPointC.k2-targetPoint.k2, 2)+pow(curentPointC.k3-targetPoint.k3, 2));
 
     float speed = 10;//mm/s
@@ -60,44 +60,44 @@ void MotionManager::MoveCartesianInter()
         to_send.k3 += z_tra;
         to_send.k4 += a_tra;
         to_send.k5 += b_tra;
-        MotorManagerUpdateTargetDef(to_send);
+        motorManagerUpdateTargetDef(to_send);
         sys.delay(time_iteration);
     }
     to_send = targetPoint;
-    MotorManagerUpdateTargetDef(to_send);
+    motorManagerUpdateTargetDef(to_send);
 }
 
-void MotionManager::MoveCartesianNorm()
+void MotionManager::moveCartesianNorm()
 {
     if (targetPoint.type == cartesianCo)
     {
-        MotorManagerUpdateTargetDef(targetPoint);
+        motorManagerUpdateTargetDef(targetPoint);
     }
     else
     {
-        targetPoint.Translate(cartesianCo);
-        MotorManagerUpdateTargetDef(targetPoint);
+        targetPoint.translate(cartesianCo);
+        motorManagerUpdateTargetDef(targetPoint);
     }
 }
 
-void MotionManager::MoveJointNorm()
+void MotionManager::moveJointNorm()
 {
     if (targetPoint.type == jointsCo)
     {
-        MotorManagerUpdateTargetDef(targetPoint);
+        motorManagerUpdateTargetDef(targetPoint);
     }
     else
     {
-        targetPoint.Translate(jointsCo);
-        MotorManagerUpdateTargetDef(targetPoint);
+        targetPoint.translate(jointsCo);
+        motorManagerUpdateTargetDef(targetPoint);
     }
 }
 
-void MotionManager::MoveJointInter()
+void MotionManager::moveJointInter()
 {   
     if (targetPoint.type != jointsCo)
     {
-        targetPoint.Translate(jointsCo);
+        targetPoint.translate(jointsCo);
     }
     
     /////////
@@ -121,7 +121,7 @@ void MotionManager::MoveJointInter()
         to_send.k3 += j3_iter_step;
         to_send.k4 += j5_iter_step;
         to_send.k5 += j6_iter_step;
-        MotorManagerUpdateTargetDef(to_send);
+        motorManagerUpdateTargetDef(to_send);
         sys.delay(time_iteration);
     }
 }
@@ -201,14 +201,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(jointsCo);
+                a.translate(jointsCo);
                 targetPoint = a;
-                MoveJointInter();
+                moveJointInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVE_D:
@@ -216,16 +216,16 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(cartesianCo);
+                a.translate(cartesianCo);
                 a.k3 = a.k3 + motions[0].instruction.param1;
-                a.Translate(jointsCo);
+                a.translate(jointsCo);
                 targetPoint = a;
-                MoveJointInter();
+                moveJointInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVE_JI:
@@ -233,14 +233,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(jointsCo);
+                a.translate(jointsCo);
                 targetPoint = a;
-                MoveJointInter();
+                moveJointInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVE_CI:
@@ -248,14 +248,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(cartesianCo);
+                a.translate(cartesianCo);
                 targetPoint = a;
-                MoveCartesianInter();
+                moveCartesianInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVE_JN:
@@ -263,14 +263,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(jointsCo);
+                a.translate(jointsCo);
                 targetPoint = a;
-                MoveJointNorm();
+                moveJointNorm();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVE_CN:
@@ -278,14 +278,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(jointsCo);
+                a.translate(jointsCo);
                 targetPoint = a;
-                MoveCartesianNorm();
+                moveCartesianNorm();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         
@@ -294,14 +294,14 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(cartesianCo);
+                a.translate(cartesianCo);
                 targetPoint = a;
-                MoveCartesianInter();
+                moveCartesianInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         case MOVES_D:
@@ -309,15 +309,15 @@ void MotionManager::update()
             {
                 Coordinates a;
                 a = findPoint(motions[0].instruction.point_name);
-                a.Translate(cartesianCo);
+                a.translate(cartesianCo);
                 a.k3 = a.k3 + motions[0].instruction.param1;
                 targetPoint = a;
-                MoveCartesianInter();
+                moveCartesianInter();
                 waitForReachingTarget();
             }
             else
             {
-                ErrorLogs::Err().sendPar(18, motions[0].instruction.point_name);
+                ErrorLogs::err().sendPar(18, motions[0].instruction.point_name);
             }
         break;
         
@@ -326,13 +326,13 @@ void MotionManager::update()
         break;
         
         case H1OPEN:
-            GriperOpen();
+            griperOpen();
         break;
         case H1CLOSE:
-            GriperClose();
+            griperClose();
         break;
         case H1STOP:
-            GriperStop();
+            griperStop();
         break;
         
         case RESETPOINTS:
@@ -340,12 +340,12 @@ void MotionManager::update()
         break;
         
         case PRECYSION_ON:
-            setPrecysionMode(true, motions[0].instruction.param1, (int)motions[0].instruction.param2);
-		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
+            setPresitionMode(true, motions[0].instruction.param1, (int)motions[0].instruction.param2);
+		    ErrorLogs::err().sendPar(28, (int)motions[0].instruction.param2);
         break;
         case PRECYSION_OFF:
-            setPrecysionMode(false, motions[0].instruction.param1, (int)motions[0].instruction.param2);
-		    ErrorLogs::Err().sendPar(28, (int)motions[0].instruction.param2);
+            setPresitionMode(false, motions[0].instruction.param1, (int)motions[0].instruction.param2);
+		    ErrorLogs::err().sendPar(28, (int)motions[0].instruction.param2);
         break;
         
         case CONFIG_COM_STRIM: break;
@@ -390,14 +390,14 @@ void MotionManager::addMotionInst(motion_inst instruction)
 
 MotionManager::MotionManager()
 {
-    precysion_mode_time = 0;
-    precysion_mode = false;
-    precysion_mode_volume = 100;
+    presition_mode_time = 0;
+    presition_mode = false;
+    presition_mode_value = 100;
 }
 
 MotionManager::MotionManager(const MotionManager &) {}
 
-void MotionManager::addPoint(char *name, typeCo type, float k1, float k2, float k3)
+void MotionManager::addPoint(char *name, type_co type, float k1, float k2, float k3)
 {
     if (checkPoint(name))
     {
@@ -414,7 +414,7 @@ void MotionManager::addPoint(char *name, typeCo type, float k1, float k2, float 
     }
 }
 
-void MotionManager::addPoint(char *name, typeCo type, float k1, float k2, float k3, float k4, float k5)
+void MotionManager::addPoint(char *name, type_co type, float k1, float k2, float k3, float k4, float k5)
 {
     if (checkPoint(name))
     {
@@ -431,7 +431,7 @@ void MotionManager::addPoint(char *name, typeCo type, float k1, float k2, float 
     }
 }
 
-void MotionManager::addPoint(char *name, typeCo type)
+void MotionManager::addPoint(char *name, type_co type)
 {
     if (checkPoint(name))
     {
@@ -489,7 +489,7 @@ bool MotionManager::checkPoint(char *name)
     return false;
 }
 
-void MotionManager::changeCoordinates(char *name, typeCo t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5)
+void MotionManager::changeCoordinates(char *name, type_co t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5)
 {
     for (unsigned int i = 0; i < points_key.size(); i++)
     {
@@ -513,17 +513,17 @@ void MotionManager::show(char *name)
     }
     else
     {
-        ErrorLogs::Err().sendPar(20, name);
+        ErrorLogs::err().sendPar(20, name);
     }
 }
 
-void MotionManager::show(char *name, typeCo type)
+void MotionManager::show(char* name, type_co type)
 {
     if (checkPoint(name))
     {
         Coordinates a;
         a = findPoint(name);
-        a.Translate(type);
+        a.translate(type);
         switch (type)
         {
         case cartesianCo:
@@ -545,7 +545,7 @@ void MotionManager::show(char *name, typeCo type)
     }
     else
     {
-        ErrorLogs::Err().sendPar(20, name);
+        ErrorLogs::err().sendPar(20, name);
     }
 }
 
@@ -600,9 +600,9 @@ void MotionManager::showCurrent()
     Serial.printf("Current Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f\n", curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5);
 }
 
-void MotionManager::showCurrent(typeCo t_type){
+void MotionManager::showCurrent(type_co t_type){
     Coordinates a = curentPoint;
-    a.Translate(t_type);
+    a.translate(t_type);
     Serial.printf("Current Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f\n", a.k1, a.k2, a.k3, a.k4, a.k5);
 }
 
@@ -610,7 +610,7 @@ void MotionManager::setOffset(char *point)
 {
     Coordinates a;
     a = findPoint(point);
-    MotorManagerSetOffsetDef(a);
+    motorManagerSetOffsetDef(a);
 }
 
 void MotionManager::setOffset()
@@ -621,20 +621,20 @@ void MotionManager::setOffset()
     a.k3 = current[3];
     a.k4 = current[5];
     a.k5 = current[6];
-    MotorManagerSetOffsetDef(a);
+    motorManagerSetOffsetDef(a);
 }
 
-void MotionManager::GriperOpen()
+void MotionManager::griperOpen()
 {
     setGripperValume(15);
 }
 
-void MotionManager::GriperClose()
+void MotionManager::griperClose()
 {
     setGripperValume(-15);
 }
 
-void MotionManager::GriperStop()
+void MotionManager::griperStop()
 {
     setGripperValume(0);
 }
@@ -680,16 +680,16 @@ float MotionManager::getTarget(int t_joint)
     return 0;
 }
 
-void MotionManager::setPrecysionMode(bool precysion, float t_volume, int t_time)
+void MotionManager::setPresitionMode(bool precysion, float t_volume, int t_time)
 {
-    precysion_mode = precysion;
-    precysion_mode_time = abs(t_time);
-    precysion_mode_volume = abs(t_volume);
+    presition_mode = precysion;
+    presition_mode_time = abs(t_time);
+    presition_mode_value = abs(t_volume);
 }
 
 void MotionManager::waitForReachingTarget()
 {
-    if (precysion_mode)
+    if (presition_mode)
     {
         float dis;
         do
@@ -697,18 +697,18 @@ void MotionManager::waitForReachingTarget()
             Coordinates a(jointsCo, current[1], current[2], current[3], current[5], current[6]);
             dis = pointToPointDistanceJointMax(targetPoint, a);
             sys.delay(10);
-        } while (dis > precysion_mode_volume);
-        if (precysion_mode_time > 0)
-            sys.delay(precysion_mode_time);
+        } while (dis > presition_mode_value);
+        if (presition_mode_time > 0)
+            sys.delay(presition_mode_time);
     }
     else
     {
-        if (precysion_mode_time > 0)
-            sys.delay(precysion_mode_time);
+        if (presition_mode_time > 0)
+            sys.delay(presition_mode_time);
     }
 }
 
-bool MotionManager::Istruction(instruction_code instruction){
+bool MotionManager::instruction(instruction_code instruction){
     motion_inst a;
     a.instruction.comand = instruction.comand;
     a.instruction.param1 = instruction.param1;

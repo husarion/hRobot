@@ -26,7 +26,7 @@ float pos6[9];
 int mode;
 int last_mode = 3;
 int modeLastBtn = -1;
-int pos_label; //switch counter for position
+int pos_label_mode; //switch counter for position
 
 // jog UI steps
 float step1;
@@ -35,9 +35,9 @@ float step3;
 float step4;
 
 // temp PID values for calibration
-extern float tempKp;
-extern float tempKi;
-extern float tempKd;
+//extern float tempKp;
+//extern float tempKi;
+//extern float tempKd;
 
 char UIcon[512];
 char UIcon_pass[512];
@@ -137,12 +137,12 @@ void cfgHandler()
     auto btn_pos7_show = platform.ui.button("btn_pos7_show");
 
     //PID buttons
-    auto btn_kpp = platform.ui.button("btn_kpp");
-    auto btn_kpm = platform.ui.button("btn_kpm");
-    auto btn_kip = platform.ui.button("btn_kip");
-    auto btn_kim = platform.ui.button("btn_kim");
-    auto btn_kdp = platform.ui.button("btn_kdp");
-    auto btn_kdm = platform.ui.button("btn_kdm");
+    //auto btn_kpp = platform.ui.button("btn_kpp");
+    //auto btn_kpm = platform.ui.button("btn_kpm");
+    //auto btn_kip = platform.ui.button("btn_kip");
+    //auto btn_kim = platform.ui.button("btn_kim");
+    //auto btn_kdp = platform.ui.button("btn_kdp");
+    //auto btn_kdm = platform.ui.button("btn_kdm");
 
     //UI command line
     auto btn_com = platform.ui.button("btn_do");
@@ -170,7 +170,7 @@ void onValueChangeEvent(hId id, const char *data)
     }
 }
 
-void sendInstruction()
+void sendtoMotionManager()
 {
     if (mode == 0)
     {
@@ -184,7 +184,7 @@ void sendInstruction()
     }
 }
 
-void sendInstructionInter()
+void sendtoMotionManagerInter()
 {
     if (mode == 0)
     {
@@ -210,18 +210,18 @@ void onButtonEvent(hId id, ButtonEventType type)
 	//if (id == "btn_com") {}//hCode_line
 
 	// PID buttons
-	if (id == "btn_kpp")
-	    tempKp += 0.05;
-	if (id == "btn_kpm")
-	    tempKp -= 0.05;
-	if (id == "btn_kdp")
-	    tempKd += 0.05;
-	if (id == "btn_kdm")
-	    tempKd -= 0.05;
-	if (id == "btn_kip")
-	    tempKi += 0.05;
-	if (id == "btn_kim")
-	    tempKi -= 0.05;
+	//if (id == "btn_kpp")
+	//    tempKp += 0.05;
+	//if (id == "btn_kpm")
+	//    tempKp -= 0.05;
+	//if (id == "btn_kdp")
+	//    tempKd += 0.05;
+	//if (id == "btn_kdm")
+	//    tempKd -= 0.05;
+	//if (id == "btn_kip")
+	//    tempKi += 0.05;
+	//if (id == "btn_kim")
+	//    tempKi -= 0.05;
 
 	// grabber buttons
 	if (id == "btn_close"){
@@ -245,41 +245,41 @@ void onButtonEvent(hId id, ButtonEventType type)
 	// show positions buttons
 	if (id == "btn_pos1_show")
 	{
-	    pos_label = 1;
+	    pos_label_mode = 1;
 	}
 	if (id == "btn_pos2_show")
 	{
-	    pos_label = 2;
+	    pos_label_mode = 2;
 	}
 	if (id == "btn_pos3_show")
 	{
-	    pos_label = 3;
+	    pos_label_mode = 3;
 	}
 	if (id == "btn_pos4_show")
 	{
-	    pos_label = 4;
+	    pos_label_mode = 4;
 	}
 	if (id == "btn_pos5_show")
 	{
-	    pos_label = 5;
+	    pos_label_mode = 5;
 	}
 	if (id == "btn_pos6_show")
 	{
-	    pos_label = 6;
+	    pos_label_mode = 6;
 	}
 	if (id == "btn_pos0_show")
 	{
-	    pos_label = 0;
+	    pos_label_mode = 0;
 	}
 	if (id == "btn_pos7_show")
 	{
-	    pos_label = 7;
+	    pos_label_mode = 7;
 	}
 
 	if (id == "btnCartesianMov")
 	{
 	    mode = 1;
-		InputData.ChangeInstructionInputType(UI, cartesianCo);
+		InputData.changeInstructionInputType(UI, cartesianCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		//target[1] = MotionManager::get().getTarget(1);
@@ -289,12 +289,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 		//target[5] = MotionManager::get().getTarget(5);
 	    }
 	    last_mode = mode;
-	    ErrorLogs::Err().send(21);
+	    ErrorLogs::err().send(21);
 	}
 	if (id == "btnJointsMov")
 	{
 	    mode = 0;
-		InputData.ChangeInstructionInputType(UI, jointsCo);
+		InputData.changeInstructionInputType(UI, jointsCo);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 		//target[1] = MotionManager::get().getTarget(1);
@@ -304,12 +304,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 		//target[5] = MotionManager::get().getTarget(5);
 	    }
 	    last_mode = mode;
-	    ErrorLogs::Err().send(21);
+	    ErrorLogs::err().send(21);
 	}
 	if (id == "btnCodeUSBMov")
 	{
 	    mode = 3;
-		InputData.ChangeInstructionInputType(SERIAL);
+		InputData.changeInstructionInputType(SERIAL);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }
@@ -318,12 +318,12 @@ void onButtonEvent(hId id, ButtonEventType type)
 		//MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
 	    }
 	    last_mode = mode;
-	    ErrorLogs::Err().send(22);
+	    ErrorLogs::err().send(22);
 	}
 	if (id == "btnCodeUIMov")
 	{
 	    mode = 2;
-		InputData.ChangeInstructionInputType(UI);
+		InputData.changeInstructionInputType(UI);
 	    if (last_mode == 3 || last_mode == 2)
 	    {
 	    }
@@ -332,7 +332,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		//MotionManager::get().setTarget(target[1], target[2], target[3], target[4], target[5]);
 	    }
 	    last_mode = mode;
-	    ErrorLogs::Err().send(27);
+	    ErrorLogs::err().send(27);
 	}
 
 	if (mode == 0 || mode == 1)
@@ -370,7 +370,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos1[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -390,7 +390,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos2[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -410,7 +410,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos3[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -430,7 +430,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos4[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -450,7 +450,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos5[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -470,7 +470,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    pos6[k] = target[k];
 		}
-		pos_label = 0;
+		pos_label_mode = 0;
 		char *temp;
 		temp = new char[20];
 		for (int i = 0; i < 20; i++)
@@ -492,8 +492,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos1[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 	    if (id == "btn_pos2_read")
 	    {
@@ -501,8 +501,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos2[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 	    if (id == "btn_pos3_read")
 	    {
@@ -510,8 +510,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos3[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 	    if (id == "btn_pos4_read")
 	    {
@@ -519,8 +519,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos4[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 	    if (id == "btn_pos5_read")
 	    {
@@ -528,8 +528,8 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos5[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 	    if (id == "btn_pos6_read")
 	    {
@@ -537,214 +537,214 @@ void onButtonEvent(hId id, ButtonEventType type)
 		{
 		    target[k] = pos6[k];
 		}
-		pos_label = 0;
-		sendInstructionInter();
+		pos_label_mode = 0;
+		sendtoMotionManagerInter();
 	    }
 
 	    // jog buttons target
 	    if (id == "btn11")
 	    {
 		target[1] += step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn12")
 	    {
 		target[1] += step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn13")
 	    {
 		target[1] += step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn14")
 	    {
 		target[1] += step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn15")
 	    {
 		target[1] -= step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn16")
 	    {
 		target[1] -= step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn17")
 	    {
 		target[1] -= step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn18")
 	    {
 		target[1] -= step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 
 	    if (id == "btn21")
 	    {
 		target[2] += step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn22")
 	    {
 		target[2] += step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn23")
 	    {
 		target[2] += step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn24")
 	    {
 		target[2] += step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn25")
 	    {
 		target[2] -= step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn26")
 	    {
 		target[2] -= step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn27")
 	    {
 		target[2] -= step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn28")
 	    {
 		target[2] -= step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 
 	    if (id == "btn31")
 	    {
 		target[3] += step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn32")
 	    {
 		target[3] += step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn33")
 	    {
 		target[3] += step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn34")
 	    {
 		target[3] += step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn35")
 	    {
 		target[3] -= step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn36")
 	    {
 		target[3] -= step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn37")
 	    {
 		target[3] -= step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn38")
 	    {
 		target[3] -= step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 
 	    if (id == "btn51")
 	    {
 		target[5] += step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn52")
 	    {
 		target[5] += step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn53")
 	    {
 		target[5] += step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn54")
 	    {
 		target[5] += step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn55")
 	    {
 		target[5] -= step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn56")
 	    {
 		target[5] -= step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn57")
 	    {
 		target[5] -= step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn58")
 	    {
 		target[5] -= step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 
 	    if (id == "btn61")
 	    {
 		target[6] += step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn62")
 	    {
 		target[6] += step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn63")
 	    {
 		target[6] += step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn64")
 	    {
 		target[6] += step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn65")
 	    {
 		target[6] -= step1;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn66")
 	    {
 		target[6] -= step2;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn67")
 	    {
 		target[6] -= step3;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	    if (id == "btn68")
 	    {
 		target[6] -= step4;
-		sendInstruction();
+		sendtoMotionManager();
 	    }
 	}
 	/*else

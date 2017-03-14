@@ -39,7 +39,7 @@ class ServoCtrl
     int servo_center;
     float output;
 
-    void make_output(float val);
+    void makeOutput(float val);
 
   public:
     ServoCtrl(IServo &servo_t, int servo_center_t, float threshold_t,
@@ -48,12 +48,12 @@ class ServoCtrl
     int update(float error, float t_time);
     int updateDown(float error, float t_time);
     int updateUp(float error, float t_time);
-    void set_error_saturate(float error_saturate_t);
-    float get_error_saturate();
-    void set_output_saturate(float output_saturate_t);
-    float get_output_saturate();
-    void set_threshold(float threshold_t);
-    float get_threshold();
+    void setErrorSaturate(float error_saturate_t);
+    float getErrorSaturate();
+    void setOutputSaturate(float output_saturate_t);
+    float getOutputSaturate();
+    void setThreshold(float threshold_t);
+    float getThreshold();
 };
 
 #endif

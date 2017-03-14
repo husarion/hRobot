@@ -34,12 +34,12 @@ CommandInput::CommandInput(Arm* t_robot){
     robot = t_robot;
 }
 
-void CommandInput::ChangeInstructionInputType(instruction_input_type new_type, typeCo jog_new_type){
+void CommandInput::changeInstructionInputType(instruction_input_type new_type, type_co jog_new_type){
     input_type = new_type;
     jog_type = jog_new_type;
 }
 
-void CommandInput::ChangeInstructionInputType(instruction_input_type new_type){
+void CommandInput::changeInstructionInputType(instruction_input_type new_type){
     input_type = new_type;
 }
 
@@ -49,27 +49,27 @@ bool CommandInput::AddInstruction(instruction_code instruction, instruction_inpu
     }
     else{
 		if(instruction.comand == NOCOMMAND){
-			ErrorLogs::Err().send(30);
+			ErrorLogs::err().send(30);
 		    return false;
 		}
 		if(instruction.comand == CONFIG_COM_STRIM){
-		    ChangeInstructionInputType(STREAM);
+		    changeInstructionInputType(STREAM);
 		    return true;
 		}
 		if(instruction.comand == CONFIG_COM_UI){
-		    ChangeInstructionInputType(UI);
+		    changeInstructionInputType(UI);
 		    return true;
 		}
 		if(instruction.comand == CONFIG_COM_SERIAL){
-		    ChangeInstructionInputType(SERIAL);
+		    changeInstructionInputType(SERIAL);
 		    return true;
 		}
 		if(instruction.comand == CONFIG_COM_JOG){
-		    ChangeInstructionInputType(JOG);
+		    changeInstructionInputType(JOG);
 		    return true;
 		}
 		if(instruction.comand == CONFIG_COM_CODE){
-		    ChangeInstructionInputType(CODE);
+		    changeInstructionInputType(CODE);
 		    return true;
 		}
 		return robot->PassInstruction(instruction);

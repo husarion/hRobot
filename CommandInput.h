@@ -11,7 +11,7 @@
 class CommandInput{
 private:
     instruction_input_type input_type;
-    typeCo jog_type;
+    type_co jog_type;
     Arm* robot;
 public:
     CommandInput(Arm* t_robot);
@@ -23,8 +23,8 @@ public:
     instruction_code CommandTranslation(char* command, char* param1, char* param2, 
     char* param3, char* param4, char* param5, char* param6, char* param7);
 
-    void ChangeInstructionInputType(instruction_input_type new_type, typeCo jog_new_type);
-    void ChangeInstructionInputType(instruction_input_type new_type);
+    void changeInstructionInputType(instruction_input_type new_type, type_co jog_new_type);
+    void changeInstructionInputType(instruction_input_type new_type);
 };
 
 #endif

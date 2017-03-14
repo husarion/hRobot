@@ -20,20 +20,20 @@
 Arm::Arm(){}
 
 bool Arm::PassInstruction(instruction_code instruction){
-	return MotionManager::get().Istruction(instruction);
+	return MotionManager::get().instruction(instruction);
 }
 
 void Arm::ArmInit(){
-	MotorManagerInit();
+	motorManagerInit();
 	sys.setSysLogDev(&devNull);
 	sys.taskCreate(printfErrorTask);
-	sys.taskCreate(ComandInputTaskSerial, 1, 600, "ComITS");
+	sys.taskCreate(comandInputTaskSerial, 1, 600, "ComITS");
 	platform.begin(&RPi);
 	platform.ui.configHandler = cfgHandler;
 	platform.ui.onButtonEvent = onButtonEvent;
 	platform.ui.onValueChangeEvent = onValueChangeEvent;
 	platform.ui.setProjectId("@@@PROJECT_ID@@@");
-	sys.taskCreate(MotorManagerUpdateTask, 2, 600, "MorManU");
+	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
-	sys.taskCreate(printOnLabelsTask, 2, 1500, "labelsT");
+	sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
 }

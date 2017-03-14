@@ -7,26 +7,25 @@
 #define __MotorManager__
 
 void motor_task();
-void MotorManagerInit();
-void MotorManagerInitServos();
-void MotorManagerInitMotor();
-void MotorManagerInitEncoders();
+void motorManagerInit();
+void motorManagerInitServos();
+void motorManagerInitEncoders();
 
-void MotorManagerUpdateTask();
+void motorManagerUpdateTask();
 
-void MotorManagerUpdateTargetGlobal();
-void MotorManagerUpdateTargetGlobalTask();
-void MotorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j6);
-void MotorManagerUpdateTargetDef(Coordinates point);
+void motorManagerUpdateTargetGlobal();
+void motorManagerUpdateTargetGlobalTask();
+void motorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j6);
+void motorManagerUpdateTargetDef(Coordinates point);
 
-void MotorManagerSetOffsetDef(int t_joint, float value);
-void MotorManagerSetOffsetDef(Coordinates current_point);
+void motorManagerSetOffsetDef(int t_joint, float value);
+void motorManagerSetOffsetDef(Coordinates current_point);
 
-bool CheckOverRange(Coordinates *point);
-bool CheckRange(Coordinates *point);
+bool checkOverRange(Coordinates *point);
+bool checkRange(Coordinates *point);
 
-void MotorManagerEndSwitchInit();
-void EndSwitchRun();
+void motorManagerEndswitchInit();
+void endswitchRun();
 
 void setGripperValume(int volume);
 

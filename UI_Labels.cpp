@@ -17,14 +17,14 @@ extern float pos5[9];
 extern float pos6[9];
 extern int mode;
 int modeLastLbs = -1;
-extern int pos_label; //switch counter for position
+extern int pos_label_mode; //switch counter for position
 
 // temp PID values for calibration
-extern float tempKp;
-extern float tempKi;
-extern float tempKd;
+//extern float tempKp;
+//extern float tempKi;
+//extern float tempKd;
 
-void printOnLabelsTask()
+void taskPrintOnLabels()
 {
     for (;;)
     {
@@ -35,10 +35,7 @@ void printOnLabelsTask()
 
 void printOnLabels()
 {
-    //platform.ui.label("mode").setText("test2");
-    //platform.ui.label("info").setText("time: %d", sys.getRefTime());
-    //UARTd(111100,pos_label);
-    switch (pos_label)
+    switch (pos_label_mode)
     {
     case 1:
 	platform.ui.label("info").setText("Pos1 J1: %f, J2: %f, J3: %f, J5: %f, J6: %f", pos1[1], pos1[2], pos1[3], pos1[5], pos1[6]);
@@ -59,11 +56,9 @@ void printOnLabels()
 	platform.ui.label("info").setText("Pos6 J1: %f, J2: %f, J3: %f, J5: %f, J6: %f", pos6[1], pos6[2], pos6[3], pos6[5], pos6[6]);
 	break;
     case 7:
-	//erco(40);
 	platform.ui.label("info").setText("Current J1: %f, J2: %f, J3: %f, J5: %f, J6: %f", current[1], current[2], current[3], current[5], current[6]);
 	break;
     default:
-	//erco(30);
 	platform.ui.label("info").setText("Target J1: %f, j2: %f, J3: %f, J5: %f, J6: %f", target[1], target[2], target[3], target[5], target[6]);
 	break;
     }

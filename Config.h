@@ -1,6 +1,5 @@
-
 #define NO_MIN_MAX
-//#define END_SWITCH_ENABLE
+#define END_SWITCH_ENABLE
 
 #ifndef HROBOTCONFIG
 #define HROBOTCONFIG
@@ -38,9 +37,9 @@ const float encoder_tics_J5 = 4.4;
 const float encoder_tics_J6 = 0.2;
 
 #ifdef END_SWITCH_ENABLE
-bool EndSwitchActive = true;
+bool endswitch_active = true;
 #else
-bool EndSwitchActive = false;
+bool endswitch_active = false;
 #endif
 
 IServo &s1 = hServoModule.servo1;

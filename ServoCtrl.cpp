@@ -12,7 +12,7 @@ ServoCtrl::ServoCtrl(IServo &servo_t, int servo_center_t, float threshold_t,
     servo = &servo_t;
     servo_center = servo_center_t;
     servo->calibrate(-100, servo_center - 700, 100, servo_center + 700);
-    threshold_t = threshold_t;
+    threshold = threshold_t;
 
     kp_down = kp_down_t;
     ki_down = ki_down_t;
@@ -26,6 +26,7 @@ ServoCtrl::ServoCtrl(IServo &servo_t, int servo_center_t, float threshold_t,
     integrator_saturate_up = integrator_saturate_up_t;
     integrator_saturate_down = integrator_saturate_down_t;
 }
+
 int ServoCtrl::update(float error, float t_time)
 {
     if (error < 0)
@@ -46,7 +47,7 @@ int ServoCtrl::updateUp(float error, float t_time)
     error_deviator = (error - error_last); //(t_time-time_last);
     error_integrator = saturateFloat(error_integrator, integrator_saturate_up);
     output = error * kp_up + error_integrator * ki_up + error_deviator * kd_up;
-    make_output(output);
+    makeOutput(output);
     error_last = error;
     time_last = t_time;
 }
@@ -59,12 +60,12 @@ int ServoCtrl::updateDown(float error, float t_time)
     error_deviator = (error - error_last); //(t_time-time_last);
     error_integrator = saturateFloat(error_integrator, integrator_saturate_down);
     output = error * kp_down + error_integrator * ki_down + error_deviator * kd_down;
-    make_output(output);
+    makeOutput(output);
     error_last = error;
     time_last = t_time;
 }
 
-void ServoCtrl::make_output(float val)
+void ServoCtrl::makeOutput(float val)
 {
     if (val == 0)
     {
@@ -77,10 +78,10 @@ void ServoCtrl::make_output(float val)
     }
 }
 
-void ServoCtrl::set_error_saturate(float error_saturate_t) { error_saturate = error_saturate_t; }
-void ServoCtrl::set_output_saturate(float output_saturate_t) { output_saturate = output_saturate_t; }
-void ServoCtrl::set_threshold(float threshold_t) { threshold = threshold_t; }
+void ServoCtrl::setErrorSaturate(float error_saturate_t) { error_saturate = error_saturate_t; }
+void ServoCtrl::setOutputSaturate(float output_saturate_t) { output_saturate = output_saturate_t; }
+void ServoCtrl::setThreshold(float threshold_t) { threshold = threshold_t; }
 
-float ServoCtrl::get_error_saturate() { return error_saturate; }
-float ServoCtrl::get_output_saturate() { return output_saturate; }
-float ServoCtrl::get_threshold() { return threshold; }
+float ServoCtrl::getErrorSaturate() { return error_saturate; }
+float ServoCtrl::getOutputSaturate() { return output_saturate; }
+float ServoCtrl::getThreshold() { return threshold; }

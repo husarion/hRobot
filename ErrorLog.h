@@ -25,7 +25,7 @@ class ErrorLogs
     void getLastChar(char *temp);
 
   public:
-    static ErrorLogs &Err()
+    static ErrorLogs &err()
     {
 	static ErrorLogs singleton;
 	return singleton;

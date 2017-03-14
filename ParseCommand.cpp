@@ -26,7 +26,7 @@ void clearChar(char *t, int size)
 	t[i] = 0;
 }
 
-void ComandInputTaskSerial()
+void comandInputTaskSerial()
 {
     char command[20];
     char param1[20];
