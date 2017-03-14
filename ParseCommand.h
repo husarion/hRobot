@@ -10,7 +10,8 @@ using namespace hFramework;
 void changeInputToUI();
 void changeInputToSerial();
 
-void ComandInputTask();
+void ComandInputTaskSerial();
+void ComandInputTaskUI();
 
 typedef enum {
 	PARSE_COMMAND,
@@ -29,10 +30,8 @@ class ParseCommand {
 public:
 	~ParseCommand() { }
 	ParseCommand(hStreamDev& dev);
+	ParseCommand();
 	void setStream(hStreamDev& dev);
-	bool UIconection;
-	void changeToUI();
-	void changeToSerial();
 	void ParseCommandActiveSet(bool b);
 	
 	bool parse(char* command, char* p1, char* p2, char* p3, char* p4, char* p5, char* p6, char* p7);

@@ -12,7 +12,7 @@
 	const float d2=210;
 	const float d4=210;
 	const float d5=170;
-	const float angle90=deg2rad(90);
+	const float angle90=90;
 
 	// internal calculations
 	

@@ -5,13 +5,15 @@
 #ifndef GripperCrtlClass
 #define GripperCrtlClass
 
-class GripperCrtl {
-private:
-	IServo* servo;
-	void make_output(float val);
-public:
-	GripperCrtl(IServo& servo_t);
-	int update(float volume);
+class GripperCrtl
+{
+  private:
+    IServo *servo;
+    void make_output(float val);
+
+  public:
+    GripperCrtl(IServo &servo_t);
+    void update(float volume);
 };
 
 #endif

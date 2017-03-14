@@ -39,7 +39,7 @@
 
 <div align="center">
 
-<table border="0" width="70%" cellspacing="0" cellpadding="0" height="100%">
+<table border="0" width="70%" cellspacing="0" cellpadding="0" height="94%">
 	<tr>
 		<td valign="top" colspan="2" height="51">
 			&nbsp;<table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -92,9 +92,9 @@
 				</tr>
 			</table>
 		<td valign="top" width="64%">
-			<div class="joints" align="center">
+			<div class="movement_UI" align="center">
 			
-				<div class="j1">
+				<div class="mode_info_UI">
 					<label id="modeMov">Current mode unknown</label></div>
 				<div class="j1/j5">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
@@ -215,7 +215,7 @@
 		</tr>
 		</table>
 					</div>
-					<div class="j4">
+					<div class="pos_1/4">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -255,7 +255,7 @@
 		</tr>
 		</table>
 					</div>
-					<div class="j5">
+					<div class="pos_2/5">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -295,7 +295,7 @@
 		</tr>
 		</table>
 					</div>
-					<div class="j6">
+					<div class="pos_3/6">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -337,7 +337,7 @@
 					</div>
 				<div class="cartesian">
 				
-					<div class="j7">
+					<div class="info_UI">
 					<table border="0" width="700" cellspacing="0" cellpadding="0">
 		<tr>
 			<td width="10">
@@ -345,15 +345,15 @@
 			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
 			<td width="782" background="bg_part_bg.png">
 			<p align="center">
-		<button type-active id="btn_pos0_show" class="btn btn_mov" style="width: 120px">
+			<div align=center class="buttons"><button type-active id="btn_pos0_show" class="btn btn_mov" style="width: 120px">
 		Show target</button> 
 		&nbsp;
 		<button type-active id="btn_pos7_show" class="btn btn_mov" style="width: 120px">
 		Show current</button> 
 		&nbsp;
 		<button type-active id="btn_pos8_show" class="btn btn_mov" style="width: 120px">
-		Show other</button> 
-			</td>
+		Show other</button></div>
+<div align=center class="label"><label id="info">Dodatkowe informacje niedostêpne</label></td><div/>
 			<td width="11" background="bg_part_bg.png">
 			<p align="right">
 			<font face="Lato">
@@ -365,13 +365,50 @@
 				
 				</div>
 				
-				<div class="tool">
 				
-				<label id="info">Dodatkowe informacje niedostêpne</label></div>
+				<div class="serial_UI">
+					<table border="0" width="700" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="10">
+			<font face="Lato">
+			<img border="0" src="bg_part_left.png" width="10" height="66"></font></td>
+			<td width="782" background="bg_part_bg.png">
+
+
+
+	
+			<div id ="X">
+				<table border="0" width="100%" cellspacing="0">
+					<tr>
+						<td align="right"><font face="Lato" size="2">Input hCode 
+						command here:</font></td>
+						<td>
+						<p align="center"><font face="Lato">&nbsp;<input type-active type="text" id="hCode_line" size="61" name="T1"></font></td>
+					</tr>
+					<tr>
+						<td align="right"><font face="Lato" size="2">And submit 
+						here:</font></td>
+						<td>
+						<p align="center"><font face="Lato">&nbsp;</font> 
+		<button type-active id="btn_do" class="btn btn_mov" style="width: 85; height: 28">
+		<font face="Lato">Do!</font></button> 
+						</font> 
+						</td>
+					</tr>
+				</table>
+			</div>
+			</td>
+			<td width="11" background="bg_part_bg.png">
+			<p align="right">
+			<font face="Lato">
+			<img border="0" src="bg_part_right.png" width="10" height="66"></font></td>
+		</tr>
+		</table>
+					&nbsp;</div>
 		</td>
 	</tr>
 	<td>
-	<font face="Lato" size="1">mikowhy95@gmail.com v.0.01.4</font></td>
+	<font face="Lato" size="1">mikowhy95@gmail.com v.0.01.5</font></td>
 </table>
 
 <p>&nbsp;</div>
