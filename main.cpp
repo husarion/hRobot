@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <cstdint>
 #include "hFramework.h"
-#include "hCloudClient.h"
 #include "Arm.h"
 #include "CommandInput.h"
 

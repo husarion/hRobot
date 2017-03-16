@@ -74,7 +74,7 @@ void motorManagerInit()
 {
     motorManagerInitEncoders();
     motorManagerInitServos();
-    motorManagerEndswitchInit();
+    motorManagerEndSwitchInit();
 }
 
 void motorManagerUpdateTask()
@@ -109,7 +109,7 @@ void motorManagerUpdateTask()
 
         if (endswitch_active)
         {
-            endswitchRun();
+            endSwitchRun();
         }
 
         int t = sys.getRefTime();
@@ -136,7 +136,7 @@ void motorManagerUpdateTargetGlobal()
     jointTarget[3] = target[5];
     jointTarget[4] = target[6];
     jointTarget[5] = target[7];
-
+    
     jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
     jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
     jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
@@ -160,7 +160,7 @@ void motorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j
     jointTarget[2] = j3;
     jointTarget[3] = j5;
     jointTarget[4] = j6;
-
+    
     jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
     jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
     jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);

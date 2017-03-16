@@ -199,12 +199,12 @@ void sendtoMotionManager()
     if (mode == 0)
     {
 	    instruction_code code = {MOVE_JN, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
     	instruction_code code = {MOVE_CN, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
 }
 
@@ -213,12 +213,12 @@ void sendtoMotionManagerInter()
     if (mode == 0)
     {
         instruction_code code = {MOVE_JI, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
         instruction_code code = {MOVE_CI, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
 }
 
@@ -247,14 +247,14 @@ void onButtonEvent(hId id, ButtonEventType type)
 	//if (id == "btn_kim")
 	//    tempKi -= 0.05;
 
-	if (id == "doP1"){InputData.AddInstructionStream(program1, SERIAL);}
-	if (id == "doP2"){InputData.AddInstructionStream(program2, SERIAL);}
-	if (id == "doP3"){InputData.AddInstructionStream(program3, SERIAL);}
-	if (id == "doP4"){InputData.AddInstructionStream(program4, SERIAL);}
-	if (id == "doP5"){InputData.AddInstructionStream(program5, SERIAL);}
-	if (id == "doP6"){InputData.AddInstructionStream(program6, SERIAL);}
-	if (id == "doP7"){InputData.AddInstructionStream(program7, SERIAL);}
-	if (id == "doP8"){InputData.AddInstructionStream(program8, SERIAL);}
+	if (id == "doP1"){InputData.AddInstructionStream(program1, UI);}
+	if (id == "doP2"){InputData.AddInstructionStream(program2, UI);}
+	if (id == "doP3"){InputData.AddInstructionStream(program3, UI);}
+	if (id == "doP4"){InputData.AddInstructionStream(program4, UI);}
+	if (id == "doP5"){InputData.AddInstructionStream(program5, UI);}
+	if (id == "doP6"){InputData.AddInstructionStream(program6, UI);}
+	if (id == "doP7"){InputData.AddInstructionStream(program7, UI);}
+	if (id == "doP8"){InputData.AddInstructionStream(program8, UI);}
 
 	if (id == "homeJ1"){}//TODO:
 	if (id == "homeJ2"){}//TODO:
