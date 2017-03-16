@@ -10,6 +10,7 @@
 #include "ErrorLog.h"
 #include "Arm.h"
 #include "CommandInput.h"
+#include "Program.h"
 
 extern Arm hRobot;
 extern CommandInput InputData;
@@ -152,6 +153,29 @@ void cfgHandler()
     auto btnJointsMov = platform.ui.button("btnJointsMov");
     auto btnCodeUSBMov = platform.ui.button("btnCodeUSBMov");
     auto btnCodeUIMov = platform.ui.button("btnCodeUIMov");
+
+	//User program buttons
+	auto prog1 = platform.ui.button("doP1");
+	auto prog2 = platform.ui.button("doP2");
+	auto prog3 = platform.ui.button("doP3");
+	auto prog4 = platform.ui.button("doP4");
+	auto prog5 = platform.ui.button("doP5");
+	auto prog6 = platform.ui.button("doP6");
+	auto prog7 = platform.ui.button("doP7");
+	auto prog8 = platform.ui.button("doP8");
+
+	//Home buttons
+	auto homeJ1 = platform.ui.button("homeJ1");
+	auto homeJ2 = platform.ui.button("homeJ2");
+	auto homeJ3 = platform.ui.button("homeJ3");
+	auto homeJ5 = platform.ui.button("homeJ5");
+	auto homeJ6 = platform.ui.button("homeJ6");
+	auto homeG1 = platform.ui.button("homeG1");
+
+	//Prec
+	auto precOn = platform.ui.button("prec_on");
+	auto precOff = platform.ui.button("prec_off");
+
 }
 
 void onValueChangeEvent(hId id, const char *data)
@@ -175,12 +199,12 @@ void sendtoMotionManager()
     if (mode == 0)
     {
 	    instruction_code code = {MOVE_JN, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
     	instruction_code code = {MOVE_CN, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
 }
 
@@ -189,12 +213,12 @@ void sendtoMotionManagerInter()
     if (mode == 0)
     {
         instruction_code code = {MOVE_JI, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
         instruction_code code = {MOVE_CI, "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
     }
 }
 
@@ -222,6 +246,31 @@ void onButtonEvent(hId id, ButtonEventType type)
 	//    tempKi += 0.05;
 	//if (id == "btn_kim")
 	//    tempKi -= 0.05;
+
+	if (id == "doP1"){InputData.AddInstructionStream(program1, UI);}
+	if (id == "doP2"){InputData.AddInstructionStream(program2, UI);}
+	if (id == "doP3"){InputData.AddInstructionStream(program3, UI);}
+	if (id == "doP4"){InputData.AddInstructionStream(program4, UI);}
+	if (id == "doP5"){InputData.AddInstructionStream(program5, UI);}
+	if (id == "doP6"){InputData.AddInstructionStream(program6, UI);}
+	if (id == "doP7"){InputData.AddInstructionStream(program7, UI);}
+	if (id == "doP8"){InputData.AddInstructionStream(program8, UI);}
+
+	if (id == "homeJ1"){}//TODO:
+	if (id == "homeJ2"){}//TODO:
+	if (id == "homeJ3"){}//TODO:
+	if (id == "homeJ5"){}//TODO:
+	if (id == "homeJ6"){}//TODO:
+	if (id == "homeG1"){}//TODO:
+
+	if (id == "prec_on"){
+		instruction_code code = {PRECYSION_ON, "", 100, 0, 0, 0, 0};
+		InputData.AddInstruction(code, JOG);
+		}
+	if (id == "prec_off"){
+		instruction_code code = {PRECYSION_OFF, "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, JOG);
+		}
 
 	// grabber buttons
 	if (id == "btn_close"){

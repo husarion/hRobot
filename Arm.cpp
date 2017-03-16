@@ -24,6 +24,7 @@ bool Arm::PassInstruction(instruction_code instruction){
 }
 
 void Arm::ArmInit(){
+
 	motorManagerInit();
 	sys.setSysLogDev(&devNull);
 	sys.taskCreate(printfErrorTask);
@@ -32,7 +33,7 @@ void Arm::ArmInit(){
 	platform.ui.configHandler = cfgHandler;
 	platform.ui.onButtonEvent = onButtonEvent;
 	platform.ui.onValueChangeEvent = onValueChangeEvent;
-	platform.ui.setProjectId("@@@PROJECT_ID@@@");
+	platform.ui.setProjectId("ba70af50a5fde43f");
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
 	sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
