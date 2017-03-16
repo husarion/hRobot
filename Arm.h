@@ -19,6 +19,14 @@ public:
 
     bool PassInstruction(instruction_code instruction);
     
+    bool SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5);//crete or replase point values
+    bool MOVE(char* Pt);//moving from current point to set point in joint interpolation
+    bool MOVES(char* Pt);//moving from current point to set point in cartesian interpolation
+    bool DLY(float time);//delay in seconds
+    bool DEPART(char* Pt, float distance);//moving from current point to set point translate in tool z axis in joint interpolation
+    bool DEPARTS(char* Pt, float distance);//moving from current point to set point translate in tool z axis in cartesian interpolation
+    
+
 };
 
 #endif

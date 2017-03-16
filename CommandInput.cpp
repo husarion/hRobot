@@ -206,45 +206,51 @@ void CommandInput::AddInstructionStream(char* instruction, instruction_input_typ
 instruction_code CommandInput::CommandTranslation(char* command, char* param1, char* param2, 
 char* param3, char* param4, char* param5, char* param6, char* param7){
         char* temp;
+		char* temp1;
+		char* temp2;
         temp = new char[20];
+		temp1 = new char[20];
+		temp2 = new char[20];
         for(int i=0; i<20; i++){
             temp[i] = param1[i];
+			temp1[i] = param2[i];
+			temp2[i] = param3[i];
         }
         if (strcmp(command, "MOVE") == 0)
 	    {   
 	        if (strcmp(param2, "") == 0){
-            instruction_code code = {MOVE, temp, 0, 0, 0, 0, 0};
+            instruction_code code = {MOVE, temp, "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
 			if (strcmp(param2, "D") == 0){
-            instruction_code code = {MOVE_D, temp, (float)atof(param3), 0, 0, 0, 0};
+            instruction_code code = {MOVE_D, temp, "", "", (float)atof(param3), 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
 	        if (strcmp(param2, "JI") == 0){
-            instruction_code code = {MOVE_JI, "", (float)atof(param3), 
+            instruction_code code = {MOVE_JI, "", "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
 	        if (strcmp(param2, "CI") == 0){
-            instruction_code code = {MOVE_CI, "", (float)atof(param3), 
+            instruction_code code = {MOVE_CI, "", "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
 	        if (strcmp(param2, "JN") == 0){
-            instruction_code code = {MOVE_JN, "", (float)atof(param3), 
+            instruction_code code = {MOVE_JN, "", "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
 	        if (strcmp(param2, "CN") == 0){
-            instruction_code code = {MOVE_CN, "", (float)atof(param3), 
+            instruction_code code = {MOVE_CN, "", "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
@@ -254,12 +260,12 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    if (strcmp(command, "MOVES") == 0)
 	    {
 			if (strcmp(param2, "") == 0){
-            	instruction_code code = {MOVES, temp, 0, 0, 0, 0, 0};
+            	instruction_code code = {MOVES, temp, "", "", 0, 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;
 			}
 			if (strcmp(param2, "D") == 0){
-            	instruction_code code = {MOVES_D, temp, (float)atof(param3), 0, 0, 0, 0};
+            	instruction_code code = {MOVES_D, temp, "", "", (float)atof(param3), 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;
 			}
@@ -268,7 +274,7 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    {
 		if (strcmp(param2, "J") == 0)
 		{
-            instruction_code code = {SET_J, temp, (float)atof(param3), 
+            instruction_code code = {SET_J, temp, "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
@@ -276,7 +282,7 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		}
 		if (strcmp(param2, "R") == 0)
 		{
-            instruction_code code = {SET_R, temp, (float)atof(param3), 
+            instruction_code code = {SET_R, temp, "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
@@ -284,7 +290,7 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		}
 		if (strcmp(param2, "C") == 0)
 		{
-            instruction_code code = {SET_C, temp, (float)atof(param3), 
+            instruction_code code = {SET_C, temp, "", "", (float)atof(param3), 
             (float)atof(param4), (float)atof(param5), (float)atof(param6), 
             (float)atof(param7)};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
@@ -294,19 +300,19 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		{
 		    if (strcmp(param3, "J") == 0)
 		    {
-                instruction_code code = {SET_HERE_J, temp, 0, 0, 0, 0, 0};
+                instruction_code code = {SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
 		    if (strcmp(param3, "R") == 0)
 		    {
-                instruction_code code = {SET_HERE_R, temp, 0, 0, 0, 0, 0};
+                instruction_code code = {SET_HERE_R, temp, "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
 		    if (strcmp(param3, "C") == 0)
 		    {
-                instruction_code code = {SET_HERE_C, temp, 0, 0, 0, 0, 0};
+                instruction_code code = {SET_HERE_C, temp, "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
@@ -314,29 +320,29 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    }
 	    if (strcmp(command, "SHOWALL") == 0)
 	    {
-            instruction_code code = {SHOWALL, "", 0, 0, 0, 0, 0};
+            instruction_code code = {SHOWALL, "", "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
 	    if (strcmp(command, "SHOWCURRENT") == 0)
 	    {
             if (strcmp(param1, "") == 0){
-                instruction_code code = {SHOWCURRENT, "", 0, 0, 0, 0, 0};
+                instruction_code code = {SHOWCURRENT, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
             }
             if (strcmp(param1, "J") == 0){
-                instruction_code code = {SHOWCURRENT_J, "", 0, 0, 0, 0, 0};
+                instruction_code code = {SHOWCURRENT_J, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
             }
             if (strcmp(param1, "R") == 0){
-                instruction_code code = {SHOWCURRENT_R, "", 0, 0, 0, 0, 0};
+                instruction_code code = {SHOWCURRENT_R, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
             }
             if (strcmp(param1, "C") == 0){
-                instruction_code code = {SHOWCURRENT_C, "", 0, 0, 0, 0, 0};
+                instruction_code code = {SHOWCURRENT_C, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
             }
@@ -345,32 +351,32 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    {
 		if (strcmp(param2, "") == 0)
 		{
-            instruction_code code = {SHOW, temp, 0, 0, 0, 0, 0};
+            instruction_code code = {SHOW, temp, "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
 		if (strcmp(param2, "J") == 0)
 		{
-            instruction_code code = {SHOW_J, temp, 0, 0, 0, 0, 0};
+            instruction_code code = {SHOW_J, temp, "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
 		if (strcmp(param2, "R") == 0)
 		{
-            instruction_code code = {SHOW_R, temp, 0, 0, 0, 0, 0};
+            instruction_code code = {SHOW_R, temp, "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
 		if (strcmp(param2, "C") == 0)
 		{
-            instruction_code code = {SHOW_C, temp, 0, 0, 0, 0, 0};
+            instruction_code code = {SHOW_C, temp, "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
 	    }
 	    if (strcmp(command, "DELAY") == 0)
 	    {
-            instruction_code code = {SHOW_C, "", (float)atof(param1), 0, 0, 0, 0};
+            instruction_code code = {SHOW_C, "", "", "", (float)atof(param1), 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
@@ -378,13 +384,13 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 	    {
 		if (strcmp(param1, "ON") == 0)
 		{
-            instruction_code code = {PRECYSION_ON, "", (float)atof(param2), (float)atof(param3), 0, 0, 0};
+            instruction_code code = {PRECYSION_ON, "", "", "", (float)atof(param2), (float)atof(param3), 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
 		if (strcmp(param1, "OFF") == 0)
 		{
-            instruction_code code = {PRECYSION_OFF, "", (float)atof(param2), (float)atof(param3), 0, 0, 0};
+            instruction_code code = {PRECYSION_OFF, "", "", "", (float)atof(param2), (float)atof(param3), 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
@@ -395,13 +401,13 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		{
 		    if (strcmp(param2, "UI") == 0)
 		    {
-                instruction_code code = {CONFIG_COM_UI, "", 0, 0, 0, 0, 0};
+                instruction_code code = {CONFIG_COM_UI, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
 		    if (strcmp(param2, "SERIAL") == 0)
 		    {
-			    instruction_code code = {CONFIG_COM_SERIAL, "", 0, 0, 0, 0, 0};
+			    instruction_code code = {CONFIG_COM_SERIAL, "", "", "", 0, 0, 0, 0, 0};
 			    clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
@@ -410,20 +416,20 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		{
 		    if (strcmp(param1, "ONPOINT") == 0)
 		    {
-                instruction_code code = {OFFSET_ONPOINT, "", 0, 0, 0, 0, 0};
+                instruction_code code = {OFFSET_ONPOINT, "", "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
 		    if (strcmp(param1, "INPOINT") == 0)
 		    {
-                instruction_code code = {OFFSET_INPOINT, param1, 0, 0, 0, 0, 0};
+                instruction_code code = {OFFSET_INPOINT, param1, "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
 		}
 		if (strcmp(command, "RESETPOINTS") == 0)
 		{
-            instruction_code code = {RESETPOINTS, "", 0, 0, 0, 0, 0};
+            instruction_code code = {RESETPOINTS, "", "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
@@ -431,24 +437,93 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 
 	    if (strcmp(command, "H1OPEN") == 0)
 	    {
-            instruction_code code = {H1OPEN, "", 0, 0, 0, 0, 0};
+            instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
 	    if (strcmp(command, "H1CLOSE") == 0)
 	    {
-            instruction_code code = {H1CLOSE, "", 0, 0, 0, 0, 0};
+            instruction_code code = {H1CLOSE, "", "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
 	    if (strcmp(command, "H1STOP") == 0)
 	    {
-            instruction_code code = {H1STOP, "", 0, 0, 0, 0, 0};
+            instruction_code code = {H1STOP, "", "", "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
+		if (strcmp(command, "JOG") == 0)
+	    {
+			if (strcmp(param1, "J") == 0)
+	    	{
+            	instruction_code code = {JOG_J, "", "", "", (float)atof(param2), (float)atof(param3), (float)atof(param4), (float)atof(param5), (float)atof(param6)};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "R") == 0)
+	    	{
+            	instruction_code code = {JOG_R, "", "", "", (float)atof(param2), (float)atof(param3), (float)atof(param4), (float)atof(param5), (float)atof(param6)};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "C") == 0)
+	    	{
+            	instruction_code code = {JOG_C, "", "", "", (float)atof(param2), (float)atof(param3), (float)atof(param4), (float)atof(param5), (float)atof(param6)};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "X") == 0)
+	    	{
+            	instruction_code code = {JOG_X, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "Y") == 0)
+	    	{
+            	instruction_code code = {JOG_Y, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "Z") == 0)
+	    	{
+            	instruction_code code = {JOG_Z, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "J1") == 0)
+	    	{
+            	instruction_code code = {JOG_J1, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "J2") == 0)
+	    	{
+            	instruction_code code = {JOG_J2, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "J3") == 0)
+	    	{
+            	instruction_code code = {JOG_J3, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "J5") == 0)
+	    	{
+            	instruction_code code = {JOG_J5, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+			if (strcmp(param1, "J6") == 0)
+	    	{
+            	instruction_code code = {JOG_J6, "", "", "", (float)atof(param2), 0, 0, 0, 0};
+            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            	return code;
+			}
+	    }
 
-		instruction_code code = {NOCOMMAND, "", 0, 0, 0, 0, 0};
+		instruction_code code = {NOCOMMAND, "", "", "", 0, 0, 0, 0, 0};
 		clear_all(command, param1, param2, param3, param4, param5, param6, param7);
     	return code;
     }

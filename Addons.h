@@ -24,6 +24,7 @@ enum instruction_command{
                         SHOW, SHOW_J, SHOW_C, SHOW_R,
                         MOVE, MOVE_D, MOVE_JI, MOVE_CI, MOVE_JN, MOVE_CN,
                         MOVES, MOVES_D,
+                        JOG_J, JOG_R, JOG_C, JOG_X, JOG_Y, JOG_Z, JOG_J1, JOG_J2, JOG_J3, JOG_J5, JOG_J6,
                         DELAY,
                         H1OPEN, H1CLOSE, H1STOP,
                         RESETPOINTS,
@@ -35,6 +36,8 @@ enum instruction_command{
 struct instruction_code{
     instruction_command comand;
     char* point_name;
+    char* point_1_name;
+    char* point_2_name;
     float param1;
     float param2;
     float param3;

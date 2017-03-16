@@ -301,6 +301,108 @@ void MotionManager::update()
             }
         break;
         
+        case JOG_J:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k1 += motions[0].instruction.param1;
+            a.k2 += motions[0].instruction.param2;
+            a.k3 += motions[0].instruction.param3;
+            a.k4 += motions[0].instruction.param4;
+            a.k5 += motions[0].instruction.param5;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_R:
+            a = curentPoint;
+            a.translate(cylindricalCo);
+            a.k1 += motions[0].instruction.param1;
+            a.k2 += motions[0].instruction.param2;
+            a.k3 += motions[0].instruction.param3;
+            a.k4 += motions[0].instruction.param4;
+            a.k5 += motions[0].instruction.param5;
+            a.translate(jointsCo);
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_C:
+            a = curentPoint;
+            a.translate(cartesianCo);
+            a.k1 += motions[0].instruction.param1;
+            a.k2 += motions[0].instruction.param2;
+            a.k3 += motions[0].instruction.param3;
+            a.k4 += motions[0].instruction.param4;
+            a.k5 += motions[0].instruction.param5;
+            targetPoint = a;
+            moveCartesianNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_X:
+            a = curentPoint;
+            a.translate(cartesianCo);
+            a.k1 += motions[0].instruction.param1;
+            targetPoint = a;
+            moveCartesianNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_Y:
+            a = curentPoint;
+            a.translate(cartesianCo);
+            a.k2 += motions[0].instruction.param2;
+            targetPoint = a;
+            moveCartesianNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_Z:
+            a = curentPoint;
+            a.translate(cartesianCo);
+            a.k3 += motions[0].instruction.param3;
+            targetPoint = a;
+            moveCartesianNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_J1:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k1 += motions[0].instruction.param1;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_J2:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k2 += motions[0].instruction.param2;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_J3:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k3 += motions[0].instruction.param3;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_J5:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k4 += motions[0].instruction.param4;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+        case JOG_J6:
+            a = curentPoint;
+            a.translate(jointsCo);
+            a.k5 += motions[0].instruction.param5;
+            targetPoint = a;
+            moveJointNorm();
+            waitForReachingTarget();
+        break;
+
         case DELAY:
             sys.delay(motions[0].instruction.param1);
         break;

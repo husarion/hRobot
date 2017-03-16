@@ -198,12 +198,12 @@ void sendtoMotionManager()
 {
     if (mode == 0)
     {
-	    instruction_code code = {MOVE_JN, "", target[1], target[2], target[3], target[5], target[6]};
+	    instruction_code code = {MOVE_JN, "", "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
-    	instruction_code code = {MOVE_CN, "", target[1], target[2], target[3], target[5], target[6]};
+    	instruction_code code = {MOVE_CN, "", "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, UI);
     }
 }
@@ -212,12 +212,12 @@ void sendtoMotionManagerInter()
 {
     if (mode == 0)
     {
-        instruction_code code = {MOVE_JI, "", target[1], target[2], target[3], target[5], target[6]};
+        instruction_code code = {MOVE_JI, "", "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, UI);
     }
     if (mode == 1)
     {
-        instruction_code code = {MOVE_CI, "", target[1], target[2], target[3], target[5], target[6]};
+        instruction_code code = {MOVE_CI, "", "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, UI);
     }
 }
@@ -264,25 +264,25 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "homeG1"){}//TODO:
 
 	if (id == "prec_on"){
-		instruction_code code = {PRECYSION_ON, "", 100, 0, 0, 0, 0};
+		instruction_code code = {PRECYSION_ON, "", "", "", 100, 0, 0, 0, 0};
 		InputData.AddInstruction(code, JOG);
 		}
 	if (id == "prec_off"){
-		instruction_code code = {PRECYSION_OFF, "", 0, 0, 0, 0, 0};
+		instruction_code code = {PRECYSION_OFF, "", "", "", 0, 0, 0, 0, 0};
 		InputData.AddInstruction(code, JOG);
 		}
 
 	// grabber buttons
 	if (id == "btn_close"){
-	    instruction_code code = {H1OPEN, "", 0, 0, 0, 0, 0};
+	    instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
         InputData.AddInstruction(code, JOG);
 	}
 	if (id == "btn_open"){
-	    instruction_code code = {H1CLOSE, "", 0, 0, 0, 0, 0};
+	    instruction_code code = {H1CLOSE, "", "", "", 0, 0, 0, 0, 0};
         InputData.AddInstruction(code, JOG);
 	}
 	if (id == "btn_stop"){
-	    instruction_code code = {H1STOP, "", 0, 0, 0, 0, 0};
+	    instruction_code code = {H1STOP, "", "", "", 0, 0, 0, 0, 0};
         InputData.AddInstruction(code, JOG);
 	}
 
@@ -430,7 +430,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 49;
 		temp[2] = 85;
 		temp[3] = 73;
-		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos2_write")
@@ -450,7 +450,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 50;
 		temp[2] = 85;
 		temp[3] = 73;
-		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos3_write")
@@ -470,7 +470,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 51;
 		temp[2] = 85;
 		temp[3] = 73;
-	    instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+	    instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos4_write")
@@ -490,7 +490,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 52;
 		temp[2] = 85;
 		temp[3] = 73;
-		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos5_write")
@@ -510,7 +510,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 53;
 		temp[2] = 85;
 		temp[3] = 73;
-		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 	    if (id == "btn_pos6_write")
@@ -530,7 +530,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[1] = 54;
 		temp[2] = 85;
 		temp[3] = 73;
-		instruction_code code = {SET_J, temp, target[1], target[2], target[3], target[5], target[6]};
+		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
         InputData.AddInstruction(code, JOG);
 	    }
 
