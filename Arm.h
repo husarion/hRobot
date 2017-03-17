@@ -25,8 +25,12 @@ public:
     bool DLY(float time);//delay in seconds
     bool DEPART(char* Pt, float distance);//moving from current point to set point translate in tool z axis in joint interpolation
     bool DEPARTS(char* Pt, float distance);//moving from current point to set point translate in tool z axis in cartesian interpolation
-    
-
+    bool RESETPOINTS();
+    bool PRECYSION_ON();
+    bool PRECYSION_OFF();
+    bool JOG(joint_names j, float distance);
+    bool JOG(float J1, float J2, float J3, float J5, float J6);
+    bool SPEED(float value);
 };
 
 #endif

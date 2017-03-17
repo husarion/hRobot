@@ -14,6 +14,16 @@ enum type_co
     jointsCo
 };
 
+enum joint_names
+{
+    J1,
+    J2,
+    J3,
+    J4,
+    J5,
+    J6
+};
+
 enum instruction_input_type{UI, SERIAL, JOG, CODE, STREAM};
 
 enum instruction_command{
@@ -29,6 +39,7 @@ enum instruction_command{
                         H1OPEN, H1CLOSE, H1STOP,
                         RESETPOINTS,
                         PRECYSION_ON, PRECYSION_OFF,
+                        SPEED,
                         CONFIG_COM_STRIM, CONFIG_COM_UI, CONFIG_COM_SERIAL, CONFIG_COM_JOG, CONFIG_COM_CODE,
                         OFFSET_ONPOINT, OFFSET_INPOINT
                         };

@@ -104,3 +104,55 @@ bool Arm::DEPARTS(char* Pt, float distance){
 	instruction_code code = {instruction_command::MOVES_D, temp, "", "", distance, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
+
+bool Arm::RESETPOINTS(){
+	instruction_code code = {instruction_command::RESETPOINTS, "", "", "", 0, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool Arm::PRECYSION_ON(){
+	instruction_code code = {instruction_command::PRECYSION_ON, "", "", "", 100, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool Arm::PRECYSION_OFF(){
+	instruction_code code = {instruction_command::PRECYSION_OFF, "", "", "", 100, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool Arm::JOG(joint_names j, float distance){
+	instruction_code code;
+	switch(j){
+		case J1:
+			code = {instruction_command::JOG_J1, "", "", "", distance, 0, 0, 0, 0};
+			return PassInstruction(code);	
+		break;
+		case J2:
+			 code = {instruction_command::JOG_J2, "", "", "", distance, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case J3:
+			code = {instruction_command::JOG_J3, "", "", "", distance, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case J5:
+			code = {instruction_command::JOG_J5, "", "", "", distance, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case J6:
+			code = {instruction_command::JOG_J6, "", "", "", distance, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+	}
+	return false;
+}
+
+bool Arm::JOG(float J1, float J2, float J3, float J5, float J6){
+	instruction_code code = {instruction_command::JOG_J, "", "", "", J1, J2, J3, J4, J5};
+	return PassInstruction(code);
+}
+
+bool Arm::SPEED(float value){
+	instruction_code code = {instruction_command::SPEED, "", "", "", value, 0, 0, 0, 0};
+	return PassInstruction(code);
+}

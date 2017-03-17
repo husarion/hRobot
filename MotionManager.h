@@ -16,16 +16,6 @@
 #ifndef HROBOTMOTIONMANAGER
 #define HROBOTMOTIONMANAGER
 
-enum joint_names
-{
-    J1,
-    J2,
-    J3,
-    J4,
-    J5,
-    J6
-};
-
 struct motion_inst
 {
     instruction_code instruction;
@@ -46,6 +36,8 @@ class MotionManager
     bool presition_mode;
     int presition_mode_time;
     float presition_mode_value;
+
+    float ovrd_speed;
 
     bool checkRangeJ(Coordinates *point);
     void waitForReachingTarget();

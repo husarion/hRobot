@@ -429,7 +429,11 @@ void MotionManager::update()
             setPresitionMode(false, motions[0].instruction.param1, (int)motions[0].instruction.param2);
 		    ErrorLogs::err().sendPar(28, (int)motions[0].instruction.param2);
         break;
-        
+
+        case SPEED:
+            ovrd_speed = saturateFloatUnsym(motions[0].instruction.param1, 0, 100)/100;
+        break;
+
         case CONFIG_COM_STRIM: break;
         case CONFIG_COM_UI: break;
         case CONFIG_COM_SERIAL: break;
