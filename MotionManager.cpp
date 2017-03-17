@@ -433,6 +433,18 @@ void MotionManager::update()
         case SPEED:
             ovrd_speed = saturateFloatUnsym(motions[0].instruction.param1, 0, 100)/100;
         break;
+        case COPY:
+            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name);
+        break;
+        case COPY_J:
+            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, jointsCo);
+        break;
+        case COPY_R:
+            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, cylindricalCo);
+        break;
+        case COPY_C:
+            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, cartesianCo);
+        break;
 
         case CONFIG_COM_STRIM: break;
         case CONFIG_COM_UI: break;
@@ -482,6 +494,54 @@ MotionManager::MotionManager()
 }
 
 MotionManager::MotionManager(const MotionManager &) {}
+
+void MotionManager::copyPoint(char* name_out, char* name_in){
+    if (checkPoint(name_in))
+    {
+        if(checkPoint(name_out)){
+            Coordinates a = findPoint(name_in);
+            changeCoordinates(name_out, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);    
+        }
+        else{
+            Coordinates a = findPoint(name_in);
+            char *temp;
+            temp = new char[20];
+            for (int i = 0; i < 20; i++)
+                temp[i] = name_out[i];
+            points_key.push_back(temp);
+            points_cor.push_back(new Coordinates(a.type, a.k1, a.k2, a.k3, a.k4, a.k5));
+        }
+    }
+    else
+    {
+        ErrorLogs::err().sendPar(20, name_in);
+    }
+}
+
+void MotionManager::copyPoint(char* name_out, char* name_in, type_co type){
+    if (checkPoint(name_in))
+    {
+        if(checkPoint(name_out)){
+            Coordinates a = findPoint(name_in);
+            a.translate(type);
+            changeCoordinates(name_out, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);    
+        }
+        else{
+            Coordinates a = findPoint(name_in);
+            a.translate(type);
+            char *temp;
+            temp = new char[20];
+            for (int i = 0; i < 20; i++)
+                temp[i] = name_out[i];
+            points_key.push_back(temp);
+            points_cor.push_back(new Coordinates(a.type, a.k1, a.k2, a.k3, a.k4, a.k5));
+        }
+    }
+    else
+    {
+        ErrorLogs::err().sendPar(20, name_in);
+    }
+}
 
 void MotionManager::addPoint(char *name, type_co type, float k1, float k2, float k3)
 {

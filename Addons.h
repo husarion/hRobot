@@ -40,6 +40,7 @@ enum instruction_command{
                         RESETPOINTS,
                         PRECYSION_ON, PRECYSION_OFF,
                         SPEED,
+                        COPY, COPY_J, COPY_R, COPY_C,
                         CONFIG_COM_STRIM, CONFIG_COM_UI, CONFIG_COM_SERIAL, CONFIG_COM_JOG, CONFIG_COM_CODE,
                         OFFSET_ONPOINT, OFFSET_INPOINT
                         };

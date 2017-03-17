@@ -156,3 +156,18 @@ bool Arm::SPEED(float value){
 	instruction_code code = {instruction_command::SPEED, "", "", "", value, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
+
+bool Arm::CPY(char* Pn, char* Pd){
+	char* temp1;
+	char* temp2;
+	temp1 = new char[20];
+	temp2 = new char[20];
+    for(int i=0; i<20; i++){
+        temp1[i] = Pn[i];
+		temp2[i] = Pd[i];
+    }
+	instruction_code code = {instruction_command::COPY, temp1, temp1, "", 0, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool CPY(char* Pn, char* Pd, type_co Co){}//TODO:
