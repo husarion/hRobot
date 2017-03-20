@@ -446,6 +446,13 @@ void MotionManager::update()
             copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, cartesianCo);
         break;
 
+        case TRANSLATE:
+            translatePoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name);
+        break;
+        case TRANSLATE_SET:
+            translatePoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, motions[0].instruction.point_2_name);
+        break;
+
         case CONFIG_COM_STRIM: break;
         case CONFIG_COM_UI: break;
         case CONFIG_COM_SERIAL: break;
@@ -540,6 +547,57 @@ void MotionManager::copyPoint(char* name_out, char* name_in, type_co type){
     else
     {
         ErrorLogs::err().sendPar(20, name_in);
+    }
+}
+
+void MotionManager::translatePoint(char* point, char* about){
+    if (checkPoint(point))
+    {
+        if (checkPoint(about))
+        {
+            Coordinates a = findPoint(point);
+            Coordinates b = findPoint(about);
+            a.translate(a.type);
+            changeCoordinates(point, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
+        }
+        else{
+            ErrorLogs::err().sendPar(20, about);
+        }        
+    }
+    else{
+        ErrorLogs::err().sendPar(20, point);
+    }
+}
+
+void MotionManager::translatePoint(char* point, char* about, char* name_out){
+    if (checkPoint(point))
+    {
+        if (checkPoint(about))
+        {
+            Coordinates a = findPoint(point);
+            Coordinates b = findPoint(about);
+            b.translate(a.type);
+            if (checkPoint(name_out)){
+                changeCoordinates(name_out, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
+            }
+            else{
+                Coordinates a = findPoint(point);
+                Coordinates b = findPoint(about);
+                b.translate(a.type);
+                char *temp;
+                temp = new char[20];
+                for (int i = 0; i < 20; i++)
+                    temp[i] = name_out[i];
+                points_key.push_back(temp);
+                points_cor.push_back(new Coordinates(a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5));
+            }
+        }
+        else{
+            ErrorLogs::err().sendPar(20, about);
+        }        
+    }
+    else{
+        ErrorLogs::err().sendPar(20, point);
     }
 }
 

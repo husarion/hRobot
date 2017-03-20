@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 #include "hFramework.h"
-#include "hCloudClient.h"
+//#include "hCloudClient.h"
 #include <iostream>
 #include <cstdio>
 #include <vector>
@@ -12,8 +12,8 @@
 #include "ErrorLog.h"
 
 #include "GeoMath.h"
-#include "UI_Buttons.h"
-#include "UI_Labels.h"
+//#include "UI_Buttons.h"
+//#include "UI_Labels.h"
 #include "ParseCommand.h"
 #include "MotorManager.h"
 
@@ -30,13 +30,13 @@ void Arm::ArmInit(){
 	sys.taskCreate(printfErrorTask);
 	sys.taskCreate(comandInputTaskSerial, 1, 600, "ComITS");
 	platform.begin(&RPi);
-	platform.ui.configHandler = cfgHandler;
-	platform.ui.onButtonEvent = onButtonEvent;
-	platform.ui.onValueChangeEvent = onValueChangeEvent;
-	platform.ui.setProjectId("68b5fe1f1473854f");
+	//platform.ui.configHandler = cfgHandler;
+	//platform.ui.onButtonEvent = onButtonEvent;
+	//platform.ui.onValueChangeEvent = onValueChangeEvent;
+	//platform.ui.setProjectId("68b5fe1f1473854f");
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
-	sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
+	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
 }
 
 bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
@@ -135,6 +135,7 @@ bool Arm::JOG(joint_names j, float distance){
 			code = {instruction_command::JOG_J3, "", "", "", distance, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
+		case J4:break;
 		case J5:
 			code = {instruction_command::JOG_J5, "", "", "", distance, 0, 0, 0, 0};
 			return PassInstruction(code);
@@ -166,8 +167,62 @@ bool Arm::CPY(char* Pn, char* Pd){
         temp1[i] = Pn[i];
 		temp2[i] = Pd[i];
     }
-	instruction_code code = {instruction_command::COPY, temp1, temp1, "", 0, 0, 0, 0, 0};
+	instruction_code code = {instruction_command::COPY, temp1, temp2, "", 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool CPY(char* Pn, char* Pd, type_co Co){}//TODO:
+bool Arm::CPY(char* Pn, char* Pd, type_co Co){
+	instruction_code code;
+	char* temp1;
+	char* temp2;
+	temp1 = new char[20];
+	temp2 = new char[20];
+    for(int i=0; i<20; i++){
+        temp1[i] = Pn[i];
+		temp2[i] = Pd[i];
+    }
+	switch(Co){
+		case cartesianCo:
+			code = {instruction_command::COPY_C, temp1, temp2, "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case cylindricalCo:
+			code = {instruction_command::COPY_R, temp1, temp2, "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case jointsCo:
+			code = {instruction_command::COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+	}
+	return false;
+}
+
+bool Arm::TRANS(char* Pi, char* Pd){
+	char* temp1;
+	char* temp2;
+	temp1 = new char[20];
+	temp2 = new char[20];
+    for(int i=0; i<20; i++){
+        temp1[i] = Pi[i];
+		temp2[i] = Pd[i];
+    }
+	instruction_code code = {instruction_command::TRANSLATE, temp1, temp2, "", 0, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool Arm::TRANS(char* Pi, char* Pd, char* Pt){
+	char* temp1;
+	char* temp2;
+	char* temp3;	
+	temp1 = new char[20];
+	temp2 = new char[20];
+	temp3 = new char[20];
+    for(int i=0; i<20; i++){
+        temp1[i] = Pi[i];
+		temp2[i] = Pd[i];
+		temp3[i] = Pt[i];
+    }
+	instruction_code code = {instruction_command::TRANSLATE_SET, temp1, temp2, temp3, 0, 0, 0, 0, 0};
+	return PassInstruction(code);
+}

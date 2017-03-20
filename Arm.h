@@ -31,8 +31,10 @@ public:
     bool JOG(joint_names j, float distance);
     bool JOG(float J1, float J2, float J3, float J5, float J6);
     bool SPEED(float value);
-    bool CPY(char* Pn, char* Pd);
-    bool CPY(char* Pn, char* Pd, type_co Co);//TODO:
+    bool CPY(char* Pn, char* Pd);// Create new point Pn, what is a copy of point Pd.
+    bool CPY(char* Pn, char* Pd, type_co Co);// Create new point Pn, which is Pd transated to Coordinates Co.
+    bool TRANS(char* Pi, char* Pd);// Translate point Pi about point Pd and save it as Pi
+    bool TRANS(char* Pi, char* Pd, char* Pt);// Translate point Pi about point Pd and save it as Pt
 };
 
 #endif

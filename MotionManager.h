@@ -61,6 +61,8 @@ class MotionManager
     void addPoint(char *name, type_co type);
     void copyPoint(char* name_out, char* name_in);
     void copyPoint(char* name_out, char* name_in, type_co type);
+    void translatePoint(char* point, char* about);
+    void translatePoint(char* point, char* about, char* name_out);
     void clearPoints();
     void changeCoordinates(char *name, type_co t_type, float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void addMotionInst(motion_inst instruction);
