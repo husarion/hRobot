@@ -422,7 +422,7 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		    }
 		    if (strcmp(param1, "INPOINT") == 0)
 		    {
-                instruction_code code = {OFFSET_INPOINT, param1, "", "", 0, 0, 0, 0, 0};
+                instruction_code code = {OFFSET_INPOINT, temp, "", "", 0, 0, 0, 0, 0};
                 clear_all(command, param1, param2, param3, param4, param5, param6, param7);
                 return code;
 		    }
@@ -531,22 +531,22 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 		if (strcmp(command, "COPY") == 0)
 	    {
             if (strcmp(param1, "") == 0){
-				instruction_code code = {COPY, param1, param2, "", 0, 0, 0, 0, 0};
+				instruction_code code = {COPY, temp1, temp2, "", 0, 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;	
 	    	}
 			if (strcmp(param1, "J") == 0){
-				instruction_code code = {COPY_J, param1, param2, "", 0, 0, 0, 0, 0};
+				instruction_code code = {COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;
 	    	}
 			if (strcmp(param1, "R") == 0){
-				instruction_code code = {COPY_R, param1, param2, "", 0, 0, 0, 0, 0};
+				instruction_code code = {COPY_R, temp1, temp2, "", 0, 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;
 	    	}
 			if (strcmp(param1, "C") == 0){
-				instruction_code code = {COPY_C, param1, param2, "", 0, 0, 0, 0, 0};
+				instruction_code code = {COPY_C, temp1, temp2, "", 0, 0, 0, 0, 0};
             	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             	return code;
 	    	}
@@ -554,14 +554,14 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 
 		if (strcmp(command, "TRANS") == 0)
 	    {
-            instruction_code code = {TRANSLATE, param1, param2, "", 0, 0, 0, 0, 0};
+            instruction_code code = {TRANSLATE, temp, temp1, "", 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }
 
 		if (strcmp(command, "TRANSSET") == 0)
 	    {
-            instruction_code code = {TRANSLATE_SET, param1, param2, param3, 0, 0, 0, 0, 0};
+            instruction_code code = {TRANSLATE_SET, temp, temp1, temp2, 0, 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	    }

@@ -434,16 +434,16 @@ void MotionManager::update()
             ovrd_speed = saturateFloatUnsym(motions[0].instruction.param1, 0, 100)/100;
         break;
         case COPY:
-            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name);
+            copyPoint(motions[0].instruction.point_1_name, motions[0].instruction.point_name);
         break;
         case COPY_J:
-            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, jointsCo);
+            copyPoint(motions[0].instruction.point_1_name, motions[0].instruction.point_name, jointsCo);
         break;
         case COPY_R:
-            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, cylindricalCo);
+            copyPoint(motions[0].instruction.point_1_name, motions[0].instruction.point_name, cylindricalCo);
         break;
         case COPY_C:
-            copyPoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, cartesianCo);
+            copyPoint(motions[0].instruction.point_1_name, motions[0].instruction.point_name, cartesianCo);
         break;
 
         case TRANSLATE:
@@ -515,8 +515,7 @@ void MotionManager::copyPoint(char* name_out, char* name_in){
             temp = new char[20];
             for (int i = 0; i < 20; i++)
                 temp[i] = name_out[i];
-            points_key.push_back(temp);
-            points_cor.push_back(new Coordinates(a.type, a.k1, a.k2, a.k3, a.k4, a.k5));
+            addPoint(temp, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);
         }
     }
     else
@@ -529,19 +528,20 @@ void MotionManager::copyPoint(char* name_out, char* name_in, type_co type){
     if (checkPoint(name_in))
     {
         if(checkPoint(name_out)){
-            Coordinates a = findPoint(name_in);
+            Coordinates b = findPoint(name_in);
+            Coordinates a = b;
             a.translate(type);
             changeCoordinates(name_out, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);    
         }
         else{
-            Coordinates a = findPoint(name_in);
+            Coordinates b = findPoint(name_in);
+            Coordinates a = b;
             a.translate(type);
             char *temp;
             temp = new char[20];
             for (int i = 0; i < 20; i++)
                 temp[i] = name_out[i];
-            points_key.push_back(temp);
-            points_cor.push_back(new Coordinates(a.type, a.k1, a.k2, a.k3, a.k4, a.k5));
+            addPoint(temp, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);
         }
     }
     else
@@ -556,8 +556,9 @@ void MotionManager::translatePoint(char* point, char* about){
         if (checkPoint(about))
         {
             Coordinates a = findPoint(point);
-            Coordinates b = findPoint(about);
-            a.translate(a.type);
+            Coordinates c = findPoint(about);
+            Coordinates b = c;
+            b.translate(a.type);
             changeCoordinates(point, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
         }
         else{
@@ -575,21 +576,22 @@ void MotionManager::translatePoint(char* point, char* about, char* name_out){
         if (checkPoint(about))
         {
             Coordinates a = findPoint(point);
-            Coordinates b = findPoint(about);
+            Coordinates c = findPoint(about);
+            Coordinates b = c;
             b.translate(a.type);
             if (checkPoint(name_out)){
                 changeCoordinates(name_out, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
             }
             else{
                 Coordinates a = findPoint(point);
-                Coordinates b = findPoint(about);
+                Coordinates c = findPoint(about);
+                Coordinates b = c;
                 b.translate(a.type);
                 char *temp;
                 temp = new char[20];
                 for (int i = 0; i < 20; i++)
                     temp[i] = name_out[i];
-                points_key.push_back(temp);
-                points_cor.push_back(new Coordinates(a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5));
+                addPoint(temp, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
             }
         }
         else{
@@ -922,6 +924,8 @@ bool MotionManager::instruction(instruction_code instruction){
     a.instruction.param5 = instruction.param5;
     for(int i=0; i< 20; i++){
         a.instruction.point_name = instruction.point_name;
+        a.instruction.point_1_name = instruction.point_1_name;
+        a.instruction.point_2_name = instruction.point_2_name;
     }
     if(instruction.point_name != ""){
         a.point = findPoint(a.instruction.point_name);
