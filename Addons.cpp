@@ -63,7 +63,7 @@ Coordinates::Coordinates(){
     this->k3 = 0.0;
     this->k4 = 0.0;
     this->k5 = 0.0;
-    this->type = jointsCo;
+    this->type = none;
 }
 
 Coordinates::Coordinates(type_co type, float k1, float k2, float k3){

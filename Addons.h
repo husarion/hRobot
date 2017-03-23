@@ -11,7 +11,8 @@ enum type_co
 {
     cartesianCo,
     cylindricalCo,
-    jointsCo
+    jointsCo,
+    none
 };
 
 enum joint_names

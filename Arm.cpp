@@ -194,6 +194,10 @@ bool Arm::CPY(char* Pn, char* Pd, type_co Co){
 			code = {instruction_command::COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
+		case none:
+			code = {instruction_command::COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
 	}
 	return false;
 }
@@ -225,4 +229,85 @@ bool Arm::TRANS(char* Pi, char* Pd, char* Pt){
     }
 	instruction_code code = {instruction_command::TRANSLATE_SET, temp1, temp2, temp3, 0, 0, 0, 0, 0};
 	return PassInstruction(code);
+}
+
+bool Arm::HERE(char* Pn){
+	char* temp;	
+	temp = new char[20];
+    for(int i=0; i<20; i++){
+        temp[i] = Pn[i];
+    }
+	instruction_code code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
+	return PassInstruction(code);
+}
+
+bool Arm::HERE(char* Pn, type_co Co){
+	char* temp;	
+	temp = new char[20];
+    for(int i=0; i<20; i++){
+        temp[i] = Pn[i];
+    }
+	instruction_code code;
+	switch(Co){
+	case cartesianCo:
+		code = {instruction_command::SET_HERE_C, temp, "", "", 0, 0, 0, 0, 0};
+		return PassInstruction(code);
+	break;
+	case cylindricalCo:
+		code = {instruction_command::SET_HERE_R, temp, "", "", 0, 0, 0, 0, 0};
+		return PassInstruction(code);
+	break;
+	case jointsCo:
+		code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
+		return PassInstruction(code);
+	break;
+	case none:
+		code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
+		return PassInstruction(code);
+	break;
+	}
+	return false;
+}
+
+bool Arm::SHOW(char* Pd, char* str, int* size, type_co Co){
+	Coordinates a;
+	a = MotionManager::get().getPoint(Pd, Co);
+	if(a.type != none){
+		//TODO:
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool Arm::SHOW(char* Pd, char* str, type_co Co){
+	Coordinates a;
+	a = MotionManager::get().getPoint(Pd, Co);
+	if(a.type != none){
+		//TODO:
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool Arm::HGRABBER(grabber_options option){
+	instruction_code code;
+	switch(option){
+		case GOPEN:
+			code = {instruction_command::H1OPEN, "", "", "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case GCLOSE:
+			code = {instruction_command::H1CLOSE, "", "", "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+		case GSTOP:
+			code = {instruction_command::H1STOP, "", "", "", 0, 0, 0, 0, 0};
+			return PassInstruction(code);
+		break;
+	}
+	return false;
 }

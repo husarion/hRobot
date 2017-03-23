@@ -7,7 +7,7 @@
 #include <cstdio>
 #include <stdio.h>
 #include <string.h>
-#include <cstring>
+#include <cstdlib>
 
 #include "hFramework.h"
 #include "MotionManager.h"
@@ -498,6 +498,7 @@ MotionManager::MotionManager()
     presition_mode_time = 0;
     presition_mode = false;
     presition_mode_value = 100;
+    point_iterator = 0;
 }
 
 MotionManager::MotionManager(const MotionManager &) {}
@@ -654,8 +655,77 @@ void MotionManager::addPoint(char *name, type_co type)
     }
 }
 
+void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3){
+    char* temp;
+    temp = new char[20];
+    for(int i =0; i< 20; i++){
+        temp[i] = 0;
+    }
+    char* temp2;
+    temp2 = new char[20];
+    itoa(point_iterator, temp2, 10);
+    point_iterator++;
+    temp[0] = 80;
+    temp[1] = 71;
+    for(int i = 2; i< 20 ; i++){
+        if(temp2[i-2] > 47 && temp2[i-2] < 58){
+            temp[i] = temp2[i-2];
+        }
+        else{
+            break;
+        }
+    }
+    points_key.push_back(temp);
+    points_cor.push_back(new Coordinates(type, k1, k2, k3, 0, 0));
+}
+
+void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3, float k4, float k5){
+    char* temp;
+    temp = new char[20];
+    for(int i =0; i< 20; i++){
+        temp[i] = 0;
+    }
+    char* temp2 = itoa(point_iterator);
+    point_iterator++;
+    temp[0] = 80;
+    temp[1] = 71;
+    for(int i = 2; i< 20 ; i++){
+        if(temp2[i-2] > 47 && temp2[i-2] < 58){
+            temp[i] = temp2[i-2];
+        }
+        else{
+            break;
+        }
+    }
+    points_key.push_back(temp);
+    points_cor.push_back(new Coordinates(type, k1, k2, k3, k4, k5));
+}
+
+void MotionManager::addPointAutomatic(type_co type){
+    char* temp;
+    temp = new char[20];
+    for(int i =0; i< 20; i++){
+        temp[i] = 0;
+    }
+    char* temp2 = itoa(point_iterator);
+    point_iterator++;
+    temp[0] = 80;
+    temp[1] = 71;
+    for(int i = 2; i< 20 ; i++){
+        if(temp2[i-2] > 47 && temp2[i-2] < 58){
+            temp[i] = temp2[i-2];
+        }
+        else{
+            break;
+        }
+    }
+    points_key.push_back(temp);
+    points_cor.push_back(new Coordinates(type, 0, 0, 0, 0, 0));
+}
+
 void MotionManager::clearPoints()
 {
+    point_iterator = 0;
     points_key.clear();
     points_cor.clear();
 }
@@ -741,6 +811,9 @@ void MotionManager::show(char* name, type_co type)
         case jointsCo:
             Serial.printf("Point %s : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", name, a.k1, a.k2, a.k3, a.k4, a.k5);
             break;
+        case none:
+            Serial.printf("Point %s : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", name, a.k1, a.k2, a.k3, a.k4, a.k5);
+            break;
         }
         if (a.type == cartesianCo)
             Serial.printf(" type: cartesian\n");
@@ -767,6 +840,9 @@ void MotionManager::show(Coordinates point){
         case jointsCo:
             Serial.printf("Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", point.k1, point.k2, point.k3, point.k4, point.k5);
             break;
+        case none:
+            Serial.printf("Point : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", point.k1, point.k2, point.k3, point.k4, point.k5);
+            break;
         }
         if (point.type == cartesianCo)
             Serial.printf(" type: cartesian\n");
@@ -789,6 +865,9 @@ void MotionManager::showAll()
             Serial.printf("Point %s : r: %f, h: %f, alpha: %f, A: %f, B: %f", points_key[i], points_cor[i]->k1, points_cor[i]->k2, points_cor[i]->k3, points_cor[i]->k4, points_cor[i]->k5);
             break;
         case jointsCo:
+            Serial.printf("Point %s : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", points_key[i], points_cor[i]->k1, points_cor[i]->k2, points_cor[i]->k3, points_cor[i]->k4, points_cor[i]->k5);
+            break;
+        case none:
             Serial.printf("Point %s : j1: %f, j2: %f, j3: %f, j5: %f, j6: %f", points_key[i], points_cor[i]->k1, points_cor[i]->k2, points_cor[i]->k3, points_cor[i]->k4, points_cor[i]->k5);
             break;
         }
@@ -932,4 +1011,39 @@ bool MotionManager::instruction(instruction_code instruction){
     }
     addMotionInst(a);
     return true;
+}
+
+Coordinates MotionManager::getPoint(char* name){
+    char* temp;
+    temp = new char[20];
+    for(int i=0; i<20; i++){
+        temp[i]=name[i];
+    }
+    if(checkPoint(temp)){
+        return findPoint(temp);
+    }
+    else{
+        ErrorLogs::err().sendPar(20, temp);
+        Coordinates a;
+        return a;
+    }
+}
+
+Coordinates MotionManager::getPoint(char* name, type_co type){
+    char* temp;
+    temp = new char[20];
+    for(int i=0; i<20; i++){
+        temp[i]=name[i];
+    }
+    if(checkPoint(temp)){
+        Coordinates a;
+        a = findPoint(temp);
+        a.translate(type);
+        return a;
+    }
+    else{
+        ErrorLogs::err().sendPar(20, temp);
+        Coordinates a;
+        return a;
+    }
 }

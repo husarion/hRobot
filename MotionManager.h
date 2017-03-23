@@ -37,6 +37,8 @@ class MotionManager
     int presition_mode_time;
     float presition_mode_value;
 
+    int point_iterator;
+
     float ovrd_speed;
 
     bool checkRangeJ(Coordinates *point);
@@ -89,6 +91,11 @@ class MotionManager
     void setTarget(float t_k1, float t_k2, float t_k3, float t_k4, float t_k5);
     void setTarget(Coordinates *point);
     float getTarget(int t_joint);
+    Coordinates getPoint(char* name);
+    Coordinates getPoint(char* name, type_co type);
+    void addPointAutomatic(type_co type, float k1, float k2, float k3);
+    void addPointAutomatic(type_co type, float k1, float k2, float k3, float k4, float k5);
+    void addPointAutomatic(type_co type = jointsCo);
         
     bool instruction(instruction_code instruction);
 

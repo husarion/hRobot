@@ -247,14 +247,14 @@ void onButtonEvent(hId id, ButtonEventType type)
 	//if (id == "btn_kim")
 	//    tempKi -= 0.05;
 
-	if (id == "doP1"){InputData.AddInstructionStream(program1, UI);}
-	if (id == "doP2"){InputData.AddInstructionStream(program2, UI);}
-	if (id == "doP3"){InputData.AddInstructionStream(program3, UI);}
-	if (id == "doP4"){InputData.AddInstructionStream(program4, UI);}
-	if (id == "doP5"){InputData.AddInstructionStream(program5, UI);}
-	if (id == "doP6"){InputData.AddInstructionStream(program6, UI);}
-	if (id == "doP7"){InputData.AddInstructionStream(program7, UI);}
-	if (id == "doP8"){InputData.AddInstructionStream(program8, UI);}
+	if (id == "doP1"){program1_start();}
+	if (id == "doP2"){program2_start();}
+	if (id == "doP3"){program3_start();}
+	if (id == "doP4"){program4_start();}
+	if (id == "doP5"){program5_start();}
+	if (id == "doP6"){program6_start();}
+	if (id == "doP7"){program7_start();}
+	if (id == "doP8"){program8_start();}
 
 	if (id == "homeJ1"){}//TODO:
 	if (id == "homeJ2"){}//TODO:

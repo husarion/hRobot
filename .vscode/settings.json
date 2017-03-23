@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "system_error": "cpp"
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp"
     }
 }
