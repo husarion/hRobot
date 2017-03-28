@@ -6,8 +6,6 @@
 #include <iostream>
 #include <cstdio>
 #include <stdio.h>
-#include <string.h>
-#include <cstdlib>
 
 #include "hFramework.h"
 #include "MotionManager.h"
@@ -655,15 +653,45 @@ void MotionManager::addPoint(char *name, type_co type)
     }
 }
 
+void itoa(int volume, char* str){
+    int retro = 0;
+    int iter = 0;
+    do{
+        retro = volume % 10;
+        volume /= 10;
+        switch(retro){
+            case 0: str[iter] = 48; break;
+            case 1: str[iter] = 49; break;
+            case 2: str[iter] = 50; break;
+            case 3: str[iter] = 51; break;
+            case 4: str[iter] = 52; break;
+            case 6: str[iter] = 53; break;
+            case 7: str[iter] = 54; break;
+            case 8: str[iter] = 55; break;
+            case 9: str[iter] = 56; break;
+        }
+        if(retro != 0){
+            char temp;
+            for(int i = iter; i>0; i--){
+                temp = str[iter];
+                str[iter] = str[iter-1];
+                str[iter-1] = temp;
+            }
+        }
+        iter ++;
+    }while(volume != 0);
+}
+
 void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3){
     char* temp;
+    char* temp2;
     temp = new char[20];
+    temp2 = new char[20];
     for(int i =0; i< 20; i++){
         temp[i] = 0;
+        temp2[i] = 0;
     }
-    char* temp2;
-    temp2 = new char[20];
-    itoa(point_iterator, temp2, 10);
+    itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
     temp[1] = 71;
@@ -681,11 +709,14 @@ void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3
 
 void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3, float k4, float k5){
     char* temp;
+    char* temp2;
     temp = new char[20];
+    temp2 = new char[20];
     for(int i =0; i< 20; i++){
         temp[i] = 0;
+        temp2[i] = 0;
     }
-    char* temp2 = itoa(point_iterator);
+    itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
     temp[1] = 71;
@@ -703,11 +734,14 @@ void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3
 
 void MotionManager::addPointAutomatic(type_co type){
     char* temp;
+    char* temp2;
     temp = new char[20];
+    temp2 = new char[20];
     for(int i =0; i< 20; i++){
         temp[i] = 0;
+        temp2[i] = 0;
     }
-    char* temp2 = itoa(point_iterator);
+    itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
     temp[1] = 71;
@@ -736,6 +770,8 @@ bool com(char *tem1, char *tem2)
     {
         if (tem1[i] != tem2[i] && tem1[1] >= 48 && tem2[1] >= 48 && tem1[i] <= 90 && tem2[i] <= 90)
             return false;
+        if (tem1[i] == 0 && tem2[i] == 0)
+            break;
     }
     return true;
 }

@@ -37,6 +37,27 @@ void Arm::ArmInit(){
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
 	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
+
+	sys.delay(3000);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
+	char* str;
+	char* temp;
+	temp = new char[20];
+	temp = "PG0";
+	for(int i = 3; i< 20; i++){
+		temp[i]=0;
+	}
+	SHOW(temp, str, jointsCo);
 }
 
 bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
@@ -269,23 +290,32 @@ bool Arm::HERE(char* Pn, type_co Co){
 	return false;
 }
 
-bool Arm::SHOW(char* Pd, char* str, int* size, type_co Co){
-	Coordinates a;
-	a = MotionManager::get().getPoint(Pd, Co);
-	if(a.type != none){
-		//TODO:
-		return true;
-	}
-	else{
-		return false;
-	}
-}
+void addStrAndFloat(char* str, char* text1, char* text2, char* textJ1, float j1, char* textJ2, float j2,
+char* textJ3, float j3, char* textJ4, float j4, char* textJ5, float j5, char* type){
+	
+}//TODO:
 
 bool Arm::SHOW(char* Pd, char* str, type_co Co){
 	Coordinates a;
 	a = MotionManager::get().getPoint(Pd, Co);
 	if(a.type != none){
-		//TODO:
+		str = new char(255);
+		for(int i = 0; i< 255; i++){
+			str[i]=0;
+		}
+		switch(Co){
+		case jointsCo:
+			addStrAndFloat(str, "Point ", Pd, "\tJ1: ", a.k1, "\tJ2: ", a.k2, "\tJ3: ", a.k3, "\tJ4: ", a.k4, "\tJ5: ", a.k5, "\tjointsCo");
+		break;
+		case cylindricalCo:
+			addStrAndFloat(str, "\tPoint ", Pd, "\tR: ", a.k1, "\tH: ", a.k2, "\tF: ", a.k3, "\tA: ", a.k4, "\tB: ", a.k5, "\tcylindricalCo");
+			break;
+		case cartesianCo:
+			addStrAndFloat(str, "\tPoint ", Pd, "\tX: ", a.k1, "\tY: ", a.k2, "\tZ: ", a.k3, "\tA: ", a.k4, "\tB: ", a.k5, "\tcartesianCo");
+			break;
+		case none:
+			break;
+		}
 		return true;
 	}
 	else{

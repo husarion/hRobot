@@ -27,7 +27,7 @@ ServoCtrl::ServoCtrl(IServo &servo_t, int servo_center_t, float threshold_t,
     integrator_saturate_down = integrator_saturate_down_t;
 }
 
-int ServoCtrl::update(float error, float t_time)
+void ServoCtrl::update(float error, float t_time)
 {
     if (error < 0)
     {
@@ -39,7 +39,7 @@ int ServoCtrl::update(float error, float t_time)
     }
 }
 
-int ServoCtrl::updateUp(float error, float t_time)
+void ServoCtrl::updateUp(float error, float t_time)
 {
     error = thresholdFloat(error, threshold);
     error = saturateFloat(error, error_saturate);
@@ -52,7 +52,7 @@ int ServoCtrl::updateUp(float error, float t_time)
     time_last = t_time;
 }
 
-int ServoCtrl::updateDown(float error, float t_time)
+void ServoCtrl::updateDown(float error, float t_time)
 {
     error = thresholdFloat(error, threshold);
     error = saturateFloat(error, error_saturate);
