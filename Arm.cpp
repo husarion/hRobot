@@ -36,21 +36,7 @@ void Arm::ArmInit(){
 	//platform.ui.setProjectId("68b5fe1f1473854f");
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
-	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
-
-	sys.delay(3000);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	MotionManager::get().addPointAutomatic(jointsCo, 10, 100, 1000, 100, 200);
-	
+	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");	
 }
 
 bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
