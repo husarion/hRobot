@@ -30,6 +30,7 @@ enum instruction_input_type{UI, SERIAL, JOG, CODE, STREAM};
 enum instruction_command{
                         NOCOMMAND,
                         SET_J, SET_C, SET_R, SET_HERE_J, SET_HERE_C, SET_HERE_R,
+                        ADDPOINTAUTO_J, ADDPOINTAUTO_R, ADDPOINTAUTO_C,
                         SHOWALL,
                         SHOWCURRENT, SHOWCURRENT_J, SHOWCURRENT_C, SHOWCURRENT_R,
                         SHOW, SHOW_J, SHOW_C, SHOW_R,

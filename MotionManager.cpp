@@ -451,6 +451,19 @@ void MotionManager::update()
             translatePoint(motions[0].instruction.point_name, motions[0].instruction.point_1_name, motions[0].instruction.point_2_name);
         break;
 
+        case ADDPOINTAUTO_J:
+            addPointAutomatic(jointsCo, motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, motions[0].instruction.param5);
+        break;
+        case ADDPOINTAUTO_R:
+            addPointAutomatic(cylindricalCo, motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, motions[0].instruction.param5);
+        break;
+        case ADDPOINTAUTO_C:
+            addPointAutomatic(cartesianCo, motions[0].instruction.param1, motions[0].instruction.param2, 
+            motions[0].instruction.param3, motions[0].instruction.param4, motions[0].instruction.param5);
+        break;
+
         case CONFIG_COM_STRIM: break;
         case CONFIG_COM_UI: break;
         case CONFIG_COM_SERIAL: break;
