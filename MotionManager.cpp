@@ -525,8 +525,7 @@ void MotionManager::copyPoint(char* name_out, char* name_in){
             Coordinates a = findPoint(name_in);
             char *temp;
             temp = new char[20];
-            for (int i = 0; i < 20; i++)
-                temp[i] = name_out[i];
+            for(int i = 0; i < 20; i++)temp[i] = name_out[i];
             addPoint(temp, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);
         }
     }
@@ -551,8 +550,7 @@ void MotionManager::copyPoint(char* name_out, char* name_in, type_co type){
             a.translate(type);
             char *temp;
             temp = new char[20];
-            for (int i = 0; i < 20; i++)
-                temp[i] = name_out[i];
+            for(int i = 0; i < 20; i++)temp[i] = name_out[i];
             addPoint(temp, a.type, a.k1, a.k2, a.k3, a.k4, a.k5);
         }
     }
@@ -601,8 +599,7 @@ void MotionManager::translatePoint(char* point, char* about, char* name_out){
                 b.translate(a.type);
                 char *temp;
                 temp = new char[20];
-                for (int i = 0; i < 20; i++)
-                    temp[i] = name_out[i];
+                for(int i = 0; i < 20; i++)temp[i] = name_out[i];
                 addPoint(temp, a.type, a.k1+b.k1, b.k2+a.k2, b.k3+a.k3, b.k4+a.k4, b.k5+a.k5);
             }
         }
@@ -625,8 +622,7 @@ void MotionManager::addPoint(char *name, type_co type, float k1, float k2, float
     {
         char *temp;
         temp = new char[20];
-        for (int i = 0; i < 20; i++)
-            temp[i] = name[i];
+        for(int i = 0; i < 20; i++)temp[i] = name[i];
         points_key.push_back(temp);
         points_cor.push_back(new Coordinates(type, k1, k2, k3));
     }
@@ -642,8 +638,7 @@ void MotionManager::addPoint(char *name, type_co type, float k1, float k2, float
     {
         char *temp;
         temp = new char[20];
-        for (int i = 0; i < 20; i++)
-            temp[i] = name[i];
+        for(int i = 0; i < 20; i++)temp[i] = name[i];
         points_key.push_back(temp);
         points_cor.push_back(new Coordinates(type, k1, k2, k3, k4, k5));
     }
@@ -653,16 +648,19 @@ void MotionManager::addPoint(char *name, type_co type)
 {
     if (checkPoint(name))
     {
-        changeCoordinates(name, type, curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5);
+        Coordinates a(jointsCo, curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5);
+        a.translate(type);
+        changeCoordinates(name, type, a.k1, a.k2, a.k3, a.k4, a.k5);
     }
     else
     {
         char *temp;
         temp = new char[20];
-        for (int i = 0; i < 20; i++)
-            temp[i] = name[i];
+        for(int i = 0; i < 20; i++)temp[i] = name[i];
         points_key.push_back(temp);
-        points_cor.push_back(new Coordinates(type, curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5));
+        Coordinates a(jointsCo, curentPoint.k1, curentPoint.k2, curentPoint.k3, curentPoint.k4, curentPoint.k5);
+        a.translate(type);
+        points_cor.push_back(new Coordinates(type, a.k1, a.k2, a.k3, a.k4, a.k5));
     }
 }
 
@@ -700,10 +698,7 @@ void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3
     char* temp2;
     temp = new char[20];
     temp2 = new char[20];
-    for(int i =0; i< 20; i++){
-        temp[i] = 0;
-        temp2[i] = 0;
-    }
+    for(int i =0; i< 20; i++){temp[i] = 0;temp2[i] = 0;}
     itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
@@ -725,10 +720,7 @@ void MotionManager::addPointAutomatic(type_co type, float k1, float k2, float k3
     char* temp2;
     temp = new char[20];
     temp2 = new char[20];
-    for(int i =0; i< 20; i++){
-        temp[i] = 0;
-        temp2[i] = 0;
-    }
+    for(int i =0; i< 20; i++){temp[i] = 0;temp2[i] = 0;}
     itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
@@ -750,10 +742,7 @@ void MotionManager::addPointAutomatic(type_co type){
     char* temp2;
     temp = new char[20];
     temp2 = new char[20];
-    for(int i =0; i< 20; i++){
-        temp[i] = 0;
-        temp2[i] = 0;
-    }
+    for(int i =0; i< 20; i++){temp[i] = 0;temp2[i] = 0;}
     itoa(point_iterator, temp2);
     point_iterator++;
     temp[0] = 80;
@@ -1065,9 +1054,7 @@ bool MotionManager::instruction(instruction_code instruction){
 Coordinates MotionManager::getPoint(char* name){
     char* temp;
     temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i]=name[i];
-    }
+    for(int i=0; i<20; i++) temp[i]=name[i];
     if(checkPoint(temp)){
         return findPoint(temp);
     }
@@ -1081,9 +1068,7 @@ Coordinates MotionManager::getPoint(char* name){
 Coordinates MotionManager::getPoint(char* name, type_co type){
     char* temp;
     temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i]=name[i];
-    }
+    for(int i=0; i<20; i++)temp[i]=name[i];
     if(checkPoint(temp)){
         Coordinates a;
         a = findPoint(temp);

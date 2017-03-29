@@ -136,6 +136,8 @@ void ErrorLogs::translateError(int error)
     char *temp3;
     temp = new char[255];
     temp3 = new char[127];
+    for(int i = 0; i< 255; i++)temp[i]=0;
+    for(int i = 0; i< 127; i++)temp3[i]=0;
     switch (error)
     {
     case 0:

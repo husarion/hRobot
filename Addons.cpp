@@ -48,6 +48,38 @@ void erco(int code){
     ErrorLogs::err().sendPar(17, code);
 }
 
+void ftoa(char* str, float number){
+	float t = number;
+	int steps = 0;
+	do{
+		steps++;
+		t /= 10;
+	}while(t>=1);
+	steps += 3;
+	int iter = steps;
+	int num = (int)(number*1000);
+	for(int i = 0; i < steps; i++){
+		if(i == 3){
+			str[iter] = 44;
+			iter--;
+		}
+		switch(num % 10){
+			case 0 : str[iter] = 48; break;
+			case 1 : str[iter] = 49; break;
+			case 2 : str[iter] = 50; break;
+			case 3 : str[iter] = 51; break;
+			case 4 : str[iter] = 52; break;
+			case 5 : str[iter] = 53; break;
+			case 6 : str[iter] = 54; break;
+			case 7 : str[iter] = 55; break;
+			case 8 : str[iter] = 56; break;
+			case 9 : str[iter] = 57; break;
+		}
+		num /= 10;
+		iter--;
+	}
+}
+
 Coordinates::Coordinates(const Coordinates & t){
     this->k1 = t.k1;
     this->k2 = t.k2;
@@ -98,6 +130,7 @@ void Coordinates::translate(type_co t_type){
         if(t_type == cartesianCo){*this = joints2cartes(*this);}
         if(t_type == cylindricalCo){*this = joints2cylin(*this);}
         break;
+        case none: break;
     }
 }
 

@@ -88,6 +88,7 @@ float deg2rad(float deg);
 float rad2deg(float rad);
 float sq(float val);
 void erco(int code);
+void ftoa(char* str, float number);
 float sind(float deg);
 float cosd(float deg);
 

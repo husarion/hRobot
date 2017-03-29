@@ -36,7 +36,25 @@ void Arm::ArmInit(){
 	//platform.ui.setProjectId("68b5fe1f1473854f");
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
-	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");	
+	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
+
+	sys.delay(3000);
+	char* temp;
+	temp = new char[20];
+	for(int i = 0; i<20; i++)temp[i]=0;
+	temp[0] = 'P';
+	temp[1] = '1';
+	SET(temp, jointsCo, 0, -15, 20, 20, 0);
+	sys.delay(3000);
+	SHOW(temp);
+
+	HGRABBER(GOPEN);
+	sys.delay(1000);
+	HGRABBER(GSTOP);
+	sys.delay(1000);
+	HGRABBER(GCLOSE);
+	sys.delay(1000);
+	HGRABBER(GSTOP);
 }
 
 bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
@@ -231,16 +249,6 @@ bool Arm::TRANS(char* Pi, char* Pd, char* Pt){
 	return PassInstruction(code);
 }
 
-bool Arm::HERE(char* Pn){
-	char* temp;	
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pn[i];
-    }
-	instruction_code code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
-	return PassInstruction(code);
-}
-
 bool Arm::HERE(char* Pn, type_co Co){
 	char* temp;	
 	temp = new char[20];
@@ -269,38 +277,7 @@ bool Arm::HERE(char* Pn, type_co Co){
 	return false;
 }
 
-void ftoa(char* str, float number){
-	float t = number;
-	int steps = 0;
-	do{
-		steps++;
-		t /= 10;
-	}while(t>=1);
-	steps += 3;
-	int iter = steps;
-	int num = (int)(number*1000);
-	for(int i = 0; i < steps; i++){
-		if(i == 3){
-			str[iter] = 44;
-			iter--;
-		}
-		switch(num % 10){
-			case 0 : str[iter] = 48; break;
-			case 1 : str[iter] = 49; break;
-			case 2 : str[iter] = 50; break;
-			case 3 : str[iter] = 51; break;
-			case 4 : str[iter] = 52; break;
-			case 5 : str[iter] = 53; break;
-			case 6 : str[iter] = 54; break;
-			case 7 : str[iter] = 55; break;
-			case 8 : str[iter] = 56; break;
-			case 9 : str[iter] = 57; break;
-		}
-		num /= 10;
-		iter--;
-	}
-}
-
+/*
 void addStrAndFloat(char* str, char* text1, size_t size1, char* text2, char* textJ1, size_t size2, float j1, char* textJ2, size_t size3, float j2,
 char* textJ3, size_t size4, float j3, char* textJ4, size_t size5, float j4, char* textJ5, size_t size6, float j5, char* type, size_t size7){
 	int iter = 0;
@@ -399,30 +376,38 @@ char* textJ3, size_t size4, float j3, char* textJ4, size_t size5, float j4, char
 	str[iter] = 9;
 	str[iter+1] = '\n';
 }
+*/
 
 bool Arm::SHOW(char* Pd, type_co Co){
 	Coordinates a;
 	a = MotionManager::get().getPoint(Pd, Co);
-	char* str;
-	str = new char(64);
-	for(int i = 0; i< 64; i++){
-		str[i]=0;
+	//char* str;
+	//str = new char(64);
+	//for(int i = 0; i< 64; i++){
+	//	str[i]=0;
+	//}
+	if(Co != none)
+	if(a.type != Co){
+		a.translate(Co);
 	}
 	if(a.type != none){
-		switch(Co){
+		switch(a.type){
 		case jointsCo:
-			addStrAndFloat(str, "Point ", 6, Pd, "\tJ1: ", 5, a.k1, "\tJ2: ", 5 , a.k2, "\tJ3: ", 5, a.k3, "\tJ5: ", 5, a.k4, "\tJ6: ", 5, a.k5, "\tjointsCo", 9);
+			Serial.printf("Point %s\tJ1: %f\tJ2: %f\tJ3: %f\tJ5: %f\tJ6: %f\tjointsCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			//addStrAndFloat(str, "Point ", 6, Pd, "\tJ1: ", 5, a.k1, "\tJ2: ", 5 , a.k2, "\tJ3: ", 5, a.k3, "\tJ5: ", 5, a.k4, "\tJ6: ", 5, a.k5, "\tjointsCo", 9);
 		break;
 		case cylindricalCo:
-			addStrAndFloat(str, "Point ", 6, Pd, "\tR: ", 4, a.k1, "\tH: ", 4, a.k2, "\tF: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcylindricalCo", 14);
+			Serial.printf("Point %s\tR: %f\tH: %f\tF: %f\tA: %f\tB: %f\tcylindricalCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			//addStrAndFloat(str, "Point ", 6, Pd, "\tR: ", 4, a.k1, "\tH: ", 4, a.k2, "\tF: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcylindricalCo", 14);
 			break;
 		case cartesianCo:
-			addStrAndFloat(str, "Point ", 6, Pd, "\tX: ", 4, a.k1, "\tY: ", 4, a.k2, "\tZ: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcartesianCo", 11);
+			Serial.printf("Point %s\tX: %f\tY: %f\tZ: %f\tA: %f\tB: %f\tcartesianCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			//addStrAndFloat(str, "Point ", 6, Pd, "\tX: ", 4, a.k1, "\tY: ", 4, a.k2, "\tZ: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcartesianCo", 11);
 			break;
 		case none:
 			break;
 		}
-		Serial.printf("%s\n", str);
+		//Serial.printf("%s\n", str);
 		return true;
 	}
 	else{

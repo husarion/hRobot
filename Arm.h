@@ -37,8 +37,7 @@ public:
     bool CPY(char* Pn, char* Pd, type_co Co);// Create new point Pn, which is Pd transated to Coordinates Co.
     bool TRANS(char* Pi, char* Pd);// Translate point Pi about point Pd and save it as Pi
     bool TRANS(char* Pi, char* Pd, char* Pt);// Translate point Pi about point Pd and save it as Pt
-    bool HERE(char* Pn);// saving current target set before as a point Pn.
-    bool HERE(char* Pn, type_co Co);// saving current target set before as a point Pn in specified system.
+    bool HERE(char* Pn, type_co Co = none);// saving current target set before as a point Pn in specified system.
     bool SHOW(char* Pd, type_co Co = none);
     bool HGRABBER(grabber_options option);
 };
