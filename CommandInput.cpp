@@ -216,15 +216,16 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 			temp1[i] = param2[i];
 			temp2[i] = param3[i];
         }
+		if (strcmp(command, "DEPART") == 0)
+		{
+			instruction_code code = {MOVE_D, temp, "", "", (float)atof(param2), 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
         if (strcmp(command, "MOVE") == 0)
 	    {   
 	        if (strcmp(param2, "") == 0){
             instruction_code code = {MOVE, temp, "", "", 0, 0, 0, 0, 0};
-            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
-            return code;
-	        }
-			if (strcmp(param2, "D") == 0){
-            instruction_code code = {MOVE_D, temp, "", "", (float)atof(param3), 0, 0, 0, 0};
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 	        }
@@ -257,18 +258,17 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
             return code;
 	        }
 	    }
+		if (strcmp(command, "DEPARTS") == 0)
+		{
+			instruction_code code = {MOVES_D, temp, "", "", (float)atof(param2), 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
 	    if (strcmp(command, "MOVES") == 0)
 	    {
-			if (strcmp(param2, "") == 0){
-            	instruction_code code = {MOVES, temp, "", "", 0, 0, 0, 0, 0};
-            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
-            	return code;
-			}
-			if (strcmp(param2, "D") == 0){
-            	instruction_code code = {MOVES_D, temp, "", "", (float)atof(param3), 0, 0, 0, 0};
-            	clear_all(command, param1, param2, param3, param4, param5, param6, param7);
-            	return code;
-			}
+            instruction_code code = {MOVES, temp, "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
 	    }
 	    if (strcmp(command, "SET") == 0)
 	    {

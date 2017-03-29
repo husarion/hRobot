@@ -77,6 +77,15 @@ class Coordinates
     void translate(type_co t_type);
 };
 
+class PointCa{
+    private:
+    public:
+    char* name;
+    PointCa();
+    PointCa(char* t_name);
+    PointCa(const PointCa &t);
+};
+
 float pointToPointDistance(Coordinates from, Coordinates to);
 float pointToPointDistanceJointMax(Coordinates from, Coordinates to);
 

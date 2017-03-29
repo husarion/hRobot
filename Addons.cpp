@@ -134,6 +134,30 @@ void Coordinates::translate(type_co t_type){
     }
 }
 
+PointCa::PointCa(){
+    name = new char[20];
+    for(int i = 0; i< 20 ; i++)name[i] = 0;
+}
+
+PointCa::PointCa(char* t_name){
+    name = new char[20];
+    for(int i = 0; i< 20 ; i++)name[i] = 0;
+    for(int i = 0; i< 20 ; i++){
+        if(t_name[i] != 0){
+            name[i] = t_name[i];
+        }
+    }
+}
+
+PointCa::PointCa(const PointCa &t){
+    for(int i = 0; i< 20 ; i++)name[i] = 0;
+    for(int i = 0; i< 20 ; i++){
+        if(t.name[i] != 0){
+            name[i] = t.name[i];
+        }
+    }
+}
+
 float pointToPointDistance(Coordinates from, Coordinates to){
     from.translate(cartesianCo);
     to.translate(cartesianCo);

@@ -42,19 +42,22 @@ void Arm::ArmInit(){
 	char* temp;
 	temp = new char[20];
 	for(int i = 0; i<20; i++)temp[i]=0;
+	char* temp1;
+	temp1 = new char[20];
+	for(int i = 0; i<20; i++)temp1[i]=0;
+	char* temp2;
+	temp2 = new char[20];
+	for(int i = 0; i<20; i++)temp2[i]=0;
 	temp[0] = 'P';
 	temp[1] = '1';
+	temp1[0] = 'P';
+	temp1[1] = '2';
+	temp2[0] = 'P';
+	temp2[1] = '3';
 	SET(temp, jointsCo, 0, -15, 20, 20, 0);
 	sys.delay(3000);
 	SHOW(temp);
 
-	HGRABBER(GOPEN);
-	sys.delay(1000);
-	HGRABBER(GSTOP);
-	sys.delay(1000);
-	HGRABBER(GCLOSE);
-	sys.delay(1000);
-	HGRABBER(GSTOP);
 }
 
 bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
