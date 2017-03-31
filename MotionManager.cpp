@@ -347,7 +347,7 @@ void MotionManager::update()
         case JOG_Y:
             a = curentPoint;
             a.translate(cartesianCo);
-            a.k2 += motions[0].instruction.param2;
+            a.k2 += motions[0].instruction.param1;
             targetPoint = a;
             moveCartesianNorm();
             waitForReachingTarget();
@@ -355,7 +355,7 @@ void MotionManager::update()
         case JOG_Z:
             a = curentPoint;
             a.translate(cartesianCo);
-            a.k3 += motions[0].instruction.param3;
+            a.k3 += motions[0].instruction.param1;
             targetPoint = a;
             moveCartesianNorm();
             waitForReachingTarget();
@@ -371,7 +371,7 @@ void MotionManager::update()
         case JOG_J2:
             a = curentPoint;
             a.translate(jointsCo);
-            a.k2 += motions[0].instruction.param2;
+            a.k2 += motions[0].instruction.param1;
             targetPoint = a;
             moveJointNorm();
             waitForReachingTarget();
@@ -379,7 +379,7 @@ void MotionManager::update()
         case JOG_J3:
             a = curentPoint;
             a.translate(jointsCo);
-            a.k3 += motions[0].instruction.param3;
+            a.k3 += motions[0].instruction.param1;
             targetPoint = a;
             moveJointNorm();
             waitForReachingTarget();
@@ -387,7 +387,7 @@ void MotionManager::update()
         case JOG_J5:
             a = curentPoint;
             a.translate(jointsCo);
-            a.k4 += motions[0].instruction.param4;
+            a.k4 += motions[0].instruction.param1;
             targetPoint = a;
             moveJointNorm();
             waitForReachingTarget();
@@ -395,7 +395,7 @@ void MotionManager::update()
         case JOG_J6:
             a = curentPoint;
             a.translate(jointsCo);
-            a.k5 += motions[0].instruction.param5;
+            a.k5 += motions[0].instruction.param1;
             targetPoint = a;
             moveJointNorm();
             waitForReachingTarget();

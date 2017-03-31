@@ -21,24 +21,24 @@ public:
 
     bool PassInstruction(instruction_code instruction);
     
-    bool SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5);//crete or replase point values
-    bool MOVE(char* Pt);//moving from current point to set point in joint interpolation
-    bool MOVES(char* Pt);//moving from current point to set point in cartesian interpolation
+    bool SET(PointCa Pt, type_co Co, float k1, float k2, float k3, float k4, float k5);//crete or replase point values
+    bool MOVE(PointCa Pt);//moving from current point to set point in joint interpolation
+    bool MOVES(PointCa Pt);//moving from current point to set point in cartesian interpolation
     bool DLY(float time);//delay in seconds
-    bool DEPART(char* Pt, float distance);//moving from current point to set point translate in tool z axis in joint interpolation
-    bool DEPARTS(char* Pt, float distance);//moving from current point to set point translate in tool z axis in cartesian interpolation
+    bool DEPART(PointCa Pt, float distance);//moving from current point to set point translate in tool z axis in joint interpolation
+    bool DEPARTS(PointCa Pt, float distance);//moving from current point to set point translate in tool z axis in cartesian interpolation
     bool RESETPOINTS();
-    bool PRECYSION_ON();
-    bool PRECYSION_OFF();
+    bool PRECYSION_ON(float t_treshold = 100, float t_time = 0);
+    bool PRECYSION_OFF(float t_time = 0);
     bool JOG(joint_names j, float distance);
     bool JOG(float J1, float J2, float J3, float J5, float J6);
     bool SPEED(float value);
-    bool CPY(char* Pn, char* Pd);// Create new point Pn, what is a copy of point Pd.
-    bool CPY(char* Pn, char* Pd, type_co Co);// Create new point Pn, which is Pd transated to Coordinates Co.
-    bool TRANS(char* Pi, char* Pd);// Translate point Pi about point Pd and save it as Pi
-    bool TRANS(char* Pi, char* Pd, char* Pt);// Translate point Pi about point Pd and save it as Pt
-    bool HERE(char* Pn, type_co Co = none);// saving current target set before as a point Pn in specified system.
-    bool SHOW(char* Pd, type_co Co = none);
+    bool CPY(PointCa Pn, PointCa Pd);// Create new point Pn, what is a copy of point Pd.
+    bool CPY(PointCa Pn, PointCa Pd, type_co Co);// Create new point Pn, which is Pd transated to Coordinates Co.
+    bool TRANS(PointCa Pi, PointCa Pd);// Translate point Pi about point Pd and save it as Pi
+    bool TRANS(PointCa Pi, PointCa Pd, PointCa Pt);// Translate point Pi about point Pd and save it as Pt
+    bool HERE(PointCa Pn, type_co Co = none);// saving current target set before as a point Pn in specified system.
+    bool SHOW(PointCa Pd, type_co Co = none);
     bool HGRABBER(grabber_options option);
 };
 

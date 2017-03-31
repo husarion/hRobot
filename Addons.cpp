@@ -143,17 +143,24 @@ PointCa::PointCa(char* t_name){
     name = new char[20];
     for(int i = 0; i< 20 ; i++)name[i] = 0;
     for(int i = 0; i< 20 ; i++){
-        if(t_name[i] != 0){
+        if(t_name[i] > 31){
             name[i] = t_name[i];
+        }
+        else{
+            break;
         }
     }
 }
 
 PointCa::PointCa(const PointCa &t){
+    name = new char[20];
     for(int i = 0; i< 20 ; i++)name[i] = 0;
     for(int i = 0; i< 20 ; i++){
-        if(t.name[i] != 0){
+        if(t.name[i] > 31){
             name[i] = t.name[i];
+        }
+        else{
+            break;
         }
     }
 }

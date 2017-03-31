@@ -39,65 +39,38 @@ void Arm::ArmInit(){
 	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
 
 	sys.delay(3000);
-	char* temp;
-	temp = new char[20];
-	for(int i = 0; i<20; i++)temp[i]=0;
-	char* temp1;
-	temp1 = new char[20];
-	for(int i = 0; i<20; i++)temp1[i]=0;
-	char* temp2;
-	temp2 = new char[20];
-	for(int i = 0; i<20; i++)temp2[i]=0;
-	temp[0] = 'P';
-	temp[1] = '1';
-	temp1[0] = 'P';
-	temp1[1] = '2';
-	temp2[0] = 'P';
-	temp2[1] = '3';
-	SET(temp, jointsCo, 0, -15, 20, 20, 0);
+	PointCa a("P1\n");
+	SET(a, jointsCo, 0, -15, 20, 20, 0);
 	sys.delay(3000);
-	SHOW(temp);
+	SHOW(a);
+	JOG(J2, 20);
+	SHOW(a);
 
 }
 
-bool Arm::SET(char* Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
-	char* temp;
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pt[i];
-    }
+bool Arm::SET(PointCa Pt, type_co Co, float k1, float k2, float k3, float k4, float k5){
 	if(Co == jointsCo){
-		instruction_code code = {instruction_command::SET_J, temp, "", "", k1, k2, k3, k4, k5};
+		instruction_code code = {instruction_command::SET_J, Pt.name, "", "", k1, k2, k3, k4, k5};
 		return PassInstruction(code);
 	}
 	if(Co == cylindricalCo){
-		instruction_code code = {instruction_command::SET_R, temp, "", "", k1, k2, k3, k4, k5};
+		instruction_code code = {instruction_command::SET_R, Pt.name, "", "", k1, k2, k3, k4, k5};
 		return PassInstruction(code);
 	}
 	if(Co == cartesianCo){
-		instruction_code code = {instruction_command::SET_C, temp, "", "", k1, k2, k3, k4, k5};
+		instruction_code code = {instruction_command::SET_C, Pt.name, "", "", k1, k2, k3, k4, k5};
 		return PassInstruction(code);
 	}
 	return false;
 }
 
-bool Arm::MOVE(char* Pt){
-	char* temp;
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pt[i];
-    }
-	instruction_code code = {instruction_command::MOVE, temp, "", "", 0, 0, 0, 0, 0};
+bool Arm::MOVE(PointCa Pt){
+	instruction_code code = {instruction_command::MOVE, Pt.name, "", "", 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::MOVES(char* Pt){
-	char* temp;
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pt[i];
-    }
-	instruction_code code = {instruction_command::MOVES, temp, "", "", 0, 0, 0, 0, 0};
+bool Arm::MOVES(PointCa Pt){
+	instruction_code code = {instruction_command::MOVES, Pt.name, "", "", 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
@@ -106,23 +79,13 @@ bool Arm::DLY(float time){
 	return PassInstruction(code);
 }
 
-bool Arm::DEPART(char* Pt, float distance){
-	char* temp;
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pt[i];
-    }
-	instruction_code code = {instruction_command::MOVE_D, temp, "", "", distance, 0, 0, 0, 0};
+bool Arm::DEPART(PointCa Pt, float distance){
+	instruction_code code = {instruction_command::MOVE_D, Pt.name, "", "", distance, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::DEPARTS(char* Pt, float distance){
-	char* temp;
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pt[i];
-    }
-	instruction_code code = {instruction_command::MOVES_D, temp, "", "", distance, 0, 0, 0, 0};
+bool Arm::DEPARTS(PointCa Pt, float distance){
+	instruction_code code = {instruction_command::MOVES_D, Pt.name, "", "", distance, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
@@ -131,13 +94,13 @@ bool Arm::RESETPOINTS(){
 	return PassInstruction(code);
 }
 
-bool Arm::PRECYSION_ON(){
-	instruction_code code = {instruction_command::PRECYSION_ON, "", "", "", 100, 0, 0, 0, 0};
+bool Arm::PRECYSION_ON(float t_treshold, float t_time){
+	instruction_code code = {instruction_command::PRECYSION_ON, "", "", "", t_treshold, t_time, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::PRECYSION_OFF(){
-	instruction_code code = {instruction_command::PRECYSION_OFF, "", "", "", 100, 0, 0, 0, 0};
+bool Arm::PRECYSION_OFF(float t_time){
+	instruction_code code = {instruction_command::PRECYSION_OFF, "", "", "", 100, t_time, 0, 0, 0};
 	return PassInstruction(code);
 }
 
@@ -179,101 +142,61 @@ bool Arm::SPEED(float value){
 	return PassInstruction(code);
 }
 
-bool Arm::CPY(char* Pn, char* Pd){
-	char* temp1;
-	char* temp2;
-	temp1 = new char[20];
-	temp2 = new char[20];
-    for(int i=0; i<20; i++){
-        temp1[i] = Pn[i];
-		temp2[i] = Pd[i];
-    }
-	instruction_code code = {instruction_command::COPY, temp1, temp2, "", 0, 0, 0, 0, 0};
+bool Arm::CPY(PointCa Pn, PointCa Pd){
+	instruction_code code = {instruction_command::COPY, Pn.name, Pd.name, "", 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::CPY(char* Pn, char* Pd, type_co Co){
+bool Arm::CPY(PointCa Pn, PointCa Pd, type_co Co){
 	instruction_code code;
-	char* temp1;
-	char* temp2;
-	temp1 = new char[20];
-	temp2 = new char[20];
-    for(int i=0; i<20; i++){
-        temp1[i] = Pn[i];
-		temp2[i] = Pd[i];
-    }
 	switch(Co){
 		case cartesianCo:
-			code = {instruction_command::COPY_C, temp1, temp2, "", 0, 0, 0, 0, 0};
+			code = {instruction_command::COPY_C, Pn.name, Pd.name, "", 0, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
 		case cylindricalCo:
-			code = {instruction_command::COPY_R, temp1, temp2, "", 0, 0, 0, 0, 0};
+			code = {instruction_command::COPY_R, Pn.name, Pd.name, "", 0, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
 		case jointsCo:
-			code = {instruction_command::COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
+			code = {instruction_command::COPY_J, Pn.name, Pd.name, "", 0, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
 		case none:
-			code = {instruction_command::COPY_J, temp1, temp2, "", 0, 0, 0, 0, 0};
+			code = {instruction_command::COPY_J, Pn.name, Pd.name, "", 0, 0, 0, 0, 0};
 			return PassInstruction(code);
 		break;
 	}
 	return false;
 }
 
-bool Arm::TRANS(char* Pi, char* Pd){
-	char* temp1;
-	char* temp2;
-	temp1 = new char[20];
-	temp2 = new char[20];
-    for(int i=0; i<20; i++){
-        temp1[i] = Pi[i];
-		temp2[i] = Pd[i];
-    }
-	instruction_code code = {instruction_command::TRANSLATE, temp1, temp2, "", 0, 0, 0, 0, 0};
+bool Arm::TRANS(PointCa Pi, PointCa Pd){
+	instruction_code code = {instruction_command::TRANSLATE, Pi.name, Pd.name, "", 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::TRANS(char* Pi, char* Pd, char* Pt){
-	char* temp1;
-	char* temp2;
-	char* temp3;	
-	temp1 = new char[20];
-	temp2 = new char[20];
-	temp3 = new char[20];
-    for(int i=0; i<20; i++){
-        temp1[i] = Pi[i];
-		temp2[i] = Pd[i];
-		temp3[i] = Pt[i];
-    }
-	instruction_code code = {instruction_command::TRANSLATE_SET, temp1, temp2, temp3, 0, 0, 0, 0, 0};
+bool Arm::TRANS(PointCa Pi, PointCa Pd, PointCa Pt){
+	instruction_code code = {instruction_command::TRANSLATE_SET, Pi.name, Pd.name, Pt.name, 0, 0, 0, 0, 0};
 	return PassInstruction(code);
 }
 
-bool Arm::HERE(char* Pn, type_co Co){
-	char* temp;	
-	temp = new char[20];
-    for(int i=0; i<20; i++){
-        temp[i] = Pn[i];
-    }
+bool Arm::HERE(PointCa Pn, type_co Co){
 	instruction_code code;
 	switch(Co){
 	case cartesianCo:
-		code = {instruction_command::SET_HERE_C, temp, "", "", 0, 0, 0, 0, 0};
+		code = {instruction_command::SET_HERE_C, Pn.name, "", "", 0, 0, 0, 0, 0};
 		return PassInstruction(code);
 	break;
 	case cylindricalCo:
-		code = {instruction_command::SET_HERE_R, temp, "", "", 0, 0, 0, 0, 0};
+		code = {instruction_command::SET_HERE_R, Pn.name, "", "", 0, 0, 0, 0, 0};
 		return PassInstruction(code);
 	break;
 	case jointsCo:
-		code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
+		code = {instruction_command::SET_HERE_J, Pn.name, "", "", 0, 0, 0, 0, 0};
 		return PassInstruction(code);
 	break;
 	case none:
-		code = {instruction_command::SET_HERE_J, temp, "", "", 0, 0, 0, 0, 0};
+		code = {instruction_command::SET_HERE_J, Pn.name, "", "", 0, 0, 0, 0, 0};
 		return PassInstruction(code);
 	break;
 	}
@@ -381,9 +304,9 @@ char* textJ3, size_t size4, float j3, char* textJ4, size_t size5, float j4, char
 }
 */
 
-bool Arm::SHOW(char* Pd, type_co Co){
+bool Arm::SHOW(PointCa Pd, type_co Co){
 	Coordinates a;
-	a = MotionManager::get().getPoint(Pd, Co);
+	a = MotionManager::get().getPoint(Pd.name, Co);
 	//char* str;
 	//str = new char(64);
 	//for(int i = 0; i< 64; i++){
@@ -396,15 +319,15 @@ bool Arm::SHOW(char* Pd, type_co Co){
 	if(a.type != none){
 		switch(a.type){
 		case jointsCo:
-			Serial.printf("Point %s\tJ1: %f\tJ2: %f\tJ3: %f\tJ5: %f\tJ6: %f\tjointsCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			Serial.printf("Point %s\tJ1: %f\tJ2: %f\tJ3: %f\tJ5: %f\tJ6: %f\tjointsCo\n", Pd.name, a.k1, a.k2, a.k3, a.k4, a.k5);
 			//addStrAndFloat(str, "Point ", 6, Pd, "\tJ1: ", 5, a.k1, "\tJ2: ", 5 , a.k2, "\tJ3: ", 5, a.k3, "\tJ5: ", 5, a.k4, "\tJ6: ", 5, a.k5, "\tjointsCo", 9);
 		break;
 		case cylindricalCo:
-			Serial.printf("Point %s\tR: %f\tH: %f\tF: %f\tA: %f\tB: %f\tcylindricalCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			Serial.printf("Point %s\tR: %f\tH: %f\tF: %f\tA: %f\tB: %f\tcylindricalCo\n", Pd.name, a.k1, a.k2, a.k3, a.k4, a.k5);
 			//addStrAndFloat(str, "Point ", 6, Pd, "\tR: ", 4, a.k1, "\tH: ", 4, a.k2, "\tF: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcylindricalCo", 14);
 			break;
 		case cartesianCo:
-			Serial.printf("Point %s\tX: %f\tY: %f\tZ: %f\tA: %f\tB: %f\tcartesianCo\n", Pd, a.k1, a.k2, a.k3, a.k4, a.k5);
+			Serial.printf("Point %s\tX: %f\tY: %f\tZ: %f\tA: %f\tB: %f\tcartesianCo\n", Pd.name, a.k1, a.k2, a.k3, a.k4, a.k5);
 			//addStrAndFloat(str, "Point ", 6, Pd, "\tX: ", 4, a.k1, "\tY: ", 4, a.k2, "\tZ: ", 4, a.k3, "\tA: ", 4, a.k4, "\tB: ", 4, a.k5, "\tcartesianCo", 11);
 			break;
 		case none:
