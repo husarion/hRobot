@@ -1,9 +1,10 @@
 #define NO_MIN_MAX
-//#define END_SWITCH_ENABLE
+#define END_SWITCH_ENABLE
 
 #ifndef HROBOTCONFIG
 #define HROBOTCONFIG
 
+//min max volues for soft stops and ofset
 #ifdef NO_MIN_MAX
 const float J1_min = -360.0;
 const float J2_min = -360.0;
@@ -30,18 +31,26 @@ const float J4_max = 105.0;
 const float J5_max = 180.0;
 #endif
 
+//Interpolation setings
+const int time_motion_task = 100;
+const float time_iteration = 75;
+const float step_mul = 10;
+
+//enkoder tics for revolution scale
 const float encoder_tics_J1 = 20;
 const float encoder_tics_J2 = 18 * 4;
 const float encoder_tics_J3 = 20 / 4.355;
 const float encoder_tics_J5 = 4.4;
 const float encoder_tics_J6 = 0.2;
 
+//endswitch enable
 #ifdef END_SWITCH_ENABLE
 bool endswitch_active = true;
 #else
 bool endswitch_active = false;
 #endif
 
+//Servos names and settings
 IServo &s1 = hServoModule.servo1;
 IServo &s2 = hServoModule.servo2;
 IServo &s3 = hServoModule.servo3;

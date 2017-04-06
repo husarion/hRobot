@@ -12,13 +12,10 @@
 #include "Addons.h"
 #include "ErrorLog.h"
 #include "MotorManager.h"
+#include "Config.h"
 
 extern float current[9];
 extern float target[9];
-
-const int time_motion_task = 100;
-float time_iteration = 75;
-float step_mul = 10;
 
 Coordinates to_send;
 

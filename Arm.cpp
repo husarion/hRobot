@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 #include "hFramework.h"
-//#include "hCloudClient.h"
+#include "hCloudClient.h"
 #include <iostream>
 #include <cstdio>
 #include <vector>
@@ -12,8 +12,8 @@
 #include "ErrorLog.h"
 
 #include "GeoMath.h"
-//#include "UI_Buttons.h"
-//#include "UI_Labels.h"
+#include "UI_Buttons.h"
+#include "UI_Labels.h"
 #include "ParseCommand.h"
 #include "MotorManager.h"
 
@@ -30,13 +30,13 @@ void Arm::ArmInit(){
 	sys.taskCreate(printfErrorTask);
 	sys.taskCreate(comandInputTaskSerial, 1, 600, "ComITS");
 	platform.begin(&RPi);
-	//platform.ui.configHandler = cfgHandler;
-	//platform.ui.onButtonEvent = onButtonEvent;
-	//platform.ui.onValueChangeEvent = onValueChangeEvent;
-	//platform.ui.setProjectId("68b5fe1f1473854f");
+	platform.ui.configHandler = cfgHandler;
+	platform.ui.onButtonEvent = onButtonEvent;
+	platform.ui.onValueChangeEvent = onValueChangeEvent;
+	platform.ui.setProjectId("68b5fe1f1473854f");
 	sys.taskCreate(motorManagerUpdateTask, 2, 600, "MorManU");
 	sys.taskCreate(MotionTask, 2, 1000, "MotManT");
-	//sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
+	sys.taskCreate(taskPrintOnLabels, 2, 1500, "labelsT");
 
 	sys.delay(3000);
 	PointCa a("P1\n");
