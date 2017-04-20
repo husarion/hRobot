@@ -265,25 +265,25 @@ void onButtonEvent(hId id, ButtonEventType type)
 
 	if (id == "prec_on"){
 		instruction_code code = {PRECYSION_ON, "", "", "", 100, 0, 0, 0, 0};
-		InputData.AddInstruction(code, JOG);
+		InputData.AddInstruction(code, UI);
 		}
 	if (id == "prec_off"){
 		instruction_code code = {PRECYSION_OFF, "", "", "", 0, 0, 0, 0, 0};
-		InputData.AddInstruction(code, JOG);
+		InputData.AddInstruction(code, UI);
 		}
 
 	// grabber buttons
 	if (id == "btn_close"){
-	    instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
-        InputData.AddInstruction(code, JOG);
+	    instruction_code code = {H1CLOSE, "", "", "", 0, 0, 0, 0, 0};
+        InputData.AddInstruction(code, UI);
 	}
 	if (id == "btn_open"){
-	    instruction_code code = {H1CLOSE, "", "", "", 0, 0, 0, 0, 0};
-        InputData.AddInstruction(code, JOG);
+	    instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
+        InputData.AddInstruction(code, UI);
 	}
 	if (id == "btn_stop"){
 	    instruction_code code = {H1STOP, "", "", "", 0, 0, 0, 0, 0};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	}
 
 	// do button for code execution
@@ -431,7 +431,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 	    if (id == "btn_pos2_write")
 	    {
@@ -451,7 +451,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 	    if (id == "btn_pos3_write")
 	    {
@@ -471,7 +471,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 	    instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 	    if (id == "btn_pos4_write")
 	    {
@@ -491,7 +491,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 	    if (id == "btn_pos5_write")
 	    {
@@ -511,7 +511,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 	    if (id == "btn_pos6_write")
 	    {
@@ -531,7 +531,7 @@ void onButtonEvent(hId id, ButtonEventType type)
 		temp[2] = 85;
 		temp[3] = 73;
 		instruction_code code = {SET_J, temp, "", "", target[1], target[2], target[3], target[5], target[6]};
-        InputData.AddInstruction(code, JOG);
+        InputData.AddInstruction(code, UI);
 	    }
 
 	    // read positions buttons
