@@ -102,7 +102,7 @@ void motorManagerUpdateTask()
         // sensor
         current[1] = (float)hMot1.getEncoderCnt() / encoder_tics_J1 + offset.k1;
         current[2] = (float)hMot2.getEncoderCnt() / encoder_tics_J2 + offset.k2;
-        current[3] = (float)hMot3.getEncoderCnt() / encoder_tics_J3 + offset.k3;
+        current[3] = ((float)hMot3.getEncoderCnt() / encoder_tics_J3 + offset.k3);
         current[5] = (float)hMot4.getEncoderCnt() / encoder_tics_J5 + offset.k4;
         current[6] = (float)soft_enkoder.getEncoderCnt() / encoder_tics_J6 + offset.k5;
         // motion
@@ -252,57 +252,63 @@ void endSwitchRun()
     {
         stopInP52 = current[1];
     }
-    if (stateP52)
+    if (stateP52 && jointTarget[0] > stopInP52)
     {
         jointTarget[0] = stopInP52;
     }
     stateP52last = stateP52;
+
     stateP53 = hSens5.pin3.read(); //J2
     if (stateP53 && !stateP53last)
     {
         stopInP53 = current[2];
     }
-    if (stateP53)
+    if (stateP53 && jointTarget[1] > stopInP53)
     {
         jointTarget[1] = stopInP53;
     }
     stateP53last = stateP53;
+
     stateP54 = hSens5.pin4.read(); //J3
     if (stateP54 && !stateP54last)
     {
-        stopInP54 = current[3];
+        stopInP54 = -current[3];
     }
-    if (stateP54)
+    if (stateP54 && jointTarget[2] > stopInP54)
     {
         jointTarget[2] = stopInP54;
     }
     stateP54last = stateP54;
+
     stateP62 = hSens6.pin2.read(); //J5
     if (stateP62 && !stateP62last)
     {
         stopInP62 = current[5];
     }
-    if (stateP62)
+    if (stateP62 && jointTarget[3] > stopInP62)
     {
         jointTarget[3] = stopInP62;
     }
     stateP62last = stateP62;
+
     stateP63 = hSens6.pin3.read(); //J6
     if (stateP63 && !stateP63last)
     {
         stopInP63 = current[6];
     }
-    if (stateP63)
+    if (stateP63 && jointTarget[4] > stopInP63)
     {
         jointTarget[4] = stopInP63;
     }
     stateP63last = stateP63;
+
+
     stateP64 = hSens6.pin4.read(); //H1
     if (stateP64 && !stateP64last)
     {
         stopInP64 = 0;
     }
-    if (stateP64)
+    if (stateP64 && jointTarget[5] > stopInP64)
     {
         jointTarget[5] = stopInP64;
     }

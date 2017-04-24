@@ -40,6 +40,7 @@ int DblMotorCtrl::update(float error1, float t_time)
     {
         updateUp(error1, t_time);
     }
+    return 0;
 }
 
 int DblMotorCtrl::updateUp(float error1, float t_time)
@@ -55,6 +56,7 @@ int DblMotorCtrl::updateUp(float error1, float t_time)
     time_last = t_time;
 
     makeOutput(output1);
+    return 0;
 }
 
 int DblMotorCtrl::updateDown(float error1, float t_time)
@@ -70,6 +72,7 @@ int DblMotorCtrl::updateDown(float error1, float t_time)
     time_last = t_time;
 
     makeOutput(output1);
+    return 0;
 }
 void DblMotorCtrl::makeOutput(float o1)
 {

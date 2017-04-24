@@ -12,12 +12,17 @@
 #include "Addons.h"
 #include "ErrorLog.h"
 #include "MotorManager.h"
-#include "Config.h"
+//#include "Config.h"
 
 extern float current[9];
 extern float target[9];
 
 Coordinates to_send;
+
+//Interpolation setings
+const int time_motion_task = 100;
+const float time_iteration = 75;
+const float step_mul = 10;
 
 void MotionTask()
 {

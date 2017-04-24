@@ -1,8 +1,9 @@
-#define NO_MIN_MAX
-#define END_SWITCH_ENABLE
-
 #ifndef HROBOTCONFIG
 #define HROBOTCONFIG
+
+#define NO_MIN_MAX
+
+#define END_SWITCH_ENABLE
 
 //min max volues for soft stops and ofset
 #ifdef NO_MIN_MAX
@@ -30,11 +31,6 @@ const float J3_max = 170.0;
 const float J4_max = 105.0;
 const float J5_max = 180.0;
 #endif
-
-//Interpolation setings
-const int time_motion_task = 100;
-const float time_iteration = 75;
-const float step_mul = 10;
 
 //enkoder tics for revolution scale
 const float encoder_tics_J1 = 20;

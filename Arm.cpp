@@ -43,8 +43,6 @@ void Arm::ArmInit(){
 	SET(a, jointsCo, 0, -15, 20, 20, 0);
 	sys.delay(3000);
 	SHOW(a);
-	JOG(J2, 20);
-	SHOW(a);
 
 }
 
