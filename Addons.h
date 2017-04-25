@@ -22,7 +22,8 @@ enum joint_names
     J3,
     J4,
     J5,
-    J6
+    J6,
+    H1
 };
 
 enum instruction_input_type{UI, SERIAL, JOG, CODE, STREAM};
@@ -45,7 +46,8 @@ enum instruction_command{
                         COPY, COPY_J, COPY_R, COPY_C,
                         TRANSLATE_SET, TRANSLATE,
                         CONFIG_COM_STRIM, CONFIG_COM_UI, CONFIG_COM_SERIAL, CONFIG_COM_JOG, CONFIG_COM_CODE,
-                        OFFSET_ONPOINT, OFFSET_INPOINT
+                        OFFSET_ONPOINT, OFFSET_INPOINT,
+                        HOMEALL, HOMEJ1, HOMEJ2, HOMEJ3, HOMEJ5, HOMEJ6, HOMEH1
                         };
 
 struct instruction_code{

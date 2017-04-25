@@ -22,32 +22,26 @@ Coordinates maximum(jointsCo, J1_max, J2_max, J3_max, J4_max, J5_max);
 bool stateP52;
 bool stateP52last;
 float stopInP52;
-bool homedP52 = false;
 //J2
 bool stateP53;
 bool stateP53last;
 float stopInP53;
-bool homedP53 = false;
 //J3
 bool stateP54;
 bool stateP54last;
 float stopInP54;
-bool homedP54 = false;
 //J5
 bool stateP62;
 bool stateP62last;
 float stopInP62;
-bool homedP62 = false;
 //J6
 bool stateP63;
 bool stateP63last;
 float stopInP63;
-bool homedP63 = false;
 //H1
 bool stateP64;
 bool stateP64last;
 float stopInP64;
-bool homedP64 = false;
 
 SoftEnc soft_enkoder(hSens1.pin1, hSens2.pin1);
 
@@ -134,6 +128,35 @@ void motorManagerUpdateTask()
     }
 }
 
+void rangeCheck(){
+    if(min_max_enable){
+        if(homedP52)
+            jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
+        else
+            jointTarget[0] = saturateFloatUnsym(jointTarget[0], 360, minimum.k1);
+        
+        if(homedP53)
+            jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
+        else
+            jointTarget[1] = saturateFloatUnsym(jointTarget[1], 360, minimum.k2);
+
+        if(homedP54)
+            jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
+        else
+            jointTarget[2] = saturateFloatUnsym(jointTarget[2], 360, minimum.k3);
+
+        if(homedP62)
+            jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4, minimum.k4);
+        else
+            jointTarget[3] = saturateFloatUnsym(jointTarget[3], 360, minimum.k4);
+
+        if(homedP63)
+            jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
+        else
+            jointTarget[4] = saturateFloatUnsym(jointTarget[4], 360, minimum.k5);
+    }
+}
+
 void motorManagerUpdateTargetGlobal()
 {
     jointTarget[0] = target[1];
@@ -143,11 +166,7 @@ void motorManagerUpdateTargetGlobal()
     jointTarget[4] = target[6];
     jointTarget[5] = target[7];
     
-    jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
-    jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
-    jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
-    jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4, minimum.k4);
-    jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
+    rangeCheck();
 }
 
 void motorManagerUpdateTargetGlobalTask()
@@ -167,11 +186,7 @@ void motorManagerUpdateTargetDef(float j1, float j2, float j3, float j5, float j
     jointTarget[3] = j5;
     jointTarget[4] = j6;
     
-    jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
-    jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
-    jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
-    jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4, minimum.k4);
-    jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
+    rangeCheck();
 }
 
 void motorManagerUpdateTargetDef(Coordinates point)
@@ -186,11 +201,7 @@ void motorManagerUpdateTargetDef(Coordinates point)
         jointTarget[3] = point.k4;
         jointTarget[4] = point.k5;
 
-        jointTarget[0] = saturateFloatUnsym(jointTarget[0], maximum.k1, minimum.k1);
-        jointTarget[1] = saturateFloatUnsym(jointTarget[1], maximum.k2, minimum.k2);
-        jointTarget[2] = saturateFloatUnsym(jointTarget[2], maximum.k3, minimum.k3);
-        jointTarget[3] = saturateFloatUnsym(jointTarget[3], maximum.k4, minimum.k4);
-        jointTarget[4] = saturateFloatUnsym(jointTarget[4], maximum.k5, minimum.k5);
+        rangeCheck();
 }
 
 void motorManagerSetOffsetDef(int t_joint, float value)

@@ -585,6 +585,42 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
 			}
 		}
 
+		if (strcmp(command, "HOMEALL") == 0){
+			instruction_code code = {HOMEALL, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEJ1") == 0){
+			instruction_code code = {HOMEJ1, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEJ2") == 0){
+			instruction_code code = {HOMEJ2, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEJ3") == 0){
+			instruction_code code = {HOMEJ3, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEJ5") == 0){
+			instruction_code code = {HOMEJ5, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEJ6") == 0){
+			instruction_code code = {HOMEJ6, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+		if (strcmp(command, "HOMEH1") == 0){
+			instruction_code code = {HOMEH1, "", "", "", 0, 0, 0, 0, 0};
+            clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+            return code;
+		}
+
 		instruction_code code = {NOCOMMAND, "", "", "", 0, 0, 0, 0, 0};
 		clear_all(command, param1, param2, param3, param4, param5, param6, param7);
     	return code;

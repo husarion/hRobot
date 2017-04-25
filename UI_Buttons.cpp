@@ -256,12 +256,34 @@ void onButtonEvent(hId id, ButtonEventType type)
 	if (id == "doP7"){program7_start();}
 	if (id == "doP8"){program8_start();}
 
-	if (id == "homeJ1"){}//TODO:
-	if (id == "homeJ2"){}//TODO:
-	if (id == "homeJ3"){}//TODO:
-	if (id == "homeJ5"){}//TODO:
-	if (id == "homeJ6"){}//TODO:
-	if (id == "homeG1"){}//TODO:
+	if (id == "homeAll"){
+		instruction_code code = {HOMEALL, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+	}
+	if (id == "homeJ1"){
+		instruction_code code = {HOMEJ1, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+	}
+	if (id == "homeJ2"){
+		instruction_code code = {HOMEJ2, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+		}
+	if (id == "homeJ3"){
+		instruction_code code = {HOMEJ3, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+		}
+	if (id == "homeJ5"){
+		instruction_code code = {HOMEJ5, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+		}
+	if (id == "homeJ6"){
+		instruction_code code = {HOMEJ6, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+		}
+	if (id == "homeG1"){
+		instruction_code code = {HOMEH1, "", "", "", 0, 0, 0, 0, 0};
+		InputData.AddInstruction(code, UI);
+		}
 
 	if (id == "prec_on"){
 		instruction_code code = {PRECYSION_ON, "", "", "", 100, 0, 0, 0, 0};

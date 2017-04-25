@@ -12,7 +12,7 @@
 #include "Addons.h"
 #include "ErrorLog.h"
 #include "MotorManager.h"
-//#include "Config.h"
+#include "Config.h"
 
 extern float current[9];
 extern float target[9];
@@ -123,6 +123,21 @@ void MotionManager::moveJointInter()
         to_send.k5 += j6_iter_step;
         motorManagerUpdateTargetDef(to_send);
         sys.delay(time_iteration);
+    }
+}
+
+void homejoint(joint_names joint){
+    switch(joint){
+        case J1 : break;//TODO:
+        case J2 : break;//TODO:
+        case J3 : break;//TODO:
+        case J4 : break;//TODO:
+        case J5 : break;//TODO:
+        case J6 : break;//TODO:
+        case H1 : 
+            instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
+            MotionManager::get().instruction(code);
+        break;
     }
 }
 
@@ -477,6 +492,33 @@ void MotionManager::update()
         break;
         case OFFSET_INPOINT:
             setOffset(motions[0].instruction.point_name);
+        break;
+
+        case HOMEALL:
+            homejoint(H1);
+            homejoint(J1);
+            homejoint(J2);
+            homejoint(J3);
+            homejoint(J4);
+            homejoint(J5);
+        break;
+        case HOMEJ1:
+            homejoint(J1);
+        break;
+        case HOMEJ2:
+            homejoint(J2);
+        break;
+        case HOMEJ3:
+            homejoint(J3);
+        break;
+        case HOMEJ5:
+            homejoint(J5);
+        break;
+        case HOMEJ6:
+            homejoint(J5);
+        break;
+        case HOMEH1:
+            homejoint(H1);
         break;
         }
         
