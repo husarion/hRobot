@@ -412,6 +412,12 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
                 return code;
 		    }
 		}
+		if (strcmp(param1, "CLEARHOME") == 0){
+				instruction_code code = {CONFIG_CLEARHOME, "", "", "", 0, 0, 0, 0, 0};
+			    clear_all(command, param1, param2, param3, param4, param5, param6, param7);
+                return code;
+		}
+		}
 		if (strcmp(command, "OFFSET") == 0)
 		{
 		    if (strcmp(param1, "ONPOINT") == 0)
@@ -433,7 +439,6 @@ char* param3, char* param4, char* param5, char* param6, char* param7){
             clear_all(command, param1, param2, param3, param4, param5, param6, param7);
             return code;
 		}
-	    }
 
 	    if (strcmp(command, "H1OPEN") == 0)
 	    {

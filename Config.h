@@ -36,13 +36,6 @@ const float J5_max = 180.0;
 const bool min_max_enable = true;
 #endif
 
-bool homedP52 = false;
-bool homedP53 = false;
-bool homedP54 = false;
-bool homedP62 = false;
-bool homedP63 = false;
-bool homedP64 = false;
-
 //enkoder tics for revolution scale
 const float encoder_tics_J1 = 20;
 const float encoder_tics_J2 = 18 * 4;

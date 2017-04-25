@@ -43,6 +43,13 @@ bool stateP64;
 bool stateP64last;
 float stopInP64;
 
+bool homedP52 = false;//J1
+bool homedP53 = false;//J2
+bool homedP54 = false;//J3
+bool homedP62 = false;//J5
+bool homedP63 = false;//J6
+bool homedP64 = false;//H1
+
 SoftEnc soft_enkoder(hSens1.pin1, hSens2.pin1);
 
 void motorManagerInitServos()

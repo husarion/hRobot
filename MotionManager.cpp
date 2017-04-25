@@ -12,10 +12,15 @@
 #include "Addons.h"
 #include "ErrorLog.h"
 #include "MotorManager.h"
-#include "Config.h"
 
 extern float current[9];
 extern float target[9];
+extern bool homedP52;
+extern bool homedP53;
+extern bool homedP54;
+extern bool homedP62;
+extern bool homedP63;
+extern bool homedP64;
 
 Coordinates to_send;
 
@@ -126,14 +131,70 @@ void MotionManager::moveJointInter()
     }
 }
 
-void homejoint(joint_names joint){
+void MotionManager::homejoint(joint_names joint){
+    Coordinates a;
     switch(joint){
-        case J1 : break;//TODO:
-        case J2 : break;//TODO:
-        case J3 : break;//TODO:
-        case J4 : break;//TODO:
-        case J5 : break;//TODO:
-        case J6 : break;//TODO:
+        case J1 : 
+            while(!homedP52){
+                a.k1 = current[1] + 1;
+                a.k2 = current[2];
+                a.k3 = current[3];
+                a.k4 = current[5];
+                a.k5 = current[6];
+                targetPoint = a;
+                moveJointNorm();
+                sys.delay(time_iteration);
+            }
+        break;
+        case J2 : 
+            while(!homedP53){
+                a.k1 = current[1];
+                a.k2 = current[2] + 1;
+                a.k3 = current[3];
+                a.k4 = current[5];
+                a.k5 = current[6];
+                targetPoint = a;
+                moveJointNorm();
+                sys.delay(time_iteration);
+            }
+        break;
+        case J3 : 
+            while(!homedP54){
+                a.k1 = current[1];
+                a.k2 = current[2];
+                a.k3 = current[3] + 1;
+                a.k4 = current[5];
+                a.k5 = current[6];
+                targetPoint = a;
+                moveJointNorm();
+                sys.delay(time_iteration);
+            }
+        break;
+        case J4 : break;
+        case J5 : 
+            while(!homedP62){
+                a.k1 = current[1];
+                a.k2 = current[2];
+                a.k3 = current[3];
+                a.k4 = current[5] + 1;
+                a.k5 = current[6];
+                targetPoint = a;
+                moveJointNorm();
+                sys.delay(time_iteration);
+            }
+        break;
+        case J6 : 
+            while(!homedP63){
+                a.k1 = current[1];
+                a.k2 = current[2];
+                a.k3 = current[3];
+                a.k4 = current[5];
+                a.k5 = current[6] + 1;
+                targetPoint = a;
+                moveJointNorm();
+                sys.delay(time_iteration);
+            }
+        break;
         case H1 : 
             instruction_code code = {H1OPEN, "", "", "", 0, 0, 0, 0, 0};
             MotionManager::get().instruction(code);
@@ -519,6 +580,15 @@ void MotionManager::update()
         break;
         case HOMEH1:
             homejoint(H1);
+        break;
+
+        case CONFIG_CLEARHOME:
+            homedP52 = false;
+            homedP53 = false;
+            homedP54 = false;
+            homedP62 = false;
+            homedP63 = false;
+            homedP64 = false;
         break;
         }
         

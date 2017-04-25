@@ -75,6 +75,7 @@ class MotionManager
     void griperOpen();
     void griperClose();
     void griperStop();
+    void homejoint(joint_names joint);
 
   public:
     static MotionManager & get()
