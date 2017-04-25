@@ -18,6 +18,8 @@ const float J2_max = 360.0;
 const float J3_max = 360.0;
 const float J4_max = 360.0;
 const float J5_max = 360.0;
+
+const bool min_max_enable = false;
 #else
 const float J1_min = -180.0;
 const float J2_min = -120.0;
@@ -30,6 +32,8 @@ const float J2_max = 30.0;
 const float J3_max = 170.0;
 const float J4_max = 105.0;
 const float J5_max = 180.0;
+
+const bool min_max_enable = true;
 #endif
 
 //enkoder tics for revolution scale

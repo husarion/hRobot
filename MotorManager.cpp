@@ -22,26 +22,32 @@ Coordinates maximum(jointsCo, J1_max, J2_max, J3_max, J4_max, J5_max);
 bool stateP52;
 bool stateP52last;
 float stopInP52;
+bool homedP52 = false;
 //J2
 bool stateP53;
 bool stateP53last;
 float stopInP53;
+bool homedP53 = false;
 //J3
 bool stateP54;
 bool stateP54last;
 float stopInP54;
+bool homedP54 = false;
 //J5
 bool stateP62;
 bool stateP62last;
 float stopInP62;
+bool homedP62 = false;
 //J6
 bool stateP63;
 bool stateP63last;
 float stopInP63;
+bool homedP63 = false;
 //H1
 bool stateP64;
 bool stateP64last;
 float stopInP64;
+bool homedP64 = false;
 
 SoftEnc soft_enkoder(hSens1.pin1, hSens2.pin1);
 
@@ -217,6 +223,7 @@ void motorManagerSetOffsetDef(Coordinates current_point)
 
 bool checkIfInRange(Coordinates *point)
 {
+    if(min_max_enable){
     if (point->k1 != saturateFloatUnsym(point->k1, maximum.k1, minimum.k1))
         return false;
     if (point->k2 != saturateFloatUnsym(point->k2, maximum.k1, minimum.k2))
@@ -227,6 +234,7 @@ bool checkIfInRange(Coordinates *point)
         return false;
     if (point->k5 != saturateFloatUnsym(point->k5, maximum.k1, minimum.k5))
         return false;
+    }
     return true;
 }
 
@@ -251,6 +259,7 @@ void endSwitchRun()
     if (stateP52 && !stateP52last)
     {
         stopInP52 = current[1];
+        homedP52 = true;
     }
     if (stateP52 && jointTarget[0] > stopInP52)
     {
@@ -262,6 +271,11 @@ void endSwitchRun()
     if (stateP53 && !stateP53last)
     {
         stopInP53 = current[2];
+        homedP53 = true;
+        //
+        //offset.k2 = current[2] - J2_max;
+        Serial.printf("%d\n", current[2] - J2_max);
+        //
     }
     if (stateP53 && jointTarget[1] > stopInP53)
     {
@@ -273,6 +287,7 @@ void endSwitchRun()
     if (stateP54 && !stateP54last)
     {
         stopInP54 = -current[3];
+        homedP54 = true;
     }
     if (stateP54 && jointTarget[2] > stopInP54)
     {
@@ -284,6 +299,7 @@ void endSwitchRun()
     if (stateP62 && !stateP62last)
     {
         stopInP62 = current[5];
+        homedP62 = true;
     }
     if (stateP62 && jointTarget[3] > stopInP62)
     {
@@ -295,6 +311,7 @@ void endSwitchRun()
     if (stateP63 && !stateP63last)
     {
         stopInP63 = current[6];
+        homedP63 = true;
     }
     if (stateP63 && jointTarget[4] > stopInP63)
     {
@@ -307,6 +324,7 @@ void endSwitchRun()
     if (stateP64 && !stateP64last)
     {
         stopInP64 = 0;
+        homedP64 = true;
     }
     if (stateP64 && jointTarget[5] > stopInP64)
     {
