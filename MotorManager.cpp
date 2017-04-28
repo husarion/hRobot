@@ -277,6 +277,8 @@ void endSwitchRun()
     if (stateP52 && !stateP52last)
     {
         stopInP52 = current[1];
+        //if(~homedP52)
+        //    offset.k1 =  J1_max - current[1];
         homedP52 = true;
     }
     if (stateP52 && jointTarget[0] > stopInP52)
@@ -289,11 +291,9 @@ void endSwitchRun()
     if (stateP53 && !stateP53last)
     {
         stopInP53 = current[2];
+        if(~homedP53)
+            offset.k2 =  J2_max - current[2];
         homedP53 = true;
-        //
-        //offset.k2 = current[2] - J2_max;
-        Serial.printf("%d\n", current[2] - J2_max);
-        //
     }
     if (stateP53 && jointTarget[1] > stopInP53)
     {
@@ -305,6 +305,8 @@ void endSwitchRun()
     if (stateP54 && !stateP54last)
     {
         stopInP54 = -current[3];
+        if(~homedP54)
+            offset.k3 =  J3_max - current[3];
         homedP54 = true;
     }
     if (stateP54 && jointTarget[2] > stopInP54)
@@ -317,6 +319,8 @@ void endSwitchRun()
     if (stateP62 && !stateP62last)
     {
         stopInP62 = current[5];
+        if(~homedP62)
+            offset.k4 =  J4_max - current[5];
         homedP62 = true;
     }
     if (stateP62 && jointTarget[3] > stopInP62)
@@ -329,6 +333,8 @@ void endSwitchRun()
     if (stateP63 && !stateP63last)
     {
         stopInP63 = current[6];
+        if(~homedP63)
+            offset.k5 =  J5_max - current[6];
         homedP63 = true;
     }
     if (stateP63 && jointTarget[4] > stopInP63)

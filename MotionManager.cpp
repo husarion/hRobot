@@ -21,6 +21,7 @@ extern bool homedP54;
 extern bool homedP62;
 extern bool homedP63;
 extern bool homedP64;
+extern Coordinates offset;
 
 Coordinates to_send;
 
@@ -162,7 +163,7 @@ void MotionManager::homejoint(joint_names joint){
             while(!homedP54){
                 a.k1 = current[1];
                 a.k2 = current[2];
-                a.k3 = current[3] + 1;
+                a.k3 = current[3] + 3;
                 a.k4 = current[5];
                 a.k5 = current[6];
                 targetPoint = a;
@@ -176,7 +177,7 @@ void MotionManager::homejoint(joint_names joint){
                 a.k1 = current[1];
                 a.k2 = current[2];
                 a.k3 = current[3];
-                a.k4 = current[5] + 1;
+                a.k4 = current[5] + 2;
                 a.k5 = current[6];
                 targetPoint = a;
                 moveJointNorm();
@@ -558,25 +559,105 @@ void MotionManager::update()
         case HOMEALL:
             homejoint(H1);
             homejoint(J1);
+            //a.k1 = 0;
+            //a.k2 = curentPoint.k2;
+            //a.k3 = curentPoint.k3;
+            //a.k4 = curentPoint.k4;
+            //a.k5 = curentPoint.k5;
+            //a.type = jointsCo;
+            //targetPoint = a;
+            //moveJointNorm();
             homejoint(J2);
+            //a.k1 = curentPoint.k1;
+            //a.k2 = 0;
+            //a.k3 = curentPoint.k3;
+            //a.k4 = curentPoint.k4;
+            //a.k5 = curentPoint.k5;
+            //a.type = jointsCo;
+            //targetPoint = a;
+            moveJointNorm();
             homejoint(J3);
+            //a.k1 = curentPoint.k1;
+            //a.k2 = curentPoint.k2;
+            //a.k3 = 0;
+            //a.k4 = curentPoint.k4;
+            //a.k5 = curentPoint.k5;
+            //a.type = jointsCo;
+            //targetPoint = a;
+            //moveJointNorm();
             homejoint(J4);
+            //a.k1 = curentPoint.k1;
+            //a.k2 = curentPoint.k2;
+            //a.k3 = curentPoint.k3;
+            //a.k4 = 0;
+            //a.k5 = curentPoint.k5;
+            //a.type = jointsCo;
+            //targetPoint = a;
+            //moveJointNorm();
             homejoint(J5);
+            //a.k1 = curentPoint.k1;
+            //a.k2 = curentPoint.k2;
+            //a.k3 = curentPoint.k3;
+            //a.k4 = curentPoint.k4;
+            //a.k5 = 0;
+            //a.type = jointsCo;
+            //targetPoint = a;
+            //moveJointNorm();
         break;
         case HOMEJ1:
             homejoint(J1);
+            a.k1 = 0;
+            a.k2 = curentPoint.k2;
+            a.k3 = curentPoint.k3;
+            a.k4 = curentPoint.k4;
+            a.k5 = curentPoint.k5;
+            a.type = jointsCo;
+            targetPoint = a;
+            moveJointNorm();
         break;
         case HOMEJ2:
             homejoint(J2);
+            a.k1 = curentPoint.k1;
+            a.k2 = 0;
+            a.k3 = curentPoint.k3;
+            a.k4 = curentPoint.k4;
+            a.k5 = curentPoint.k5;
+            a.type = jointsCo;
+            targetPoint = a;
+            moveJointNorm();
         break;
         case HOMEJ3:
             homejoint(J3);
+            a.k1 = curentPoint.k1;
+            a.k2 = curentPoint.k2;
+            a.k3 = 0;
+            a.k4 = curentPoint.k4;
+            a.k5 = curentPoint.k5;
+            a.type = jointsCo;
+            targetPoint = a;
+            moveJointNorm();
         break;
         case HOMEJ5:
             homejoint(J5);
+            a.k1 = curentPoint.k1;
+            a.k2 = curentPoint.k2;
+            a.k3 = curentPoint.k3;
+            a.k4 = 0;
+            a.k5 = curentPoint.k5;
+            a.type = jointsCo;
+            targetPoint = a;
+            moveJointNorm();
         break;
         case HOMEJ6:
-            homejoint(J5);
+            homejoint(J6);
+            a.k1 = curentPoint.k1;
+            a.k2 = curentPoint.k2;
+            a.k3 = curentPoint.k3;
+            a.k4 = curentPoint.k4;
+            a.k5 = 0;
+            a.type = jointsCo;
+            targetPoint = a;
+            moveJointNorm();
         break;
         case HOMEH1:
             homejoint(H1);
@@ -589,6 +670,11 @@ void MotionManager::update()
             homedP62 = false;
             homedP63 = false;
             homedP64 = false;
+            offset.k1 = 0;
+            offset.k2 = 0;
+            offset.k3 = 0;
+            offset.k4 = 0;
+            offset.k5 = 0;
         break;
         }
         
